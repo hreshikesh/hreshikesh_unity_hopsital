@@ -1,5 +1,6 @@
 package com.xworkz.hospital.service;
 
+import com.xworkz.hospital.entity.HospitalEntity;
 import com.xworkz.hospital.repository.HospitalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,18 +29,39 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
+    public boolean findByEmail(String email) {
+        HospitalEntity entity=hopsitalRepository.findByEmail(email);
+        if (entity.getEmail()==null){
+            return  false;
+        }else {
+            sendOtp(email);
+            return true;
+        }
+    }
+    private String otpgenerated="";
+    @Override
+
     public boolean sendOtp(String email) {
         StringBuffer otp = new StringBuffer(6);
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             otp.append(random.nextInt(10));
         }
+        otpgenerated=otp.toString();
         if (otp.equals(" ")){
             return false;
         }else {
             getEmail(email, "OTP for Sigin", "Dear Admin" + "\nThe OTP is " + otp);
             return true;
         }
+    }
+
+    @Override
+    public boolean verifyOtp(String otp) {
+         if(otpgenerated.equals(otp)){
+             otpgenerated="";
+             return true;
+         }else return false;
     }
 
 
