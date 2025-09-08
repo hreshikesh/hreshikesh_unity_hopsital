@@ -7,4 +7,6 @@ public interface HospitalRepository {
 
     HospitalEntity findByEmail(String email);
 
+    void updateTable(HospitalEntity entity);
+
 }

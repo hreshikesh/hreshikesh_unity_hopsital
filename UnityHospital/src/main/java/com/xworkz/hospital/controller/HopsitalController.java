@@ -26,12 +26,17 @@ public class HopsitalController {
         return modelAndView;
     }
     @RequestMapping("adminEmail")
-    public ModelAndView verifyOtpAndLogin(String otp, ModelAndView modelAndView) {
-        boolean otpStatus = hospitalService.verifyOtp(otp);
-        if (otpStatus) {
+    public ModelAndView verifyOtpAndLogin(String otp, ModelAndView modelAndView,HttpSession session) {
+        String otpStatus = hospitalService.verifyOtp(otp,(String) session.getAttribute("adminEmail"));
+        if (otpStatus.equals("pass")) {
             modelAndView.setViewName("Home");
-        } else {
-            modelAndView.addObject("otpstatus", "fail");
+        } else if (otpStatus.equals("timeout")){
+            modelAndView.addObject("otpstatus", "time");
+            modelAndView.addObject("check", true);
+            modelAndView.setViewName("admin");
+        } else if (otpStatus.equals("fail")) {
+            modelAndView.addObject("otpstatus", "mismatch");
+            modelAndView.addObject("check", true);
             modelAndView.setViewName("admin");
         }
         return modelAndView;

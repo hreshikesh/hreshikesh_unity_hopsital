@@ -18,8 +18,6 @@ public class HospitalEntity {
     private int id;
     @Column(name = "email")
     private String email;
-    @Column(name = "otp")
-    private String otp;
     @Column(name="local_date_time")
     private LocalDateTime localDateTime;
 }

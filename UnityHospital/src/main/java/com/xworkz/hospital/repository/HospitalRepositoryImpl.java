@@ -56,4 +56,23 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         }
         return hospital;
     }
+
+    @Override
+    public void updateTable(HospitalEntity entity) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        try {
+            transaction.begin();
+            manager.merge(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+    }
+
+
 }

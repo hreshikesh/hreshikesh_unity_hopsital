@@ -7,7 +7,7 @@ public interface HospitalService {
 
     boolean sendOtp(String email);
 
-    boolean verifyOtp(String Otp);
+    String verifyOtp(String Otp,String email);
 
 
 

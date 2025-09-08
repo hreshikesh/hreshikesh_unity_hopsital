@@ -2,22 +2,25 @@ package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.entity.HospitalEntity;
 import com.xworkz.hospital.repository.HospitalRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.time.LocalDateTime;
 import java.util.Properties;
 import java.util.Random;
 
 @Service
 public class HospitalServiceImpl implements HospitalService {
 
+    private static final Logger log = LoggerFactory.getLogger(HospitalServiceImpl.class);
     @Autowired
     HospitalRepository hopsitalRepository;
 
@@ -30,38 +33,59 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public boolean findByEmail(String email) {
-        HospitalEntity entity=hopsitalRepository.findByEmail(email);
-        if (entity.getEmail()==null){
-            return  false;
-        }else {
+        HospitalEntity entity = hopsitalRepository.findByEmail(email);
+        if (entity.getEmail() == null) {
+            return false;
+        } else {
             sendOtp(email);
             return true;
         }
     }
-    private String otpgenerated="";
+
+    private String otpgenerated = "";
+
     @Override
 
     public boolean sendOtp(String email) {
+        HospitalEntity entity = hopsitalRepository.findByEmail(email);
         StringBuffer otp = new StringBuffer(6);
         Random random = new Random();
         for (int i = 0; i < 6; i++) {
             otp.append(random.nextInt(10));
         }
-        otpgenerated=otp.toString();
-        if (otp.equals(" ")){
+        otpgenerated = otp.toString();
+        if (otp.equals(" ")) {
             return false;
-        }else {
-            getEmail(email, "OTP for Sigin", "Dear Admin" + "\nThe OTP is " + otp);
+        } else {
+            getEmail(email, "OTP for Sigin", "Dear Admin," + "\nThe OTP is " + otp);
+            LocalDateTime localDateTime=LocalDateTime.now().plusSeconds(120);
+            entity.setLocalDateTime(localDateTime);
+            hopsitalRepository.updateTable(entity);
             return true;
         }
     }
 
     @Override
-    public boolean verifyOtp(String otp) {
-         if(otpgenerated.equals(otp)){
-             otpgenerated="";
-             return true;
-         }else return false;
+    public String verifyOtp(String otp, String email) {
+        HospitalEntity entity = hopsitalRepository.findByEmail(email);
+        LocalDateTime localDateTime=LocalDateTime.now();
+        log.info(localDateTime.toString());
+        if (localDateTime.isAfter(entity.getLocalDateTime())) {
+            otpgenerated="";
+            return "timeout";
+        }
+        else
+        {
+            if (otpgenerated.equals(otp)) {
+                otpgenerated ="";
+                entity.setLocalDateTime(null);
+                hopsitalRepository.updateTable(entity);
+                return "pass";
+            }
+            else {
+                return "fail";
+            }
+        }
     }
 
 
