@@ -16,3 +16,5 @@ function verifyOtp(){
 let sendOtpButton=document.getElementById("sendOtpButton");
 sendOtpButton.classList.add("d-none");
 }
+
+

@@ -42,7 +42,7 @@ public class HospitalServiceImpl implements HospitalService {
         }
     }
 
-    private String otpgenerated = "";
+    private String otpGenerated = "";
 
     @Override
 
@@ -53,7 +53,7 @@ public class HospitalServiceImpl implements HospitalService {
         for (int i = 0; i < 6; i++) {
             otp.append(random.nextInt(10));
         }
-        otpgenerated = otp.toString();
+        otpGenerated = otp.toString();
         if (otp.equals(" ")) {
             return false;
         } else {
@@ -71,13 +71,13 @@ public class HospitalServiceImpl implements HospitalService {
         LocalDateTime localDateTime=LocalDateTime.now();
         log.info(localDateTime.toString());
         if (localDateTime.isAfter(entity.getLocalDateTime())) {
-            otpgenerated="";
+            otpGenerated ="";
             return "timeout";
         }
         else
         {
-            if (otpgenerated.equals(otp)) {
-                otpgenerated ="";
+            if (otpGenerated.equals(otp)) {
+                otpGenerated ="";
                 entity.setLocalDateTime(null);
                 hopsitalRepository.updateTable(entity);
                 return "pass";
