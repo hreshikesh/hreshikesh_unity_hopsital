@@ -39,60 +39,46 @@
 
         <h2 class="text-center mb-4">Welcome Admin!</h2>
 
+
         <div class="mb-3">
             <label for="emailId" class="form-label">Email address</label>
             <input type="email" class="form-control" id="emailId"
-                   value="${email}"
+                   value="${userEmail}"
                    onchange="checkEmail()" name="email"
                    placeholder="Enter your email" required>
             <span class="text-danger" id="emailError"></span>
         </div>
 
-        <c:if test="${empty check}">
+
+
             <div class="mb-3 text-center">
-                <button type="submit" class="btn btn-light w-50" id="sendOtpButton" onclick="timeCount()"
-                        formaction="sendotp">Send OTP
+                <button type="button" class="btn btn-light w-50" id="sendOtpButton" onclick="sendOtp()">Send OTP
                 </button>
             </div>
-        </c:if>
 
-        <p class="text-primary" id="timeCountId"></p>
-        <p class="text-center text-warning" id="timeoutMessageId" style="display:none;">OTP TimeOut</p>
+        <span id="otpStatusId" class="text-warning text-center mt-3"></span>
 
-        <c:if test="${not empty check}">
-            <c:choose>
-                <c:when test="${check}">
-                    <div class="mb-3">
-                        <label for="otpId" class="form-label">OTP</label>
-                        <input type="text" class="form-control" id="otpId" name="otp"
-                               placeholder="Enter OTP" required maxlength="6">
-                    </div>
-                    <div class="mb-3 text-center">
-                        <button type="submit" id="loginButtonId" class="btn btn-light w-50" formaction="adminEmail">
-                            Login
-                        </button>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <p class="text-danger text-center">Email not valid</p>
-                </c:otherwise>
-            </c:choose>
-        </c:if>
 
-        <div class="mb-3">
-            <c:if test="${not empty otpstatus}">
-                <c:if test="${otpstatus eq 'time'}">
-                    <div>
-                        <button type="button" id="resendId" onclick="resetTimeOtp()" disabled>
-                            Resend OTP
-                        </button>
-                    </div>
-                </c:if>
-                <c:if test="${otpstatus eq 'mismatch'}">
-                    <p class="text-center text-warning">OTP not matched</p>
-                </c:if>
-            </c:if>
+        <div id="otpContainerId" class="d-none">
+            <div class="mb-3">
+                <label for="otpId" class="form-label">OTP</label>
+                <input type="text" class="form-control" id="otpId" name="otp"
+                       placeholder="Enter OTP" required maxlength="6">
+            </div>
+
+            <p id="timeCountId" class="text-primary m-3"></p>
+
+            <button type="button" id="resendId" onclick="resetTimeOtp()" disabled>Resend OTP</button>
+            <p id="timeoutMessageId" class="text-warning"></p>
+
+            <div class="mb-3 text-center mt-3">
+                <button type="submit" id="loginButtonId" class="btn btn-light w-50" formaction="adminEmail" onclick="loginClick()">
+                    Login
+                </button>
+            </div>
         </div>
+
+
     </form>
 </div>
 <script src="js/index.js"></script>

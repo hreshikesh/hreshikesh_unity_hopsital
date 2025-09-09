@@ -13,11 +13,22 @@ public class RestController {
     @Autowired
     HospitalService service;
     @GetMapping("checkEmail/{email}")
-    public String verifyEmail(@PathVariable String email, HttpSession httpSession){
+    public String verifyEmail(@PathVariable String email){
         int count=service.findEmail(email);
         if (count==1){
-            httpSession.setAttribute("email",email);
             return " ";
         }else return "Email Not Present";
+    }
+
+    @GetMapping("sendOtp/{email}")
+    public String verifyAndSendOtp(@PathVariable String email,HttpSession session){
+        boolean sent= service.sendOtp(email);
+        session.setAttribute("adminEmail",email);
+        if(sent){
+            return "otp sent successfully";
+        }else{
+            return "otp not sent";
+        }
+
     }
 }

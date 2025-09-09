@@ -47,6 +47,7 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
 
     public boolean sendOtp(String email) {
+        log.info(email);
         HospitalEntity entity = hopsitalRepository.findByEmail(email);
         StringBuffer otp = new StringBuffer(6);
         Random random = new Random();
