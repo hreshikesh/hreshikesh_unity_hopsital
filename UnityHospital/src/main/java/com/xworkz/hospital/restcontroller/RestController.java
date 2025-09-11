@@ -23,7 +23,7 @@ public class RestController {
     @GetMapping("sendOtp/{email}")
     public String verifyAndSendOtp(@PathVariable String email,HttpSession session){
         boolean sent= service.sendOtp(email);
-        session.setAttribute("adminEmail",email);
+        session.setAttribute("adminEmail1",email);
         if(sent){
             return "otp sent successfully";
         }else{
@@ -31,4 +31,19 @@ public class RestController {
         }
 
     }
+
+    @GetMapping("verifyOtp/{otp}")
+    public String verifyOtp(@PathVariable String otp,HttpSession session){
+        String check=service.verifyOtp(otp,(String) session.getAttribute("adminEmail1"));
+        return check;
+    }
+
+    @GetMapping("resetTimeOtp")
+    public String resendOtp(HttpSession session){
+        service.sendOtp((String) session.getAttribute("adminEmail1"));
+        return "OTP resent.";
+    }
+
+
+
 }

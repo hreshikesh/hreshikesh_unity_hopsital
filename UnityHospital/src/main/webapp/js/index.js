@@ -12,40 +12,44 @@ emailError.innerHTML=this.responseText;
 }
 }
 
+
 let timer;
 function timeCount(){
-    let timeCount = document.getElementById("timeCountId");
-    let resend = document.getElementById("resendId");
-    let loginButton = document.getElementById("loginButtonId");
-    let timeoutMessage = document.getElementById("timeoutMessageId");
-    let expiryTime;
+let timeCountEl = document.getElementById("timeCountId");
+let resend = document.getElementById("resendId");
+let timeoutMessage = document.getElementById("timeoutMessageId");
 
-    let storedExpiryTime = sessionStorage.getItem("otpExpiry");
+let storedExpiryTime = sessionStorage.getItem("otpExpiry");
+let expiryTime;
 
-    if(!storedExpiryTime){
-        expiryTime = Date.now() + 120000;
-        sessionStorage.setItem("otpExpiry", expiryTime);
-    } else {
-        expiryTime = Number(storedExpiryTime);
-    }
-
-
-    timer=setInterval(function(){
-        const remainingTime = Math.floor((expiryTime - Date.now()) / 1000);
-        if(remainingTime > 0){
-            timeCount.textContent = `You can resend OTP in ${remainingTime}s`;
-            resend.disabled = true;
-            loginButton.disabled = false;
-        } else {
-            timeCount.textContent = "";
-            timeoutMessage.textContent = "Time Out Resend OTP";
-            resend.disabled = false;
-            clearInterval(timer);
-            loginButton.disabled = true;
-            sessionStorage.removeItem("otpExpiry");
-        }
-    },1000);
+if(!storedExpiryTime){
+expiryTime = Date.now() + 120000; // 2 minutes
+sessionStorage.setItem("otpExpiry", expiryTime);
+} else {
+expiryTime = Number(storedExpiryTime);
 }
+
+if(timer){
+clearInterval(timer);
+}
+timer = setInterval(function(){
+const remainingTime = Math.floor((expiryTime - Date.now()) / 1000);
+
+if(remainingTime > 0){
+timeCountEl.textContent = `You can resend OTP in ${remainingTime}s`;
+resend.disabled = true;
+timeoutMessage.textContent = "";
+} else {
+timeCountEl.textContent = "";
+timeoutMessage.textContent = "Time Out. You can resend OTP";
+resend.disabled = false;
+clearInterval(timer);
+sessionStorage.removeItem("otpExpiry");
+}
+}, 1000);
+}
+
+sessionStorage.removeItem("otpExpiry")
 
 
 function sendOtp(){
@@ -70,18 +74,83 @@ otpContainer.classList.remove("d-none");
 }
 }
 
-function loginClick(){
-let otpContainer=document.getElementById("otpContainerId");
-let sendOtpButton=document.getElementById("sendOtpButton");
-sendOtpButton.classList.add("d-none");
-otpContainer.classList.remove("d-none");
+
+function verifyOtp() {
+    let otp = document.getElementById("otpId").value;
+    let loginButton = document.getElementById("loginButtonId");
+
+    loginButton.disabled = true;
+
+    const xhhtp = new XMLHttpRequest();
+    xhhtp.open("GET", "http://localhost:8080/UnityHospital/verifyOtp/" + otp);
+    xhhtp.send();
+
+    xhhtp.onload = function () {
+        if (this.responseText.toLowerCase().includes("pass")) {
+               console.log("pass")
+            loginButton.disabled = false;
+        } else {
+            loginButton.disabled = true;
+        }
+    };
+}
+
+
+function resetTimeOtp(){
+    let loginButton = document.getElementById("loginButtonId");
+    let timeoutMessage=document.getElementById("timeoutMessageId");
+    loginButton.disabled = true;
+    const xhhtp = new XMLHttpRequest();
+    clearInterval(timer);
+    xhhtp.open("GET", "http://localhost:8080/UnityHospital/resetTimeOtp/");
+    xhhtp.send();
+    xhhtp.onload=function(){
+    timeoutMessage.innerHTML="OTP Resent";
+    sessionStorage.setItem("otpExpiry", Date.now() + 120000);
+    timeCount();
+    }
+}
+
+
+function validateName(){
+    let doctorName = document.getElementById("doctorNameId").value;
+    let doctorNamePattern = /^[A-Za-z]+$/;
+    let doctorNameError = document.getElementById("doctorNameErrorId");
+
+    if (doctorName.length < 3 || doctorName.length > 10 || !doctorNamePattern.test(doctorName)) {
+        doctorNameError.innerHTML = "Name length should be 3 to 10 characters and must not contain numbers.";
+    } else {
+        doctorNameError.innerHTML = "";
+    }
+}
+
+function validateEmail(){
+    let doctorEmail = document.getElementById("doctorEmailId").value;
+    let doctorEmailError = document.getElementById("doctorEmailErrorId");
+    let emailPattern = /^[A-Za-z0-9._]+@gmail\.com$/;
+
+    if (!emailPattern.test(doctorEmail)) {
+        doctorEmailError.innerHTML = "Email must follow this pattern: username@gmail.com";
+    } else {
+        doctorEmailError.innerHTML = "";
+    }
+}
+
+function validatePhone(){
+    let doctorPhone = document.getElementById("doctorPhoneId").value;
+    let doctorPhoneError = document.getElementById("doctorPhoneErrorId");
+    let phonePattern = /^[6-9]\d{9}$/;
+
+    if (!phonePattern.test(doctorPhone)) {
+        doctorPhoneError.innerHTML = "Phone must start with 6 to 9 and be exactly 10 digits.";
+    } else {
+        doctorPhoneError.innerHTML = "";
+    }
 }
 
 
 
-function verifyOtp(){
-let sendOtpButton=document.getElementById("sendOtpButton");
-sendOtpButton.classList.add("d-none");
-}
+
+
 
 

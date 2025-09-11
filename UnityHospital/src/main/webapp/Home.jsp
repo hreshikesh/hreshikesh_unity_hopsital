@@ -28,9 +28,13 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="index.jsp" class="btn btn-outline-success">back</a>
+            <a href="Update.jsp" class="btn btn-outline-success">Update Doctor</a>
+            <a href="Doctor.jsp" class="btn btn-outline-success mx-3">Doctors</a>
+            <a href="index.jsp" class="btn btn-outline-success">Back</a>
         </div>
+
     </div>
 </nav>
+<h2>Welcome Admin!!</h2>
 </body>
 </html>

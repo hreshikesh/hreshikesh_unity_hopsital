@@ -1,9 +1,12 @@
 package com.xworkz.hospital.service;
 
+import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
 import com.xworkz.hospital.repository.HospitalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -70,23 +73,37 @@ public class HospitalServiceImpl implements HospitalService {
     public String verifyOtp(String otp, String email) {
         HospitalEntity entity = hopsitalRepository.findByEmail(email);
         LocalDateTime localDateTime=LocalDateTime.now();
+        LocalDateTime entityDateAndTime=entity.getLocalDateTime();
         log.info(localDateTime.toString());
-        if (localDateTime.isAfter(entity.getLocalDateTime())) {
+        if (localDateTime.isAfter(entityDateAndTime)) {
             otpGenerated ="";
             return "timeout";
         }
         else
         {
             if (otpGenerated.equals(otp)) {
-                otpGenerated ="";
-                entity.setLocalDateTime(null);
-                hopsitalRepository.updateTable(entity);
                 return "pass";
             }
             else {
                 return "fail";
             }
+
         }
+    }
+
+    @Override
+    public boolean saveDoctor(DoctorDto dto) {
+        DoctorEntity entity=new DoctorEntity();
+        BeanUtils.copyProperties(dto,entity);
+       return hopsitalRepository.saveDoctor(entity);
+    }
+
+    @Override
+    public DoctorDto searchByName(String name) {
+        DoctorEntity doctorEntity=hopsitalRepository.searchByName(name);
+        DoctorDto dto=new DoctorDto();
+        BeanUtils.copyProperties(doctorEntity,dto);
+        return dto;
     }
 
 

@@ -1,13 +1,21 @@
 package com.xworkz.hospital.controller;
 
+import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import static sun.security.ssl.SSLLogger.info;
 
 @Slf4j
 @Controller
@@ -18,25 +26,52 @@ public class HopsitalController {
     HospitalService hospitalService;
 
     @RequestMapping("adminEmail")
-    public ModelAndView verifyOtpAndLogin(String otp, ModelAndView modelAndView,HttpSession session) {
-        String otpStatus = hospitalService.verifyOtp(otp,(String) session.getAttribute("adminEmail"));
-        if (otpStatus.equals("pass")) {
-            modelAndView.setViewName("Home");
-        }
-        else if (otpStatus.equals("fail")) {
-            modelAndView.addObject("otpstatus", "mismatch");
-            modelAndView.addObject("email",session.getAttribute("adminEmail") );
-            modelAndView.setViewName("admin");
-        }
-        return modelAndView;
+    public String verifyOtpAndLogin(Model model, HttpSession session) {
+        model.addAttribute("email",(String) session.getAttribute("adminEmail1"));
+        return "Home";
     }
 
-    @RequestMapping("resendOtp")
-    public ModelAndView resendOtp(ModelAndView modelAndView, HttpSession httpSession) {
-        hospitalService.sendOtp((String) httpSession.getAttribute("adminEmail"));
-        modelAndView.addObject("email", httpSession.getAttribute("adminEmail"));
-        modelAndView.addObject("check", true);
-        modelAndView.setViewName("admin");
-        return modelAndView;
+
+    @RequestMapping("registerDoctor")
+    public ModelAndView registerDoctor(@Valid DoctorDto dto, BindingResult result,ModelAndView view){
+        if(result.hasErrors()){
+            view.setViewName("Doctor");
+            view.addObject("dto",dto);
+            view.addObject("error",result.getAllErrors());
+        }else{
+            boolean status=hospitalService.saveDoctor(dto);
+            view.setViewName("Doctor");
+            view.addObject("dto",dto);
+            if(status){
+                view.addObject("status","Registered SuccessFully");
+                view.addObject("check",true);
+            }else {
+                view.addObject("status","Doctor Not Registered");
+            }
+        }
+        return view;
+    }
+
+
+    @RequestMapping("searchDoctor")
+    public String searchName(String name,Model model){
+       DoctorDto dto= hospitalService.searchByName(name);
+       log.info(dto.getDoctorName());
+       if(dto.getDoctorName()==null){
+           model.addAttribute("result","Doctor not found");
+       }else{
+           model.addAttribute("result","Doctor found");
+           model.addAttribute("dto",dto);
+       }
+       return "Update";
+    }
+
+    @RequestMapping("updateDoctor")
+    public ModelAndView updateDoctor(@Valid DoctorDto dto,BindingResult result,ModelAndView view){
+        if(result.hasErrors()){
+            view.setViewName("Doctor");
+            view.addObject("dto",dto);
+            view.addObject("error",result.getAllErrors());
+        }
     }
 }

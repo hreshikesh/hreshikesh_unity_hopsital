@@ -1,5 +1,7 @@
 package com.xworkz.hospital.repository;
 
+import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
 
 public interface HospitalRepository {
@@ -8,5 +10,9 @@ public interface HospitalRepository {
     HospitalEntity findByEmail(String email);
 
     void updateTable(HospitalEntity entity);
+
+    boolean saveDoctor(DoctorEntity entity);
+
+    DoctorEntity searchByName(String name);
 
 }
