@@ -95,14 +95,14 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     }
 
     @Override
-    public DoctorEntity searchByName(String name) {
+    public DoctorEntity searchByEmail(String email) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
         DoctorEntity doctorEntity=null;
         try {
             transaction.begin();
             Query query=manager.createNamedQuery("findByName");
-            query.setParameter("name",name);
+            query.setParameter("email",email);
             doctorEntity=(DoctorEntity)query.getSingleResult();
             transaction.commit();
         } catch (Exception e) {
@@ -113,6 +113,31 @@ public class HospitalRepositoryImpl implements HospitalRepository {
             manager.close();
         }
         return doctorEntity;
+    }
+
+    @Override
+    public boolean updateDoctor(DoctorEntity entity) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        try {
+            transaction.begin();
+           DoctorEntity entity1= searchByEmail(entity.getDoctorEmail());
+           entity1.setDoctorName(entity.getDoctorName());
+           entity1.setDoctorPhone(entity.getDoctorPhone());
+           entity1.setSpecialization(entity.getSpecialization());
+           entity1.setQualification(entity.getQualification());
+           entity1.setExperience(entity.getExperience());
+           manager.merge(entity1);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return false;
     }
 
 

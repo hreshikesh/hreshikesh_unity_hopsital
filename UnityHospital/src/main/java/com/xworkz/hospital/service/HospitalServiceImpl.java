@@ -99,11 +99,18 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public DoctorDto searchByName(String name) {
-        DoctorEntity doctorEntity=hopsitalRepository.searchByName(name);
+    public DoctorDto searchByEmail(String email) {
+        DoctorEntity doctorEntity=hopsitalRepository.searchByEmail(email);
         DoctorDto dto=new DoctorDto();
         BeanUtils.copyProperties(doctorEntity,dto);
         return dto;
+    }
+
+    @Override
+    public boolean updateDoctor(DoctorDto dto) {
+        DoctorEntity entity=new DoctorEntity();
+        BeanUtils.copyProperties(dto,entity);
+        return hopsitalRepository.updateDoctor(entity);
     }
 
 

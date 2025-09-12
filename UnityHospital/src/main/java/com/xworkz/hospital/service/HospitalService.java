@@ -13,7 +13,9 @@ public interface HospitalService {
 
     boolean saveDoctor(DoctorDto dto);
 
-    DoctorDto searchByName(String name);
+    DoctorDto searchByEmail(String email);
+
+    boolean updateDoctor(DoctorDto dto);
 
 
 

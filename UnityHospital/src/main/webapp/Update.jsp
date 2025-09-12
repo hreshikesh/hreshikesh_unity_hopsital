@@ -40,7 +40,7 @@
 
 <div class="d-flex justify-content-center align-items-center m-3">
     <form class="d-flex" role="search" action="searchDoctor" method="get">
-        <input class="form-control me-2" type="search" placeholder="Enter Doctor Name" name="name" aria-label="Search">
+        <input class="form-control me-2" type="search" placeholder="Enter Doctor Email" name="email" aria-label="Search">
         <button class="btn btn-dark text-success" type="submit">Search</button>
     </form>
 </div>
@@ -80,7 +80,7 @@
             <div class="mb-3">
                 <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
                 <input type="email" class="form-control" id="doctorEmailId" name="doctorEmail"
-                       value="${dto.doctorEmail}" required>
+                       value="${dto.doctorEmail}" readonly>
             </div>
 
 
@@ -94,12 +94,41 @@
             <div class="mb-3">
                 <label for="specialization" class="form-label fw-semibold">Specialization</label>
                 <select class="form-select" id="specialization" name="specialization" required>
-                    <option value="cardiologist" ${dto.specialization eq 'cardiologist' ? 'selected' : ''}>Cardiologist</option>
-                    <option value="dermatologist" ${dto.specialization eq 'dermatologist' ? 'selected' : ''}>Dermatologist</option>
-                    <option value="neurologist" ${dto.specialization eq 'neurologist' ? 'selected' : ''}>Neurologist</option>
-                    <option value="orthopedic" ${dto.specialization eq 'orthopedic' ? 'selected' : ''}>Orthopedic</option>
-                    <option value="pediatrician" ${dto.specialization eq 'pediatrician' ? 'selected' : ''}>Pediatrician</option>
-                    <option value="generalphysician" ${dto.specialization eq 'generalphysician' ? 'selected' : ''}>General Physician</option>
+                    <option value="cardiologist"
+                    <c:if test="${not empty dto && dto.specialization eq 'cardiologist'}">selected</c:if>
+                    >
+                    Cardiologist
+                    </option>
+
+                    <option value="dermatologist"
+                    <c:if test="${not empty dto && dto.specialization eq 'dermatologist'}">selected</c:if>
+                    >
+                    Dermatologist
+                    </option>
+
+                    <option value="neurologist"
+                    <c:if test="${not empty dto && dto.specialization eq 'neurologist'}">selected</c:if>
+                    >
+                    Neurologist
+                    </option>
+
+                    <option value="orthopedic"
+                    <c:if test="${not empty dto && dto.specialization eq 'orthopedic'}">selected</c:if>
+                    >
+                    Orthopedic
+                    </option>
+
+                    <option value="pediatrician"
+                    <c:if test="${not empty dto && dto.specialization eq 'pediatrician'}">selected</c:if>
+                    >
+                    Pediatrician
+                    </option>
+
+                    <option value="generalphysician"
+                    <c:if test="${not empty dto && dto.specialization eq 'generalphysician'}">selected</c:if>
+                    >
+                    General Physician
+                    </option>
                 </select>
             </div>
 
@@ -119,7 +148,7 @@
 
 
             <div class="d-grid">
-                <button type="submit" class="btn btn-dark fw-bold">Register Doctor</button>
+                <button type="submit" class="btn btn-dark fw-bold">Update Doctor</button>
             </div>
         </form>
     </div>

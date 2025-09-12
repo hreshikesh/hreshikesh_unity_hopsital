@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@NamedQuery(name = "findByName",query = "select e from DoctorEntity e where doctorName=:name")
+@NamedQuery(name = "findByName",query = "select e from DoctorEntity e where doctorEmail=:email")
 public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

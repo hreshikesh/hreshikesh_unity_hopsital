@@ -1,7 +1,6 @@
 package com.xworkz.hospital.controller;
 
 import com.xworkz.hospital.dto.DoctorDto;
-import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
-import static sun.security.ssl.SSLLogger.info;
 
 @Slf4j
 @Controller
@@ -44,7 +40,6 @@ public class HopsitalController {
             view.addObject("dto",dto);
             if(status){
                 view.addObject("status","Registered SuccessFully");
-                view.addObject("check",true);
             }else {
                 view.addObject("status","Doctor Not Registered");
             }
@@ -54,8 +49,8 @@ public class HopsitalController {
 
 
     @RequestMapping("searchDoctor")
-    public String searchName(String name,Model model){
-       DoctorDto dto= hospitalService.searchByName(name);
+    public String searchName(String email,Model model){
+       DoctorDto dto= hospitalService.searchByEmail(email);
        log.info(dto.getDoctorName());
        if(dto.getDoctorName()==null){
            model.addAttribute("result","Doctor not found");
@@ -69,9 +64,20 @@ public class HopsitalController {
     @RequestMapping("updateDoctor")
     public ModelAndView updateDoctor(@Valid DoctorDto dto,BindingResult result,ModelAndView view){
         if(result.hasErrors()){
-            view.setViewName("Doctor");
+            view.setViewName("Update");
             view.addObject("dto",dto);
             view.addObject("error",result.getAllErrors());
+        }else{
+           boolean status= hospitalService.updateDoctor(dto);
+            view.setViewName("Update");
+            view.addObject("dto",dto);
+            if(status){
+                view.addObject("status","Updated SuccessFully");
+            }else {
+                view.addObject("status","Doctor Details Not Updated");
+            }
         }
+        return view;
     }
+
 }
