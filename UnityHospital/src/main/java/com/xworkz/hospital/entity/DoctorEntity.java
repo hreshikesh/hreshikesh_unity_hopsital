@@ -15,6 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @NamedQuery(name = "findByName",query = "select e from DoctorEntity e where doctorEmail=:email")
+@NamedQuery(name = "getAllDoctor",query = "select e from DoctorEntity e")
 public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +32,7 @@ public class DoctorEntity {
     private String qualification;
     @Column(name = "doctor_experience")
     private int experience;
+    @Column(name = "image_path")
+    private String imagePath;
 
 }

@@ -31,4 +31,5 @@ public class DoctorDto {
     private String qualification;
     @javax.validation.constraints.NotNull
     private int experience;
+    private String imagePath;
 }

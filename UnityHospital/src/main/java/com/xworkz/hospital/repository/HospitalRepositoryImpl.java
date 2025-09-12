@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.List;
 
 @Repository
 public class HospitalRepositoryImpl implements HospitalRepository {
@@ -127,6 +128,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
            entity1.setSpecialization(entity.getSpecialization());
            entity1.setQualification(entity.getQualification());
            entity1.setExperience(entity.getExperience());
+           entity1.setImagePath(entity.getImagePath());
            manager.merge(entity1);
             transaction.commit();
             return true;
@@ -139,6 +141,27 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         }
         return false;
     }
+
+    @Override
+    public List<DoctorEntity> getAllDoctor() {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        List<DoctorEntity> entities=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("getAllDoctor");
+            entities=query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return entities;
+    }
+
 
 
 }

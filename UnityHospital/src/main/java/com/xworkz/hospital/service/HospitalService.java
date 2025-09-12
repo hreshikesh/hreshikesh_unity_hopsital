@@ -2,6 +2,8 @@ package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
 
+import java.util.List;
+
 public interface HospitalService {
     int findEmail(String email);
 
@@ -16,6 +18,8 @@ public interface HospitalService {
     DoctorDto searchByEmail(String email);
 
     boolean updateDoctor(DoctorDto dto);
+
+    List<DoctorDto> getAllDoctor();
 
 
 

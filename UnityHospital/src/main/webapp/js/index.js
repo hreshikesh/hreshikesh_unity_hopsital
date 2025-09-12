@@ -148,6 +148,20 @@ function validatePhone(){
     }
 }
 
+function checkDoctorEmail(){
+   let doctorEmail = document.getElementById("doctorEmailId").value;
+    let doctorEmailError = document.getElementById("doctorEmailErrorId");
+
+    const xhhtp=new XMLHttpRequest();
+
+    xhhtp.open("GET","http://localhost:8080/UnityHospital/checkDoctorEmail/"+doctorEmail);
+    xhhtp.send();
+    xhhtp.onload=function(){
+    doctorEmailError.innerHTML=this.responseText;
+    }
+
+}
+
 
 
 

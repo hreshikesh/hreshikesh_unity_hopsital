@@ -17,6 +17,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -111,6 +113,18 @@ public class HospitalServiceImpl implements HospitalService {
         DoctorEntity entity=new DoctorEntity();
         BeanUtils.copyProperties(dto,entity);
         return hopsitalRepository.updateDoctor(entity);
+    }
+
+    @Override
+    public List<DoctorDto> getAllDoctor() {
+      List<DoctorEntity> entities=hopsitalRepository.getAllDoctor();
+      List<DoctorDto> dtos=new ArrayList<>();
+      for (DoctorEntity entity:entities){
+          DoctorDto dto=new DoctorDto();
+          BeanUtils.copyProperties(entity,dto);
+          dtos.add(dto);
+      }
+      return dtos;
     }
 
 
