@@ -72,8 +72,7 @@ public class HopsitalController {
     @RequestMapping("searchDoctor")
     public String searchName(String email,Model model){
        DoctorDto dto= hospitalService.searchByEmail(email);
-       log.info(dto.getDoctorName());
-       if(dto.getDoctorEmail()==null){
+       if(dto==null ){
            model.addAttribute("result","Doctor not found");
        }else{
            model.addAttribute("result","Doctor found");

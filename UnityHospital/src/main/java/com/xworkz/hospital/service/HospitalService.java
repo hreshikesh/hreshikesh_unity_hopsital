@@ -15,11 +15,13 @@ public interface HospitalService {
 
     boolean saveDoctor(DoctorDto dto);
 
-    DoctorDto searchByEmail(String email);
+    DoctorDto  searchByEmail(String email);
 
     boolean updateDoctor(DoctorDto dto);
 
     List<DoctorDto> getAllDoctor();
+
+    long getEmailCount(String email);
 
 
 

@@ -44,6 +44,16 @@ public class RestController {
         return "OTP resent.";
     }
 
+    @GetMapping("checkDoctorEmail/{doctorEmail}")
+    public String checkDoctorEmail(@PathVariable String doctorEmail){
+       long count= service.getEmailCount(doctorEmail);
+       if(count==0L){
+           return "";
+       }else {
+           return "Email already exists Present";
+       }
+    }
+
 
 
 }

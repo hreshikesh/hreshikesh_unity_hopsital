@@ -2,6 +2,7 @@ package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
+
+@Slf4j
 @Repository
 public class HospitalRepositoryImpl implements HospitalRepository {
     @Autowired
@@ -162,6 +165,27 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         return entities;
     }
 
+    @Override
+    public long getEmailCount(String email) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        long count = 0L;
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("doctorEmailCount");
+            query.setParameter("email", email);
+            count = (long) query.getSingleResult();
+            log.info(String.valueOf(count));
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return count;
+    }
 
 
 }

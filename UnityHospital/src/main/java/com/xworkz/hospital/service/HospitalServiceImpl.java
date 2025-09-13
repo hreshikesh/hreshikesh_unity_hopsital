@@ -103,9 +103,13 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public DoctorDto searchByEmail(String email) {
         DoctorEntity doctorEntity=hopsitalRepository.searchByEmail(email);
-        DoctorDto dto=new DoctorDto();
-        BeanUtils.copyProperties(doctorEntity,dto);
-        return dto;
+        if(doctorEntity==null){
+            return null;
+        }else {
+            DoctorDto dto = new DoctorDto();
+            BeanUtils.copyProperties(doctorEntity, dto);
+            return dto;
+        }
     }
 
     @Override
@@ -125,6 +129,11 @@ public class HospitalServiceImpl implements HospitalService {
           dtos.add(dto);
       }
       return dtos;
+    }
+
+    @Override
+    public long getEmailCount(String email) {
+        return hopsitalRepository.getEmailCount(email);
     }
 
 

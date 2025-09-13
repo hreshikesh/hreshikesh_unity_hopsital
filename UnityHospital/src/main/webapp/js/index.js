@@ -155,6 +155,7 @@ function checkDoctorEmail(){
     const xhhtp=new XMLHttpRequest();
 
     xhhtp.open("GET","http://localhost:8080/UnityHospital/checkDoctorEmail/"+doctorEmail);
+
     xhhtp.send();
     xhhtp.onload=function(){
     doctorEmailError.innerHTML=this.responseText;

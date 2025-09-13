@@ -42,7 +42,7 @@
             </ul>
         </div>
         <div class="d-flex">
-            <a href="index.jsp" class="btn btn-outline-success">Back</a>
+            <a href="index.jsp" class="btn btn-outline-success"><i class="bi bi-box-arrow-left"></i></a>
         </div>
     </div>
 </nav>

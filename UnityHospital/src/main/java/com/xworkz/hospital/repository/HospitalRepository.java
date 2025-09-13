@@ -20,4 +20,6 @@ public interface HospitalRepository {
 
     List<DoctorEntity> getAllDoctor();
 
+    long getEmailCount(String email);
+
 }
