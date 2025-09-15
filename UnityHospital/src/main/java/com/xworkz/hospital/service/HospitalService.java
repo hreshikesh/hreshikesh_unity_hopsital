@@ -23,6 +23,8 @@ public interface HospitalService {
 
     long getEmailCount(String email);
 
+    void resetOtp(String email);
+
 
 
 }

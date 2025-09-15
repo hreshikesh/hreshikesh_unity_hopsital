@@ -36,6 +36,7 @@ public class HopsitalController {
     @RequestMapping("adminEmail")
     public String verifyOtpAndLogin(Model model, HttpSession session) {
         model.addAttribute("email",(String) session.getAttribute("adminEmail1"));
+        hospitalService.resetOtp((String) session.getAttribute("adminEmail1"));
         return "Home";
     }
 
@@ -54,8 +55,13 @@ public class HopsitalController {
             view.addObject("dto",dto);
             view.addObject("error",result.getAllErrors());
         }else{
-            String imagePath=fileUpload(dto.getDoctorName(),file);
-            dto.setImagePath(imagePath);
+            if(!file.isEmpty()) {
+                String imagePath = fileUpload(dto.getDoctorName(), file);
+                dto.setImagePath(imagePath);
+            }else{
+               DoctorDto dto1= hospitalService.searchByEmail(dto.getDoctorEmail());
+               dto.setImagePath(dto1.getImagePath());
+            }
             boolean status=hospitalService.saveDoctor(dto);
             view.setViewName("Doctor");
             if(status){
@@ -88,8 +94,13 @@ public class HopsitalController {
             view.addObject("dto",dto);
             view.addObject("error",result.getAllErrors());
         }else{
-            String imagePath=fileUpload(dto.getDoctorName(),file);
-            dto.setImagePath(imagePath);
+            if(!file.isEmpty()) {
+                String imagePath = fileUpload(dto.getDoctorName(), file);
+                dto.setImagePath(imagePath);
+            }else{
+                DoctorDto dto1= hospitalService.searchByEmail(dto.getDoctorEmail());
+                dto.setImagePath(dto1.getImagePath());
+            }
            boolean status= hospitalService.updateDoctor(dto);
             view.setViewName("Update");
             view.addObject("dto",dto);

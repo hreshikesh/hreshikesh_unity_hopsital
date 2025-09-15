@@ -87,7 +87,6 @@ function verifyOtp() {
 
     xhhtp.onload = function () {
         if (this.responseText.toLowerCase().includes("pass")) {
-               console.log("pass")
             loginButton.disabled = false;
         } else {
             loginButton.disabled = true;
@@ -162,6 +161,12 @@ function checkDoctorEmail(){
     }
 
 }
+
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    });
 
 
 

@@ -47,7 +47,6 @@ public class HospitalServiceImpl implements HospitalService {
         }
     }
 
-    private String otpGenerated = "";
 
     @Override
 
@@ -59,13 +58,13 @@ public class HospitalServiceImpl implements HospitalService {
         for (int i = 0; i < 6; i++) {
             otp.append(random.nextInt(10));
         }
-        otpGenerated = otp.toString();
         if (otp.equals(" ")) {
             return false;
         } else {
             getEmail(email, "OTP for Sigin", "Dear Admin," + "\nThe OTP is " + otp);
             LocalDateTime localDateTime=LocalDateTime.now().plusSeconds(120);
             entity.setLocalDateTime(localDateTime);
+            entity.setOtp(otp.toString());
             hopsitalRepository.updateTable(entity);
             return true;
         }
@@ -76,14 +75,14 @@ public class HospitalServiceImpl implements HospitalService {
         HospitalEntity entity = hopsitalRepository.findByEmail(email);
         LocalDateTime localDateTime=LocalDateTime.now();
         LocalDateTime entityDateAndTime=entity.getLocalDateTime();
-        log.info(localDateTime.toString());
+
+        String otpStored=entity.getOtp();
         if (localDateTime.isAfter(entityDateAndTime)) {
-            otpGenerated ="";
             return "timeout";
         }
         else
         {
-            if (otpGenerated.equals(otp)) {
+            if (otpStored.equals(otp)) {
                 return "pass";
             }
             else {
@@ -134,6 +133,13 @@ public class HospitalServiceImpl implements HospitalService {
     @Override
     public long getEmailCount(String email) {
         return hopsitalRepository.getEmailCount(email);
+    }
+
+    @Override
+    public void resetOtp(String email) {
+        HospitalEntity entity=hopsitalRepository.findByEmail(email);
+        entity.setOtp("");
+        hopsitalRepository.updateTable(entity);
     }
 
 
