@@ -65,15 +65,14 @@ public class HopsitalController {
             boolean status=hospitalService.saveDoctor(dto);
             view.setViewName("Doctor");
             if(status){
-                view.addObject("dto",dto);
                 view.addObject("status","Registered SuccessFully");
             }else {
+                view.addObject("dto",dto);
                 view.addObject("status","Doctor Not Registered");
             }
         }
         return view;
     }
-
 
     @RequestMapping("searchDoctor")
     public String searchName(String email,Model model){

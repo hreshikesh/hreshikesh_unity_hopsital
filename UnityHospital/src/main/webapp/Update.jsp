@@ -70,22 +70,25 @@
 
             <div class="mb-3">
                 <label for="doctorNameId" class="form-label fw-semibold">Name</label>
-                <input type="text" class="form-control" id="doctorNameId" name="doctorName"
+                <input type="text" class="form-control" id="doctorNameId" oninput="validateName()" name="doctorName"
                        value="${dto.doctorName}" minlength="3" maxlength="10" required>
+                <span class="text-warning small" id="doctorNameErrorId"></span>
             </div>
 
 
             <div class="mb-3">
                 <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
-                <input type="email" class="form-control" id="doctorEmailId" name="doctorEmail"
+                <input type="email" class="form-control" id="doctorEmailId"  name="doctorEmail"
                        value="${dto.doctorEmail}" readonly>
+
             </div>
 
 
             <div class="mb-3">
                 <label for="doctorPhoneId" class="form-label fw-semibold">Phone</label>
-                <input type="number" class="form-control" id="doctorPhoneId" name="doctorPhone"
+                <input type="text" class="form-control" id="doctorPhoneId" oninput="validatePhone();" name="doctorPhone"
                        value="${dto.doctorPhone}" maxlength="10" required>
+                <span class="text-warning small" id="doctorPhoneErrorId"></span>
             </div>
 
 
@@ -118,7 +121,7 @@
 
             <div class="mb-4">
                 <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
-                <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*">
+                <input class="form-control" type="file" id="profilePhoto" name="image">
             </div>
 
 

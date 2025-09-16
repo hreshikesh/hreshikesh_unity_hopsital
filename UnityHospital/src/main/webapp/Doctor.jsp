@@ -20,7 +20,7 @@
     </style>
 </head>
 <body class="bg-success-subtle">
-<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+<nav class="navbar bg-body-tertiary mb-5" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
@@ -72,6 +72,7 @@
         <div class="mb-3">
             <label for="specialization" class="form-label fw-semibold">Specialization</label>
             <select class="form-select" id="specialization" name="specialization" required>
+                <option  selected disabled>Select Specialization</option>
                 <option value="cardiologist" <c:if test="${not empty dto and dto.specialization eq 'cardiologist'}">selected</c:if>>Cardiologist</option>
                 <option value="dermatologist" <c:if test="${not empty dto and dto.specialization eq 'dermatologist'}">selected</c:if>>Dermatologist</option>
                 <option value="neurologist" <c:if test="${not empty dto and dto.specialization eq 'neurologist'}">selected</c:if>>Neurologist</option>

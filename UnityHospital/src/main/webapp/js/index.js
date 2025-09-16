@@ -23,7 +23,7 @@ let storedExpiryTime = sessionStorage.getItem("otpExpiry");
 let expiryTime;
 
 if(!storedExpiryTime){
-expiryTime = Date.now() + 120000; // 2 minutes
+expiryTime = Date.now() + 120000;
 sessionStorage.setItem("otpExpiry", expiryTime);
 } else {
 expiryTime = Number(storedExpiryTime);
@@ -112,11 +112,13 @@ function resetTimeOtp(){
 
 
 function validateName(){
-    let doctorName = document.getElementById("doctorNameId").value;
+    let doctorName = document.getElementById("doctorNameId");
     let doctorNamePattern = /^[A-Za-z]+$/;
     let doctorNameError = document.getElementById("doctorNameErrorId");
 
-    if (doctorName.length < 3 || doctorName.length > 10 || !doctorNamePattern.test(doctorName)) {
+    doctorName.value=doctorName.value.replace(/[^A-Za-z]/g,'')
+
+    if (doctorName.value.length < 3 || doctorName.value.length > 10 || !doctorNamePattern.test(doctorName.value)) {
         doctorNameError.innerHTML = "Name length should be 3 to 10 characters and must not contain numbers.";
     } else {
         doctorNameError.innerHTML = "";
@@ -136,11 +138,11 @@ function validateEmail(){
 }
 
 function validatePhone(){
-    let doctorPhone = document.getElementById("doctorPhoneId").value;
+    let doctorPhone = document.getElementById("doctorPhoneId");
     let doctorPhoneError = document.getElementById("doctorPhoneErrorId");
-    let phonePattern = /^[6-9]\d{9}$/;
-
-    if (!phonePattern.test(doctorPhone)) {
+    doctorPhone.value = doctorPhone.value.replace(/[^0-9]/g, '');
+    let phonePattern=/^[6-9]\d{9}$/;
+    if (!phonePattern.test(doctorPhone.value)) {
         doctorPhoneError.innerHTML = "Phone must start with 6 to 9 and be exactly 10 digits.";
     } else {
         doctorPhoneError.innerHTML = "";
@@ -159,14 +161,13 @@ function checkDoctorEmail(){
     xhhtp.onload=function(){
     doctorEmailError.innerHTML=this.responseText;
     }
-
 }
 
     window.addEventListener("pageshow", function (event) {
-        if (event.persisted) {
-            window.location.reload();
+     if (event.persisted) {
+            window.location.disabled=true;
         }
-    });
+ });
 
 
 
