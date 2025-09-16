@@ -25,7 +25,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="admin.jsp" class="btn btn-outline-success">Admin Login</a>
+            <a href="admin" class="btn btn-outline-success">Admin Login</a>
         </div>
     </div>
 </nav>

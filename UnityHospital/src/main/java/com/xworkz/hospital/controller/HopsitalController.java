@@ -1,6 +1,7 @@
 package com.xworkz.hospital.controller;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -23,6 +24,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -33,9 +35,43 @@ public class HopsitalController {
     @Autowired
     HospitalService hospitalService;
 
-    @RequestMapping("adminEmail")
+
+    @RequestMapping("admin")
+    public String goTOAdmin(){
+        return "admin";
+    }
+
+    @RequestMapping("index")
+    public String goTOIndex(){
+        return "index";
+    }
+
+    @RequestMapping("Home")
+    public String goToHome(){
+        return "Home";
+    }
+
+    @RequestMapping("doctor")
+    public String goToDoctor(){
+        return "Doctor";
+    }
+
+    @RequestMapping("updateDoctorPage")
+    public String goToUpdate(){
+        return "Update";
+    }
+
+
+    @RequestMapping("logout")
+    public String logOut(HttpSession session){
+        session.invalidate();
+        return "index";
+    }
+
+    @RequestMapping("home")
     public String verifyOtpAndLogin(Model model, HttpSession session) {
         model.addAttribute("email",(String) session.getAttribute("adminEmail1"));
+        session.setAttribute("adminLoggedIn",true);
         hospitalService.resetOtp((String) session.getAttribute("adminEmail1"));
         return "Home";
     }
@@ -134,5 +170,91 @@ public class HopsitalController {
         }
         return modelAndView;
     }
+    @RequestMapping("slotback")
+    public String slotBack(){
+        return "Slot";
+    }
 
+    @RequestMapping("slot")
+    public String goToSlot(Model model){
+        List<DoctorDto> dtos=hospitalService.getAllDoctor();
+        model.addAttribute("dtos",dtos);
+        return "Slot";
+    }
+
+    @RequestMapping("setSlot")
+    public String goToSetSlot(){
+        return "SetSlot";
+    }
+
+
+    @RequestMapping("settimeslot")
+    public ModelAndView setTimeSlot(@Valid TimeSlotDto dto,BindingResult result,ModelAndView view){
+        if(result.hasErrors()){
+            view.addObject("errors",result.getAllErrors());
+            view.setViewName("SetSlot");
+        }else{
+          boolean check=hospitalService.saveTimeInterval(dto);
+          if(check){
+              view.addObject("result","Time has been set");
+              view.setViewName("SetSlot");
+          }else {
+              view.addObject("result","Time not set");
+          }
+        }
+        return view;
+    }
+
+
+
+
+    @RequestMapping("doctorspecialization")
+    public ModelAndView findDoctorWithSpecialization(String specialization,ModelAndView modelAndView){
+       List<String> doctorNames= hospitalService.findDoctorBySpecialization(specialization);
+      List<TimeSlotDto> timeSlotDtos= hospitalService.findAllIntervals();
+      List<String> timeIntervals=new ArrayList<>();
+      List<DoctorDto> dtos=hospitalService.getAllDoctor();
+       if(doctorNames.isEmpty()){
+           modelAndView.addObject("dtos",dtos);
+           modelAndView.addObject("result","No Doctors found for "+specialization);
+           modelAndView.setViewName("Slot");
+       }else {
+           modelAndView.addObject("dtos",dtos);
+           modelAndView.addObject("check",true);
+           modelAndView.addObject("result","Doctors found for "+specialization);
+           modelAndView.addObject("names",doctorNames);
+           if(timeSlotDtos==null){
+               modelAndView.addObject("result","No Time Slots set  Please Set the TIme Slots");
+           }else{
+               for(TimeSlotDto timeSlotDto:timeSlotDtos){
+                   String time=timeSlotDto.getFromTime()+"-"+timeSlotDto.getToTime();
+                   timeIntervals.add(time);
+               }
+               modelAndView.addObject("timeIntervals",timeIntervals);
+           }
+           modelAndView.setViewName("Slot");
+       }
+       return modelAndView;
+    }
+
+
+
+    @RequestMapping("doctorSave")
+    public String updateDoctorTable(String doctorName,String timeInterval,Model model){
+        log.info(doctorName);
+        log.info(timeInterval);
+    boolean isSet=hospitalService.setTimeSlot(doctorName,timeInterval);
+        model.addAttribute("doctorName",doctorName);
+        model.addAttribute("timeInterval",timeInterval);
+        List<DoctorDto> dtos=hospitalService.getAllDoctor();
+        model.addAttribute("dtos",dtos);
+
+    if(isSet){
+        model.addAttribute("update","Slot has been set");
+
+    }else {
+        model.addAttribute("update","Slot has not been set");
+    }
+    return "Slot";
+    }
 }

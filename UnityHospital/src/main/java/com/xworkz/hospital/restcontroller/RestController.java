@@ -4,6 +4,7 @@ import com.xworkz.hospital.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
@@ -43,6 +44,13 @@ public class RestController {
         service.sendOtp((String) session.getAttribute("adminEmail1"));
         return "OTP resent.";
     }
+
+    @PostMapping("resetSession")
+    public void resetSession(HttpSession session){
+        session.setAttribute("adminLoggedIn",false);
+        session.removeAttribute("adminEmail");
+    }
+
 
     @GetMapping("checkDoctorEmail/{doctorEmail}")
     public String checkDoctorEmail(@PathVariable String doctorEmail){

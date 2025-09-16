@@ -2,6 +2,7 @@ package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import com.xworkz.hospital.entity.TimeSlotEntity;
 
 import java.util.List;
 
@@ -21,5 +22,13 @@ public interface HospitalRepository {
     List<DoctorEntity> getAllDoctor();
 
     long getEmailCount(String email);
+
+    boolean saveTimeInterval(TimeSlotEntity entity);
+
+    List<String> findDoctorBySpecialization(String specialization);
+
+    List<TimeSlotEntity> findAllIntervals();
+
+    boolean setTimeSlot(String doctorName,String timeInterval);
 
 }

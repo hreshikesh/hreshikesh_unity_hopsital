@@ -27,7 +27,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="Home.jsp" class="btn btn-outline-success">Home</a>
+            <a href="Home" class="btn btn-outline-success">Home</a>
         </div>
     </div>
 </nav>

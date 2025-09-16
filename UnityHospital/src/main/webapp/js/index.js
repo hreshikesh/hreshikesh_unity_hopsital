@@ -197,15 +197,27 @@ function checkDoctorEmail(){
     }
 }
 
-    window.addEventListener("pageshow", function (event) {
-     if (event.persisted) {
-            window.location.reload();
-        }
- });
+
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
 
 
-
+function resetSession(){
+const xhhtp=new XMLHttpRequest();
+xhhtp.open("POST","http://localhost:8080/UnityHospital/resetSession",true)
+xhhtp.send();
 }
+window.onload.resetSession();
+
+
+
+
+
+
+
 
 
 

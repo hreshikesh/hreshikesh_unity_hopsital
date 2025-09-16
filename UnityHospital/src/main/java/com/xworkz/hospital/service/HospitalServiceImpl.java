@@ -1,8 +1,10 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import com.xworkz.hospital.entity.TimeSlotEntity;
 import com.xworkz.hospital.repository.HospitalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +19,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class HospitalServiceImpl implements HospitalService {
@@ -140,6 +139,39 @@ public class HospitalServiceImpl implements HospitalService {
         HospitalEntity entity=hopsitalRepository.findByEmail(email);
         entity.setOtp("");
         hopsitalRepository.updateTable(entity);
+    }
+
+    @Override
+    public boolean saveTimeInterval(TimeSlotDto dto) {
+        TimeSlotEntity entity=new TimeSlotEntity();
+        BeanUtils.copyProperties(dto,entity);
+        return hopsitalRepository.saveTimeInterval(entity);
+    }
+
+    @Override
+    public List<String> findDoctorBySpecialization(String specialization) {
+      return hopsitalRepository.findDoctorBySpecialization(specialization);
+    }
+
+    @Override
+    public List<TimeSlotDto> findAllIntervals() {
+      List<TimeSlotEntity> entities=hopsitalRepository.findAllIntervals();
+      if(entities==null){
+          return  null;
+      }else{
+            List<TimeSlotDto> dtos=new ArrayList<>();
+          for(TimeSlotEntity entity:entities){
+              TimeSlotDto dto=new TimeSlotDto();
+              BeanUtils.copyProperties(entity,dto);
+              dtos.add(dto);
+          }
+          return dtos;
+      }
+    }
+
+    @Override
+    public boolean setTimeSlot(String doctorName, String timeInterval) {
+        return hopsitalRepository.setTimeSlot(doctorName,timeInterval);
     }
 
 

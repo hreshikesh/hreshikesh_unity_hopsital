@@ -17,6 +17,8 @@ import javax.persistence.*;
 @NamedQuery(name = "findByName",query = "select e from DoctorEntity e where doctorEmail=:email")
 @NamedQuery(name = "getAllDoctor",query = "select e from DoctorEntity e")
 @NamedQuery(name = "doctorEmailCount",query = "select count(e.doctorEmail) from DoctorEntity e where doctorEmail=:email")
+@NamedQuery(name = "doctorBySpecialization",query = "select e.doctorName from DoctorEntity e where specialization=:specializationBy and e.timeSlot is null")
+@NamedQuery(name = "setTimeInterval",query = "update DoctorEntity e set e.timeSlot=:timeSlot where doctorName=:doctor")
 public class DoctorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +37,6 @@ public class DoctorEntity {
     private int experience;
     @Column(name = "image_path")
     private String imagePath;
-
+    @Column(name="time_slot")
+    private String timeSlot;
 }

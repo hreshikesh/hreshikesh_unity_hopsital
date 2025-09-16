@@ -2,6 +2,7 @@ package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import com.xworkz.hospital.entity.TimeSlotEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -187,5 +188,85 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         return count;
     }
 
+    @Override
+    public boolean saveTimeInterval(TimeSlotEntity entity) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        try {
+            transaction.begin();
+            manager.persist(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }e.printStackTrace();
+        } finally {
+            manager.close();
+        }
+        return false;
+    }
 
+    @Override
+    public List<String> findDoctorBySpecialization(String specialization) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        List<String> doctorNames=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("doctorBySpecialization");
+            query.setParameter("specializationBy",specialization);
+            doctorNames=query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return doctorNames;
+    }
+
+    @Override
+    public List<TimeSlotEntity> findAllIntervals() {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        List<TimeSlotEntity> entities=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("findAllTImeSlots");
+            entities=query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return entities;
+    }
+
+    @Override
+    public boolean setTimeSlot(String doctorName, String timeInterval) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("setTimeInterval");
+            query.setParameter("timeSlot",timeInterval);
+            query.setParameter("doctor",doctorName);
+            query.executeUpdate();
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return false;
+    }
 }

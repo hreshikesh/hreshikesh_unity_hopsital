@@ -13,7 +13,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
 </head>
-<body class="bg-success-subtle" >
+<body class="bg-success-subtle">
 
 
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
@@ -23,14 +23,14 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="index.jsp" class="btn btn-outline-success">back</a>
+            <a href="index" class="btn btn-outline-success">Back</a>
         </div>
     </div>
 </nav>
 
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
-    <form class="bg-success text-dark p-5 rounded shadow-lg w-50"  action="adminEmail" method="post" id="adminForm">
+    <form class="bg-success text-dark p-5 rounded shadow-lg w-50"  action="home" method="post"  id="adminForm">
 
         <h2 class="text-center  text-dark mb-5">Welcome Admin!</h2>
 

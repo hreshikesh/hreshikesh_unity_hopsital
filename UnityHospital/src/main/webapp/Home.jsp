@@ -20,7 +20,7 @@
 }
     </style>
 </head>
-<body class="bg-success-subtle" onload="disableNavigation()">
+<body class="bg-success-subtle">
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
@@ -36,13 +36,13 @@
                     <a class="nav-link link-success fs-5" href="alldoctor">Doctors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-success fs-5" href="#">Link</a>
+                    <a class="nav-link link-success fs-5" href="slot">Slot</a>
                 </li>
 
             </ul>
         </div>
         <div class="d-flex">
-            <a href="index.jsp" class="btn btn-outline-success"><i class="bi bi-box-arrow-left"></i></a>
+            <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-left"></i></a>
         </div>
     </div>
 </nav>
@@ -53,8 +53,8 @@
     <div class="p-4 bg-success-subtle rounded shadow-lg text-center">
         <h3 class="text-dark mb-3">Doctor Management</h3>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
-            <a href="Doctor.jsp" class="btn btn-dark  btn-lg text-success">Register Doctor</a>
-            <a href="Update.jsp" class="btn btn-dark  btn-lg text-success">Update Doctor</a>
+            <a href="doctor" class="btn btn-dark  btn-lg text-success">Register Doctor</a>
+            <a href="updateDoctorPage" class="btn btn-dark  btn-lg text-success">Update Doctor</a>
         </div>
     </div>
 </div>

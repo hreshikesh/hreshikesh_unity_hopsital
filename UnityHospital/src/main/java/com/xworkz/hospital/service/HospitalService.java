@@ -1,6 +1,7 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.TimeSlotDto;
 
 import java.util.List;
 
@@ -24,6 +25,14 @@ public interface HospitalService {
     long getEmailCount(String email);
 
     void resetOtp(String email);
+
+    boolean saveTimeInterval(TimeSlotDto dto);
+
+    List<String> findDoctorBySpecialization(String specialization);
+
+   List<TimeSlotDto> findAllIntervals();
+
+   boolean setTimeSlot(String doctorName,String timeInterval);
 
 
 

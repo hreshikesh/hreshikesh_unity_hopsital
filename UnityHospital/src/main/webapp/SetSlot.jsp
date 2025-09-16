@@ -27,43 +27,47 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="Home" class="btn btn-outline-success">Home</a>
+            <a href="slotback" class="btn btn-outline-success">Back</a>
         </div>
     </div>
 </nav>
 
-<div>
-    ${status}
+<div class="container w-50 mt-5">
+    <form class="bg-success p-4 mt-5 rounded shadow w-50 mx-auto" action="settimeslot" method="post">
+        <h2 class="text-center text-light mb-4">Time Slot Setting</h2>
+
+        <c:if test="${not empty errors}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    <c:forEach var="err" items="${errors}">
+                        <li>${err.defaultMessage}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
+
+        <div class="mb-3">
+            <label for="fromTimeId" class="form-label fw-semibold">From</label>
+            <input type="time" class="form-control" id="fromTimeId" name="fromTime" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="toTimeId" class="form-label fw-semibold">To</label>
+            <input type="time" class="form-control" id="toTimeId" name="toTime" required>
+        </div>
+
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-dark fw-bold">Set Time Slot</button>
+        </div>
+
+        <c:if test="${not empty result}">
+            <p class="text-center mt-3 text-warning">${result}</p>
+        </c:if>
+
+    </form>
 </div>
-<h3 class="text-dark text-center">Doctor of Unity Hospital</h3>
-<table class="mt-3 table table-success table-striped-columns table table-bordered  text-center text-dark ">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">PhoneNo</th>
-        <th scope="col">Specialization</th>
-        <th scope="col">Qualification</th>
-        <th scope="col">Experience</th>
-        <th scope="col">Photo</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="dto" items="${dtolist}" varStatus="loop">
-    <tr>
-        <th scope="row">${loop.count}</th>
-        <td>${dto.doctorName}</td>
-        <td>${dto.doctorEmail}</td>
-        <td>${dto.doctorPhone}</td>
-        <td>${dto.specialization}</td>
-        <td>${dto.qualification}</td>
-        <td>${dto.experience}</td>
-        <td><img src="download?imagePath=${dto.imagePath}" class="rounded mx-auto d-block " width="100px" height="200px"></td>
-    </tr>
-    </c:forEach>
-    </tbody>
-</table>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>
