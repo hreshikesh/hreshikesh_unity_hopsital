@@ -13,7 +13,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
 </head>
-<body class="bg-success-subtle">
+<body class="bg-success-subtle" >
 
 
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
@@ -36,7 +36,7 @@
 
         <div class="mb-3 text-center">
             <input type="email" class="form-control w-50 mx-auto" id="emailId"
-                   value="${userEmail}" onchange="checkEmail()" name="email"
+                   onchange="checkEmail()" name="email"
                    placeholder="Enter your email" required>
             <span class="text-danger small" id="emailError"></span>
         </div>

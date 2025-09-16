@@ -149,6 +149,40 @@ function validatePhone(){
     }
 }
 
+
+function validateSpecialization(){
+let specialization=document.getElementById("specializationId");
+let specializationError=document.getElementById("specializationErrorId");
+if(specialization.value==="Select Specialization" ||specialization.value===""){
+specializationError.innerHTML="Select a Specialization";
+}else{
+specializationError.innerHTML="";
+}
+}
+
+
+function validateQualification(){
+let qualification=document.getElementById("qualificationId");
+let qualificationError=document.getElementById("qualificationErrorId");
+if(qualification.value.length>10){
+qualificationError.innerHTML="Qualification length should be 10";
+}else{
+qualificationError.innerHTML="";
+}
+}
+
+function validateExperience(){
+let experience=document.getElementById("experienceId");
+ let experienceError=document.getElementById("experienceErrorId");
+ if(experience.value<0||experience.value>50){
+ experienceError.innerHTML="Experience Should be between 0 and 50";
+ }else{
+ experienceError.innerHTML="";
+ }
+
+}
+
+
 function checkDoctorEmail(){
    let doctorEmail = document.getElementById("doctorEmailId").value;
     let doctorEmailError = document.getElementById("doctorEmailErrorId");
@@ -165,9 +199,13 @@ function checkDoctorEmail(){
 
     window.addEventListener("pageshow", function (event) {
      if (event.persisted) {
-            window.location.disabled=true;
+            window.location.reload();
         }
  });
+
+
+
+}
 
 
 

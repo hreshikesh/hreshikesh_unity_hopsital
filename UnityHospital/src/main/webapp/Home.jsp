@@ -20,7 +20,7 @@
 }
     </style>
 </head>
-<body class="bg-success-subtle">
+<body class="bg-success-subtle" onload="disableNavigation()">
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">

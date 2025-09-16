@@ -70,8 +70,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="specialization" class="form-label fw-semibold">Specialization</label>
-            <select class="form-select" id="specialization" name="specialization" required>
+            <label for="specializationId" class="form-label fw-semibold">Specialization</label>
+            <select class="form-select" name="specialization" id="specializationId" onselect="validateSpecialization()" required>
                 <option  selected disabled>Select Specialization</option>
                 <option value="cardiologist" <c:if test="${not empty dto and dto.specialization eq 'cardiologist'}">selected</c:if>>Cardiologist</option>
                 <option value="dermatologist" <c:if test="${not empty dto and dto.specialization eq 'dermatologist'}">selected</c:if>>Dermatologist</option>
@@ -80,19 +80,24 @@
                 <option value="pediatrician" <c:if test="${not empty dto and dto.specialization eq 'pediatrician'}">selected</c:if>>Pediatrician</option>
                 <option value="generalphysician" <c:if test="${not empty dto and dto.specialization eq 'generalphysician'}">selected</c:if>>General Physician</option>
             </select>
+            <span class="text-warning small" id="specializationErrorId"></span>
         </div>
 
         <div class="mb-3">
-            <label for="qualification" class="form-label fw-semibold">Qualification</label>
-            <input type="text" class="form-control" id="qualification" name="qualification"
-                   placeholder="e.g., MBBS, MD" value="${dto.qualification}" maxlength="10" required>
+            <label for="qualificationId" class="form-label fw-semibold">Qualification</label>
+            <input type="text" class="form-control" id="qualificationId" name="qualification"
+                   placeholder="e.g., MBBS, MD" value="${dto.qualification}" oninput="validateQualification()" maxlength="10" required>
+            <span class="text-warning small" id="qualificationErrorId"></span>
         </div>
 
+
         <div class="mb-3">
-            <label for="experience" class="form-label fw-semibold">Experience (Years)</label>
-            <input type="number" class="form-control" id="experience" name="experience" value="${dto.experience}"
-                   min="0" placeholder="e.g., 5" required>
+            <label for="experienceId" class="form-label fw-semibold">Experience (Years)</label>
+            <input type="number" class="form-control" id="experienceId" name="experience" oninput="validateExperience()" value="${dto.experience}"
+                   min="0" max="50" placeholder="e.g., 5" required>
+            <span class="text-warning small" id="experienceErrorId"></span>
         </div>
+
 
         <div class="mb-3">
             <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
