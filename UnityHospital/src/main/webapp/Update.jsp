@@ -27,26 +27,14 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="Home" class="btn btn-outline-success">Home</a>
+            <a href="alldoctor" class="btn btn-outline-success">Back</a>
         </div>
     </div>
 </nav>
 
 
-
-<div class="container d-flex justify-content-center my-3">
-    <form class="d-flex w-100" style="max-width:500px;" role="search" action="searchDoctor" method="get">
-        <input class="form-control me-2" type="email" placeholder="Enter Doctor Email" name="email" aria-label="Search">
-        <button class="btn btn-dark text-success" type="submit">Search</button>
-    </form>
-
-</div>
-
-
 <div class="container text-center mb-3">
-    <c:if test="${not empty result}">
-        <p class="text-warning">${result}</p>
-    </c:if>
+
     <c:if test="${not empty error}">
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <ul class="mb-0">

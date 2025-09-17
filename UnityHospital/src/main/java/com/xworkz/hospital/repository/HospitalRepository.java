@@ -31,4 +31,6 @@ public interface HospitalRepository {
 
     boolean setTimeSlot(String doctorName,String timeInterval);
 
+    long checkIntervalForSpecification(String specialization,String timeInterval);
+
 }

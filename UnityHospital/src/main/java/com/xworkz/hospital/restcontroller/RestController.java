@@ -1,13 +1,14 @@
 package com.xworkz.hospital.restcontroller;
 
 import com.xworkz.hospital.service.HospitalService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
-
+@Slf4j
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/")
 public class RestController {
@@ -26,9 +27,9 @@ public class RestController {
         boolean sent= service.sendOtp(email);
         session.setAttribute("adminEmail1",email);
         if(sent){
-            return "otp sent successfully";
+            return "OTP sent successfully";
         }else{
-            return "otp not sent";
+            return "OTP not sent";
         }
 
     }
@@ -62,6 +63,18 @@ public class RestController {
        }
     }
 
+    @GetMapping("checkInterval/{specialization}/{timeInterval}")
+    public String checkIntervalPresent(@PathVariable String specialization,@PathVariable String timeInterval){
+        int count=service.checkIntervalForSpecification(specialization,timeInterval);
+        log.info(specialization);
+        log.info(String.valueOf(count));
+        if(count>=1){
+            return "Booked";
+        }else{
+            return "available";
+        }
+
+    }
 
 
 }

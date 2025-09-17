@@ -269,4 +269,27 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         }
         return false;
     }
+
+    @Override
+    public long checkIntervalForSpecification(String specialization, String timeInterval) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        long count=0L;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("checkInterval");
+            query.setParameter("timeSlot",timeInterval);
+            query.setParameter("specializationBy",specialization);
+            count=(long)query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return count;
+    }
+
 }

@@ -40,8 +40,8 @@
         <div class="mb-3">
             <label for="specializationId" class="form-label fw-semibold">Specialization</label>
             <select class="form-select" name="specialization" id="specializationId"  required>
-                <c:forEach var="dto" items="${dtos}">
-                    <option value="${dto.specialization}">${dto.specialization}</option>
+                <c:forEach var="specialization" items="${specializations}">
+                    <option value="${specialization}" <c:if test="${specialization eq specializationEntered}">selected</c:if>>${specialization}</option>
                 </c:forEach>
             </select>
         </div>
@@ -72,14 +72,15 @@
             </div>
                 <div class="mb-3">
                     <label for="timeIntervalId" class="form-label fw-semibold">Slot</label>
-                <select class="form-select" name="timeInterval" id="timeIntervalId"  required>
+                <select class="form-select" name="timeInterval" id="timeIntervalId" required>
                     <c:forEach var="timeInterval" items="${timeIntervals}">
                         <option value="${timeInterval}">${timeInterval}</option>
                     </c:forEach>
                 </select>
+                    <p class="text-warning text-center" id="intervalErrorId">${update}</p>
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn btn-dark fw-bold">Set Slot</button>
+                <button type="submit" id="setSlotButtonId" class="btn btn-dark fw-bold">Set Slot</button>
             </div>
         </form>
     </div>

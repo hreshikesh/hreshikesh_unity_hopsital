@@ -73,12 +73,9 @@
             <label for="specializationId" class="form-label fw-semibold">Specialization</label>
             <select class="form-select" name="specialization" id="specializationId" onselect="validateSpecialization()" required>
                 <option  selected disabled>Select Specialization</option>
-                <option value="cardiologist" <c:if test="${not empty dto and dto.specialization eq 'cardiologist'}">selected</c:if>>Cardiologist</option>
-                <option value="dermatologist" <c:if test="${not empty dto and dto.specialization eq 'dermatologist'}">selected</c:if>>Dermatologist</option>
-                <option value="neurologist" <c:if test="${not empty dto and dto.specialization eq 'neurologist'}">selected</c:if>>Neurologist</option>
-                <option value="orthopedic" <c:if test="${not empty dto and dto.specialization eq 'orthopedic'}">selected</c:if>>Orthopedic</option>
-                <option value="pediatrician" <c:if test="${not empty dto and dto.specialization eq 'pediatrician'}">selected</c:if>>Pediatrician</option>
-                <option value="generalphysician" <c:if test="${not empty dto and dto.specialization eq 'generalphysician'}">selected</c:if>>General Physician</option>
+                <c:forEach var="specialization" items="${specializations}">
+                    <option value="${specialization}" <c:if test="${specialization eq dto.specialization}">selected</c:if>>${specialization}</option>
+                </c:forEach>
             </select>
             <span class="text-warning small" id="specializationErrorId"></span>
         </div>

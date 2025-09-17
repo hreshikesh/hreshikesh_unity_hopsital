@@ -18,7 +18,7 @@
     </style>
 </head>
 <body class="bg-success-subtle">
-<nav class="navbar bg-body-tertiary" data-bs-theme="dark">
+<nav class="navbar bg-body-tertiary sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
@@ -34,16 +34,21 @@
     <div class="position-absolute top-0 start-0 w-100 h-100">
         <img src="images/courosel4.png" class="w-100 h-100 object-fit-cover opacity-25" alt="Hospital">
     </div>
-
     <div class="container text-center text-success position-relative">
         <h1 class="display-4 fw-bold">Unity Hospital</h1>
         <p class="lead mt-4">Compassionate care. Advanced medicine. Healthy future.</p>
         <p>At Unity Hospital, we are committed to providing world-class healthcare services with a personal touch. Our
             team of experts ensures the highest standards of medical care and patient comfort.</p>
-        <a href="index.jsp" class="btn btn-success mt-3">Explore Our Services</a>
+        <a href="service" class="btn btn-success mt-3">Explore Our Services</a>
     </div>
 </section>
 
+<footer class="bg-dark text-success text-center p-3">
+    <div class="container">
+        <p class="mb-1">&copy; 2025 Unity Hospital. All rights reserved.</p>
+        <small>67th cross, RajajiNagar, Bengaluru | Phone: +91 98765 43210</small>
+    </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"

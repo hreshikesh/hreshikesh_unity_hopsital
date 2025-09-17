@@ -174,6 +174,13 @@ public class HospitalServiceImpl implements HospitalService {
         return hopsitalRepository.setTimeSlot(doctorName,timeInterval);
     }
 
+    @Override
+    public int checkIntervalForSpecification(String specialization, String timeInterval) {
+        long count=hopsitalRepository.checkIntervalForSpecification(specialization,timeInterval);
+        int convertedCount=Math.toIntExact(count);
+        return convertedCount;
+    }
+
 
     private void getEmail(String email, String subject, String body) {
         final String username = "ailhreshikesh@gmail.com";

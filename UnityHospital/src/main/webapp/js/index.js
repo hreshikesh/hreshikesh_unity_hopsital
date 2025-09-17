@@ -210,7 +210,7 @@ const xhhtp=new XMLHttpRequest();
 xhhtp.open("POST","http://localhost:8080/UnityHospital/resetSession",true)
 xhhtp.send();
 }
-window.onload.resetSession();
+
 
 
 

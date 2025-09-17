@@ -27,7 +27,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="slotback" class="btn btn-outline-success">Back</a>
+            <a href="slot" class="btn btn-outline-success">Back</a>
         </div>
     </div>
 </nav>

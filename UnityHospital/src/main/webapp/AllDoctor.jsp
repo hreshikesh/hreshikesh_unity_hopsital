@@ -60,6 +60,13 @@
         <td>${dto.qualification}</td>
         <td>${dto.experience}</td>
         <td><img src="download?imagePath=${dto.imagePath}" class="rounded mx-auto d-block " width="100px" height="200px"></td>
+        <td>
+            <form action="updateClick">
+                <input type="hidden" value="${dto.doctorEmail}" name="email">
+                <button type="submit" class="btn btn-success mx-auto">update</button>
+            </form>
+        </td>
+
     </tr>
     </c:forEach>
     </tbody>

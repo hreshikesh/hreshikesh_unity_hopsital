@@ -54,7 +54,6 @@
         <h3 class="text-dark mb-3">Doctor Management</h3>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             <a href="doctor" class="btn btn-dark  btn-lg text-success">Register Doctor</a>
-            <a href="updateDoctorPage" class="btn btn-dark  btn-lg text-success">Update Doctor</a>
         </div>
     </div>
 </div>

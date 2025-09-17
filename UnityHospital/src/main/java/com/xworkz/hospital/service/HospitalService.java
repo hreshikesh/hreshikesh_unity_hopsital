@@ -35,5 +35,8 @@ public interface HospitalService {
    boolean setTimeSlot(String doctorName,String timeInterval);
 
 
+   int checkIntervalForSpecification(String specialization,String timeInterval);
+
+
 
 }
