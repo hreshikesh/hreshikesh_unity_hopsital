@@ -55,9 +55,7 @@ public class HopsitalController {
     }
 
     @RequestMapping("doctor")
-    public String goToDoctor(Model model){
-        Specialization[] specialization=Specialization.values();
-        model.addAttribute("specializations",specialization);
+    public String goToDoctor(){
         return "Doctor";
     }
 
@@ -87,8 +85,6 @@ public class HopsitalController {
 
     @PostMapping("registerDoctor")
     public ModelAndView registerDoctor(@RequestParam("image")MultipartFile file, @Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
-        Specialization[] specializations=Specialization.values();
-        view.addObject("specializations",specializations);
         if(result.hasErrors()){
             view.setViewName("Doctor");
             view.addObject("dto",dto);
@@ -122,8 +118,8 @@ public class HopsitalController {
         if(dto==null ){
             model.addAttribute("result","Doctor not found");
         }else{
-            model.addAttribute("result","Doctor found");
             model.addAttribute("dto",dto);
+            model.addAttribute("speciality",dto.getSpecialization().toUpperCase());
         }
         return "Update";
     }
@@ -179,9 +175,7 @@ public class HopsitalController {
 
 
     @RequestMapping("slot")
-    public String goToSlot(Model model){
-        Specialization[] specializations=Specialization.values();
-        model.addAttribute("specializations",specializations);
+    public String goToSlot(){
         return "Slot";
     }
 
