@@ -2,6 +2,7 @@ package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import com.xworkz.hospital.entity.SpecializationEntity;
 import com.xworkz.hospital.entity.TimeSlotEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -290,6 +292,50 @@ public class HospitalRepositoryImpl implements HospitalRepository {
             manager.close();
         }
         return count;
+    }
+
+    @Override
+    public boolean deleteDoctor(String email) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("findByName");
+            query.setParameter("email", email);
+            DoctorEntity entity = (DoctorEntity) query.getSingleResult();
+            manager.remove(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return false;
+    }
+
+    @Override
+    public List<SpecializationEntity> getAllSpecialization() {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        List<SpecializationEntity> entity=new ArrayList<>();
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("getAllSpecilaization",SpecializationEntity.class);
+            entity = query.getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return entity;
     }
 
 }

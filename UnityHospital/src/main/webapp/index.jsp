@@ -43,10 +43,10 @@
     </div>
 </section>
 
-<footer class="bg-dark text-success text-center p-3">
+<footer class="bg-dark text-success text-center p-3 ">
     <div class="container">
         <p class="mb-1">&copy; 2025 Unity Hospital. All rights reserved.</p>
-        <small>67th cross, RajajiNagar, Bengaluru | Phone: +91 98765 43210</small>
+        <small>67th cross, Attiguppe, Bengaluru | Phone: +91 98765 43210</small>
     </div>
 </footer>
 

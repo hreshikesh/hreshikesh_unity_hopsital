@@ -2,6 +2,7 @@ package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import com.xworkz.hospital.entity.SpecializationEntity;
 import com.xworkz.hospital.entity.TimeSlotEntity;
 
 import java.util.List;
@@ -32,5 +33,9 @@ public interface HospitalRepository {
     boolean setTimeSlot(String doctorName,String timeInterval);
 
     long checkIntervalForSpecification(String specialization,String timeInterval);
+
+    boolean deleteDoctor(String email);
+
+    List<SpecializationEntity> getAllSpecialization();
 
 }

@@ -1,6 +1,6 @@
 package com.xworkz.hospital.controller;
-import com.xworkz.hospital.constant.Specialization;
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,6 +23,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,10 @@ public class HopsitalController {
     }
 
     @RequestMapping("doctor")
-    public String goToDoctor(){
+    public String goToDoctor(Model model){
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        System.out.println(specializationDto);
+        model.addAttribute("specializations",specializationDto);
         return "Doctor";
     }
 
@@ -85,6 +89,8 @@ public class HopsitalController {
 
     @PostMapping("registerDoctor")
     public ModelAndView registerDoctor(@RequestParam("image")MultipartFile file, @Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        view.addObject("specializations",specializationDto);
         if(result.hasErrors()){
             view.setViewName("Doctor");
             view.addObject("dto",dto);
@@ -119,13 +125,16 @@ public class HopsitalController {
             model.addAttribute("result","Doctor not found");
         }else{
             model.addAttribute("dto",dto);
-            model.addAttribute("speciality",dto.getSpecialization().toUpperCase());
+            List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+            model.addAttribute("specializations",specializationDto);
         }
         return "Update";
     }
 
     @RequestMapping("updateDoctor")
     public ModelAndView updateDoctor(@RequestParam("image")MultipartFile file,@Valid DoctorDto dto,BindingResult result,ModelAndView view) throws IOException {
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        view.addObject("specializations",specializationDto);
         if(result.hasErrors()){
             view.setViewName("Update");
             view.addObject("dto",dto);
@@ -191,6 +200,12 @@ public class HopsitalController {
             view.addObject("errors",result.getAllErrors());
             view.setViewName("SetSlot");
         }else{
+           LocalTime endTime=LocalTime.parse(dto.getToTime());
+           LocalTime startTime=LocalTime.parse(dto.getFromTime());
+           DateTimeFormatter formatter=DateTimeFormatter.ofPattern("hh:mm a");
+           dto.setToTime(endTime.format(formatter));
+           dto.setFromTime(startTime.format(formatter));
+
           boolean check=hospitalService.saveTimeInterval(dto);
           if(check){
               view.addObject("result","Time has been set");
@@ -211,8 +226,8 @@ public class HopsitalController {
       List<TimeSlotDto> timeSlotDtos= hospitalService.findAllIntervals();
       List<String> timeIntervals=new ArrayList<>();
       List<DoctorDto> dtos=hospitalService.getAllDoctor();
-        Specialization[] specializations=Specialization.values();
-        modelAndView.addObject("specializations",specializations);
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        modelAndView.addObject("specializations",specializationDto);
        if(doctorNames.isEmpty()){
            modelAndView.addObject("dtos",dtos);
            modelAndView.addObject("result","No Doctors found for "+specialization);
@@ -240,13 +255,11 @@ public class HopsitalController {
 
     @RequestMapping("doctorSave")
     public String updateDoctorTable(String doctorName,String timeInterval,Model model){
-        log.info(doctorName);
-        log.info(timeInterval);
     boolean isSet=hospitalService.setTimeSlot(doctorName,timeInterval);
         model.addAttribute("doctorName",doctorName);
         model.addAttribute("timeInterval",timeInterval);
-        Specialization[] specializations=Specialization.values();
-        model.addAttribute("specializations",specializations);
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        model.addAttribute("specializations",specializationDto);
 
     if(isSet){
         model.addAttribute("update","Slot has been set");
@@ -255,5 +268,21 @@ public class HopsitalController {
         model.addAttribute("update","Slot has not been set");
     }
     return "Slot";
+    }
+
+
+    @RequestMapping("deleteDoctor")
+    public String deleteDoctorDetails(String email,Model model){
+        boolean check=hospitalService.deleteDoctor(email);
+
+
+        if(!check) {
+            model.addAttribute("deleteMessage","Doctor not Deleted Successfully");
+        }else {
+            model.addAttribute("deleteMessage", "Doctor Deleted Successfully");
+        }
+        List<DoctorDto> doctorList = hospitalService.getAllDoctor();
+        model.addAttribute("dtolist", doctorList);
+        return "AllDoctor";
     }
 }

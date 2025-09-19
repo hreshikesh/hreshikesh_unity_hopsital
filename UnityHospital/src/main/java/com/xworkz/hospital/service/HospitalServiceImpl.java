@@ -1,9 +1,11 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.HospitalEntity;
+import com.xworkz.hospital.entity.SpecializationEntity;
 import com.xworkz.hospital.entity.TimeSlotEntity;
 import com.xworkz.hospital.repository.HospitalRepository;
 import org.slf4j.Logger;
@@ -49,7 +51,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
 
-    public boolean sendOtp(String email) {
+    public String sendOtp(String email) {
         log.info(email);
         HospitalEntity entity = hopsitalRepository.findByEmail(email);
         StringBuffer otp = new StringBuffer(6);
@@ -57,15 +59,15 @@ public class HospitalServiceImpl implements HospitalService {
         for (int i = 0; i < 6; i++) {
             otp.append(random.nextInt(10));
         }
-        if (otp.equals(" ")) {
-            return false;
+        if (entity==null) {
+            return "false";
         } else {
-            getEmail(email, "OTP for Sigin", "Dear Admin," + "\nThe OTP is " + otp);
+            getEmail(email, "Your One-Time Password (OTP) for Admin Login ", "Dear Admin," + "\n\nYour One-Time Password (OTP) is \n\n" + otp+"\n\nThis code is for your admin login on Unity Hospital.\n\nThis OTP will expire in 2 minutes\n\nFor security, please do not share this OTP with anyone\n\nThank You,\n\nUnity Hospital\nAttiguppe,Bengalore\nPhone:+91 9876543210");
             LocalDateTime localDateTime=LocalDateTime.now().plusSeconds(120);
             entity.setLocalDateTime(localDateTime);
             entity.setOtp(otp.toString());
             hopsitalRepository.updateTable(entity);
-            return true;
+            return "true";
         }
     }
 
@@ -179,6 +181,24 @@ public class HospitalServiceImpl implements HospitalService {
         long count=hopsitalRepository.checkIntervalForSpecification(specialization,timeInterval);
         int convertedCount=Math.toIntExact(count);
         return convertedCount;
+    }
+
+    @Override
+    public boolean deleteDoctor(String email) {
+       return hopsitalRepository.deleteDoctor(email);
+
+    }
+
+    @Override
+    public List<SpecializationDto> getAllSpecialization() {
+        List<SpecializationEntity> entity=hopsitalRepository.getAllSpecialization();
+        List<SpecializationDto> dtos=new ArrayList<>();
+        for (SpecializationEntity entity1:entity){
+            SpecializationDto dto=new SpecializationDto();
+            BeanUtils.copyProperties(entity1,dto);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
 

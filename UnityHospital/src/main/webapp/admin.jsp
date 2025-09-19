@@ -15,7 +15,6 @@
 </head>
 <body class="bg-success-subtle">
 
-
 <nav class="navbar bg-body-tertiary" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
@@ -60,7 +59,7 @@
             </div>
 
             <div class="d-flex justify-content-center align-items-center mb-3 text-center">
-                <p id="timeCountId" class="text-dark mb-0 fw-semibold"></p>
+                <span id="timeCountId" class="text-dark mb-0 fw-semibold"></span>
                 <button type="button" class="btn btn-outline-dark btn-sm ms-1" id="resendId" onclick="resetTimeOtp()" disabled>
                     Resend OTP
                 </button>

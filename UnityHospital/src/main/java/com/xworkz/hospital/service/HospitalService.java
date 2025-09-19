@@ -1,7 +1,9 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.dto.TimeSlotDto;
+import com.xworkz.hospital.entity.SpecializationEntity;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ public interface HospitalService {
 
     boolean findByEmail(String email);
 
-    boolean sendOtp(String email);
+    String sendOtp(String email);
 
     String verifyOtp(String Otp,String email);
 
@@ -36,6 +38,10 @@ public interface HospitalService {
 
 
    int checkIntervalForSpecification(String specialization,String timeInterval);
+
+   boolean deleteDoctor(String email);
+
+    List<SpecializationDto> getAllSpecialization();
 
 
 

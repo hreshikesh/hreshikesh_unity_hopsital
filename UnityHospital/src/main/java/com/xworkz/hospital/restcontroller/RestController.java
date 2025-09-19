@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 @Slf4j
@@ -24,12 +23,12 @@ public class RestController {
 
     @GetMapping("sendOtp/{email}")
     public String verifyAndSendOtp(@PathVariable String email,HttpSession session){
-        boolean sent= service.sendOtp(email);
+        String sent= service.sendOtp(email);
         session.setAttribute("adminEmail1",email);
-        if(sent){
+        if(sent.equals("true")){
             return "OTP sent successfully";
         }else{
-            return "OTP not sent";
+            return "OTP not sent check your Email!";
         }
 
     }
@@ -46,11 +45,6 @@ public class RestController {
         return "OTP resent.";
     }
 
-    @PostMapping("resetSession")
-    public void resetSession(HttpSession session){
-        session.setAttribute("adminLoggedIn",false);
-        session.removeAttribute("adminEmail");
-    }
 
 
     @GetMapping("checkDoctorEmail/{doctorEmail}")

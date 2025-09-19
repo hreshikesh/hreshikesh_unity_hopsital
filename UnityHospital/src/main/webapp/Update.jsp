@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
-    <%@ page import="com.xworkz.hospital.constant.Specialization" %>
     <style>
         .quintessential-regular {
   font-family: "Quintessential", serif;
@@ -84,9 +83,9 @@
             <div class="mb-3">
                 <label for="specializationId" class="form-label fw-semibold">Specialization</label>
                 <select class="form-select" name="specialization" id="specializationId" onselect="validateSpecialization()" required>
-                    <c:forEach var="specializations" items="${Specialization.values()}">
+                    <c:forEach var="specialization" items="${specializations}">
                         <option value="${specializations}"
-                        <c:if test="${specializations.name() eq speciality}">selected</c:if>>
+                        <c:if test="${specializations.name() eq dto.specialization}">selected</c:if>>
                         ${specializations}</option>
                     </c:forEach>
                 </select>

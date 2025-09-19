@@ -6,6 +6,7 @@
     <title>Unity Hospital</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
@@ -47,6 +48,8 @@
         <th scope="col">Qualification</th>
         <th scope="col">Experience</th>
         <th scope="col">Photo</th>
+        <th scope="col">update</th>
+        <th scope="col">delete</th>
     </tr>
     </thead>
     <tbody>
@@ -64,6 +67,12 @@
             <form action="updateClick">
                 <input type="hidden" value="${dto.doctorEmail}" name="email">
                 <button type="submit" class="btn btn-success mx-auto">update</button>
+            </form>
+        </td>
+        <td>
+            <form action="deleteDoctor">
+                <input type="hidden" value="${dto.doctorEmail}" name="email">
+                <button type="submit" class="btn mx-auto"><i class="bi bi-trash text-danger"></i></button>
             </form>
         </td>
 

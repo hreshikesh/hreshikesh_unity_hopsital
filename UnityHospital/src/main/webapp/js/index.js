@@ -103,8 +103,13 @@ function resetTimeOtp(){
     clearInterval(timer);
     xhhtp.open("GET", "http://localhost:8080/UnityHospital/resetTimeOtp/");
     xhhtp.send();
+    timeoutMessage.classList.remove("text-danger")
+     timeoutMessage.classList.add("text-warning")
+    timeoutMessage.innerHTML="Resending..."
     xhhtp.onload=function(){
-    timeoutMessage.innerHTML="OTP Resent";
+    timeoutMessage.classList.remove("text-warning")
+    timeoutMessage.classList.add("text-danger")
+    timeoutMessage.innerHTML=""
     sessionStorage.setItem("otpExpiry", Date.now() + 120000);
     timeCount();
     }
@@ -205,11 +210,7 @@ window.addEventListener("pageshow", function(event) {
 });
 
 
-function resetSession(){
-const xhhtp=new XMLHttpRequest();
-xhhtp.open("POST","http://localhost:8080/UnityHospital/resetSession",true)
-xhhtp.send();
-}
+
 
 
 
