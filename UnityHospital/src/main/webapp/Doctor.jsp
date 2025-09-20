@@ -33,10 +33,10 @@
 </nav>
 
 
-<div class="container d-flex justify-content-center align-items-center min-vh-100">
-    <form class="bg-success p-4 rounded shadow w-100" style="max-width:600px;" action="registerDoctor" enctype="multipart/form-data" method="post">
+<div class="container">
+    <form class="bg-success p-5 rounded shadow" style="max-width: 800px; margin:auto;"
+          action="registerDoctor" enctype="multipart/form-data" method="post">
         <h2 class="text-center text-light mb-4">Doctor Registration</h2>
-
 
         <c:if test="${not empty error}">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -48,63 +48,63 @@
             </div>
         </c:if>
 
-        <div class="mb-3">
-            <label for="doctorNameId" class="form-label fw-semibold">Name</label>
-            <input type="text" class="form-control" id="doctorNameId" oninput="validateName()" name="doctorName"
-                   minlength="3" maxlength="10" value="${dto.doctorName}" required>
-            <span class="text-warning small" id="doctorNameErrorId"></span>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="doctorNameId" class="form-label fw-semibold">Name</label>
+                <input type="text" class="form-control" id="doctorNameId" oninput="validateName()" name="doctorName"
+                       minlength="3" maxlength="10" value="${dto.doctorName}" required>
+                <span class="text-warning small" id="doctorNameErrorId"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
+                <input type="email" class="form-control" id="doctorEmailId" name="doctorEmail"
+                       oninput="validateEmail()" onchange="checkDoctorEmail()" value="${dto.doctorEmail}" required>
+                <span class="text-warning small" id="doctorEmailErrorId"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="doctorPhoneId" class="form-label fw-semibold">Phone</label>
+                <input type="text" class="form-control" id="doctorPhoneId" name="doctorPhone"
+                       oninput="validatePhone();" maxlength="10" value="${dto.doctorPhone}" required>
+                <span class="text-warning small" id="doctorPhoneErrorId"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="specializationId" class="form-label fw-semibold">Specialization</label>
+                <select class="form-select" name="specialization" id="specializationId" required>
+                    <option selected disabled>Select Specialization</option>
+                    <c:forEach var="specializationDto" items="${specializations}">
+                        <option value="${specializationDto.specialization}"
+                        <c:if test="${specializationDto.specialization eq dto.specialization}">selected</c:if>>
+                        ${specializationDto.specialization}
+                        </option>
+                    </c:forEach>
+                </select>
+                <span class="text-warning small" id="specializationErrorId"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="qualificationId" class="form-label fw-semibold">Qualification</label>
+                <input type="text" class="form-control" id="qualificationId" name="qualification"
+                       placeholder="e.g., MBBS, MD" value="${dto.qualification}" oninput="validateQualification()" maxlength="10" required>
+                <span class="text-warning small" id="qualificationErrorId"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="experienceId" class="form-label fw-semibold">Experience (Years)</label>
+                <input type="number" class="form-control" id="experienceId" name="experience"
+                       oninput="validateExperience()" value="${dto.experience}" min="0" max="50" placeholder="e.g., 5" required>
+                <span class="text-warning small" id="experienceErrorId"></span>
+            </div>
+
+            <div class="col-12">
+                <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
+                <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*">
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
-            <input type="email" class="form-control" id="doctorEmailId" name="doctorEmail"
-                   oninput="validateEmail()" onchange="checkDoctorEmail()" value="${dto.doctorEmail}" required>
-            <span class="text-warning small" id="doctorEmailErrorId"></span>
-        </div>
-
-        <div class="mb-3">
-            <label for="doctorPhoneId" class="form-label fw-semibold">Phone</label>
-            <input type="text" class="form-control" id="doctorPhoneId" name="doctorPhone" oninput="validatePhone();" maxlength="10"
-                   value="${dto.doctorPhone}" required>
-            <span class="text-warning small" id="doctorPhoneErrorId"></span>
-        </div>
-
-        <div class="mb-3">
-            <label for="specializationId" class="form-label fw-semibold">Specialization</label>
-            <select class="form-select" name="specialization" id="specializationId" required>
-                <option selected disabled>Select Specialization</option>
-                <c:forEach var="specializationDto" items="${specializations}">
-                    <option value="${specializationDto.specialization}"
-                    <c:if test="${specializationDto.specialization eq dto.specialization}">selected</c:if>>
-                    ${specializationDto.specialization}
-                    </option>
-                </c:forEach>
-            </select>
-            <span class="text-warning small" id="specializationErrorId"></span>
-        </div>
-
-        <div class="mb-3">
-            <label for="qualificationId" class="form-label fw-semibold">Qualification</label>
-            <input type="text" class="form-control" id="qualificationId" name="qualification"
-                   placeholder="e.g., MBBS, MD" value="${dto.qualification}" oninput="validateQualification()" maxlength="10" required>
-            <span class="text-warning small" id="qualificationErrorId"></span>
-        </div>
-
-
-        <div class="mb-3">
-            <label for="experienceId" class="form-label fw-semibold">Experience (Years)</label>
-            <input type="number" class="form-control" id="experienceId" name="experience" oninput="validateExperience()" value="${dto.experience}"
-                   min="0" max="50" placeholder="e.g., 5" required>
-            <span class="text-warning small" id="experienceErrorId"></span>
-        </div>
-
-
-        <div class="mb-3">
-            <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
-            <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*">
-        </div>
-
-        <div class="d-grid">
+        <div class="d-grid mt-4">
             <button type="submit" class="btn btn-dark fw-bold">Register Doctor</button>
         </div>
 
@@ -113,7 +113,6 @@
         </c:if>
     </form>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>
 </body>

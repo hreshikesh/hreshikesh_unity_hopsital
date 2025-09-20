@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TimeSlotDto {
+    @NotNull(message = " Specialization not chosen")
+    private String specialization;
     @NotNull(message = "From Time connote be empty")
     private String fromTime;
     @NotNull(message = "To Time connote be empty")

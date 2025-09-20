@@ -47,6 +47,17 @@
         </c:if>
 
         <div class="mb-3">
+            <label for="specializationId" class="form-label fw-semibold">Specialization</label>
+            <select class="form-select" name="specialization" id="specializationId"  required>
+                <c:forEach var="specializationDto" items="${specializations}">
+                    <option value="${specializationDto.specialization}" >${specializationDto.specialization}</option>
+                </c:forEach>
+            </select>
+        </div>
+
+
+
+        <div class="mb-3">
             <label for="fromTimeId" class="form-label fw-semibold">From</label>
             <input type="time" class="form-control" id="fromTimeId" name="fromTime" required>
         </div>

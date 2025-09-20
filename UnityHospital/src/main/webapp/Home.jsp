@@ -46,16 +46,37 @@
         </div>
     </div>
 </nav>
-<h2>Welcome Admin!!</h2>
 
 
-<div class="container w-50 mt-5">
-    <div class="p-4 bg-success-subtle rounded shadow-lg text-center">
-        <h3 class="text-dark mb-3">Doctor Management</h3>
-        <div class="d-flex justify-content-center gap-3 flex-wrap">
-            <a href="doctor" class="btn btn-dark  btn-lg text-success">Register Doctor</a>
+
+<div class="container text-center mb-5 mt-5">
+    <h2 class="text-success">Welcome Admin!!</h2>
+    <p class="text-dark">Manage doctors, patients, appointments efficiently from your dashboard.</p>
+</div>
+
+
+
+<div class="container my-5 d-flex justify-content-center align-items-center gap-4">
+
+    <div class="card text-center border-success bg-success-subtle" style="width: 18rem;">
+        <div class="card-body">
+            <i class="bi bi-person-plus-fill fs-2 text-success mb-2"></i>
+            <h5 class="card-title fw-bold">Doctor Registration</h5>
+            <p class="card-text text-dark">Register doctors with their details and specialization.</p>
+            <a href="doctor" class="btn btn-success btn-sm">Register</a>
         </div>
     </div>
+
+
+    <div class="card text-center border-success bg-success-subtle" style="width: 18rem;">
+        <div class="card-body">
+            <i class="bi bi-person-check-fill fs-2 text-success mb-2"></i>
+            <h5 class="card-title fw-bold">Patient Registration</h5>
+            <p class="card-text text-dark">Register patients for appointments and treatments.</p>
+            <a href="PatientRegistration.jsp" class="btn btn-success btn-sm">Register</a>
+        </div>
+    </div>
+
 </div>
 
 </body>

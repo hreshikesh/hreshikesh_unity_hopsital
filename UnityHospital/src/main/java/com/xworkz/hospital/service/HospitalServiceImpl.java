@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.mail.Message;
@@ -22,6 +23,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class HospitalServiceImpl implements HospitalService {
@@ -29,6 +31,8 @@ public class HospitalServiceImpl implements HospitalService {
     private static final Logger log = LoggerFactory.getLogger(HospitalServiceImpl.class);
     @Autowired
     HospitalRepository hopsitalRepository;
+    @Autowired
+            EmailService emailService;
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -62,8 +66,8 @@ public class HospitalServiceImpl implements HospitalService {
         if (entity==null) {
             return "false";
         } else {
-            getEmail(email, "Your One-Time Password (OTP) for Admin Login ", "Dear Admin," + "\n\nYour One-Time Password (OTP) is \n\n" + otp+"\n\nThis code is for your admin login on Unity Hospital.\n\nThis OTP will expire in 2 minutes\n\nFor security, please do not share this OTP with anyone\n\nThank You,\n\nUnity Hospital\nAttiguppe,Bengalore\nPhone:+91 9876543210");
-            LocalDateTime localDateTime=LocalDateTime.now().plusSeconds(120);
+            emailService.getEmail(email, "Your One-Time Password (OTP) for Admin Login ", "Dear Admin," + "\n\nYour One-Time Password (OTP) is \n\n" + otp+"\n\nThis code is for your admin login on Unity Hospital.\n\nThis OTP will expire in 2 minutes\n\nFor security, please do not share this OTP with anyone\n\nThank You,\n\nUnity Hospital\nAttiguppe,Bengalore\nPhone:+91 9876543210");
+            LocalDateTime localDateTime=LocalDateTime.now().plusMinutes(2);
             entity.setLocalDateTime(localDateTime);
             entity.setOtp(otp.toString());
             hopsitalRepository.updateTable(entity);
@@ -156,8 +160,8 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public List<TimeSlotDto> findAllIntervals() {
-      List<TimeSlotEntity> entities=hopsitalRepository.findAllIntervals();
+    public List<TimeSlotDto> findAllIntervals(String specialization) {
+      List<TimeSlotEntity> entities=hopsitalRepository.findAllIntervals(specialization);
       if(entities==null){
           return  null;
       }else{
@@ -202,40 +206,6 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
 
-    private void getEmail(String email, String subject, String body) {
-        final String username = "ailhreshikesh@gmail.com";
-        final String password = "mfbl tuzg xjsl zilu";
 
-        Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.starttls.enable", "true"); //TLS
-
-        Session session = Session.getInstance(prop,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(username, password);
-                    }
-                });
-
-        try {
-
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(
-                    Message.RecipientType.TO,
-                    InternetAddress.parse(email)
-            );
-            message.setSubject(subject);
-            message.setText(body);
-
-            Transport.send(message);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }

@@ -1,11 +1,12 @@
 package com.xworkz.hospital.configuarartion;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,6 +18,8 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "com.xworkz.hospital")
 @EnableWebMvc
+@EnableAsync
+@PropertySource("classpath:application.properties")
 public class HospitalConfiguaration implements WebMvcConfigurer {
 
 
@@ -30,8 +33,6 @@ public class HospitalConfiguaration implements WebMvcConfigurer {
         registry.jsp("/", ".jsp");
     }
 
-
-
     @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -41,15 +42,35 @@ public class HospitalConfiguaration implements WebMvcConfigurer {
         return factoryBean;
     }
 
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    @Value("${db.driver}")
+    private String driver;
+
+    @Value("${db.url}")
+    private String url;
+
+    @Value("${db.username}")
+    private String username;
+
+    @Value("${db.password}")
+    private String password;
+
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource source=new DriverManagerDataSource();
-        source.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        source.setUrl("jdbc:mysql://localhost:3306/module");
-        source.setPassword("hrishi@sql");
-        source.setUsername("root");
+        DriverManagerDataSource source = new DriverManagerDataSource();
+        source.setDriverClassName(driver);
+        source.setUrl(url);
+        source.setUsername(username);
+        source.setPassword(password);
         return source;
     }
+
+
 
 
     @Bean(name="multipartResolver")
@@ -59,4 +80,7 @@ public class HospitalConfiguaration implements WebMvcConfigurer {
         commonsMultipartResolver.setMaxUploadSize(1048576);
         return  commonsMultipartResolver;
     }
+
+
+
 }

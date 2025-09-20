@@ -63,8 +63,6 @@ public class HopsitalController {
         return "Doctor";
     }
 
-
-
     @RequestMapping("logout")
     public String logOut(HttpSession session){
         session.invalidate();
@@ -184,18 +182,24 @@ public class HopsitalController {
 
 
     @RequestMapping("slot")
-    public String goToSlot(){
+    public String goToSlot(Model model){
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        model.addAttribute("specializations",specializationDto);
         return "Slot";
     }
 
     @RequestMapping("setSlot")
-    public String goToSetSlot(){
+    public String goToSetSlot(Model model){
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        model.addAttribute("specializations",specializationDto);
         return "SetSlot";
     }
 
 
     @RequestMapping("settimeslot")
     public ModelAndView setTimeSlot(@Valid TimeSlotDto dto,BindingResult result,ModelAndView view){
+        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
+        view.addObject("specializations",specializationDto);
         if(result.hasErrors()){
             view.addObject("errors",result.getAllErrors());
             view.setViewName("SetSlot");
@@ -223,7 +227,7 @@ public class HopsitalController {
     @RequestMapping("doctorspecialization")
     public ModelAndView findDoctorWithSpecialization(String specialization,ModelAndView modelAndView){
         List<String> doctorNames= hospitalService.findDoctorBySpecialization(specialization);
-      List<TimeSlotDto> timeSlotDtos= hospitalService.findAllIntervals();
+      List<TimeSlotDto> timeSlotDtos= hospitalService.findAllIntervals(specialization);
       List<String> timeIntervals=new ArrayList<>();
       List<DoctorDto> dtos=hospitalService.getAllDoctor();
         List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();

@@ -32,10 +32,9 @@ public interface HospitalService {
 
     List<String> findDoctorBySpecialization(String specialization);
 
-   List<TimeSlotDto> findAllIntervals();
+   List<TimeSlotDto> findAllIntervals(String specialization);
 
    boolean setTimeSlot(String doctorName,String timeInterval);
-
 
    int checkIntervalForSpecification(String specialization,String timeInterval);
 

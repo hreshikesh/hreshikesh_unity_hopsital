@@ -68,7 +68,6 @@
                 <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
                 <input type="email" class="form-control" id="doctorEmailId"  name="doctorEmail"
                        value="${dto.doctorEmail}" readonly>
-
             </div>
 
 
@@ -82,11 +81,13 @@
 
             <div class="mb-3">
                 <label for="specializationId" class="form-label fw-semibold">Specialization</label>
-                <select class="form-select" name="specialization" id="specializationId" onselect="validateSpecialization()" required>
-                    <c:forEach var="specialization" items="${specializations}">
-                        <option value="${specializations}"
-                        <c:if test="${specializations.name() eq dto.specialization}">selected</c:if>>
-                        ${specializations}</option>
+                <select class="form-select" name="specialization" id="specializationId" required>
+                    <option selected disabled>Select Specialization</option>
+                    <c:forEach var="specializationDto" items="${specializations}">
+                        <option value="${specializationDto.specialization}"
+                        <c:if test="${specializationDto.specialization eq dto.specialization}">selected</c:if>>
+                        ${specializationDto.specialization}
+                        </option>
                     </c:forEach>
                 </select>
                 <span class="text-warning small" id="specializationErrorId"></span>

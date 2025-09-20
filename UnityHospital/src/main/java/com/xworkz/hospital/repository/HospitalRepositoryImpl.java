@@ -13,6 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -231,13 +232,14 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     }
 
     @Override
-    public List<TimeSlotEntity> findAllIntervals() {
+    public List<TimeSlotEntity> findAllIntervals(String specialization) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
         List<TimeSlotEntity> entities=null;
         try {
             transaction.begin();
             Query query=manager.createNamedQuery("findAllTImeSlots");
+            query.setParameter("specializationBy",specialization);
             entities=query.getResultList();
             transaction.commit();
         } catch (Exception e) {
@@ -336,6 +338,12 @@ public class HospitalRepositoryImpl implements HospitalRepository {
             manager.close();
         }
         return entity;
+    }
+
+    @Override
+    public List<HospitalEntity> getAllWithOtp() {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        return manager.createNamedQuery("findAllOTP").getResultList();
     }
 
 }

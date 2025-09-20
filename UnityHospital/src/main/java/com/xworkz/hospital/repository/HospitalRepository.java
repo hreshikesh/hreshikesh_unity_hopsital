@@ -28,7 +28,7 @@ public interface HospitalRepository {
 
     List<String> findDoctorBySpecialization(String specialization);
 
-    List<TimeSlotEntity> findAllIntervals();
+    List<TimeSlotEntity> findAllIntervals(String specialization);
 
     boolean setTimeSlot(String doctorName,String timeInterval);
 
@@ -37,5 +37,8 @@ public interface HospitalRepository {
     boolean deleteDoctor(String email);
 
     List<SpecializationEntity> getAllSpecialization();
+
+    List<HospitalEntity> getAllWithOtp();
+
 
 }

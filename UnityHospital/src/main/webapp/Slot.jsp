@@ -40,8 +40,8 @@
         <div class="mb-3">
             <label for="specializationId" class="form-label fw-semibold">Specialization</label>
             <select class="form-select" name="specialization" id="specializationId"  required>
-                <c:forEach var="specialization" items="${specializations}">
-                    <option value="${specialization}" <c:if test="${specialization eq dto.specialization}">selected</c:if>>${specialization}</option>
+                <c:forEach var="specializationDto" items="${specializations}">
+                    <option value="${specializationDto.specialization}" <c:if test="${specializationDto.specialization eq specializationEntered}">selected</c:if>>${specializationDto.specialization}</option>
                 </c:forEach>
             </select>
         </div>
