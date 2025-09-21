@@ -155,7 +155,7 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public List<String> findDoctorBySpecialization(String specialization) {
+    public List<DoctorEntity>  findDoctorBySpecialization(String specialization) {
       return hopsitalRepository.findDoctorBySpecialization(specialization);
     }
 
@@ -176,8 +176,8 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public boolean setTimeSlot(String doctorName, String timeInterval) {
-        return hopsitalRepository.setTimeSlot(doctorName,timeInterval);
+    public boolean setTimeSlot(String  email, String timeInterval) {
+        return hopsitalRepository.setTimeSlot(email,timeInterval);
     }
 
     @Override

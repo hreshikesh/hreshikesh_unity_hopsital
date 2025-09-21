@@ -73,7 +73,7 @@
             <i class="bi bi-person-check-fill fs-2 text-success mb-2"></i>
             <h5 class="card-title fw-bold">Patient Registration</h5>
             <p class="card-text text-dark">Register patients for appointments and treatments.</p>
-            <a href="PatientRegistration.jsp" class="btn btn-success btn-sm">Register</a>
+            <a href="patient" class="btn btn-success btn-sm">Register</a>
         </div>
     </div>
 

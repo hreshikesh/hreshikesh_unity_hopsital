@@ -16,7 +16,7 @@ public class DoctorDto {
     @Pattern(regexp = "^[A-Za-z]+$")
     private String doctorName;
     @NotNull(message = "Invalid data for email")
-    @Pattern(regexp = "[A-Za-z0-9]+@gmail\\.com$")
+    @Pattern(regexp = "[a-z0-9]+@gmail\\.com$")
     private String doctorEmail;
     @NotNull(message = "Invalid data for phone number")
     @Min(value = 6000000000L,message = "Mobile should start from 6-9")

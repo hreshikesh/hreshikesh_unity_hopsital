@@ -95,7 +95,7 @@ function verifyOtp() {
 }
 
 
-function resetTimeOtp(){
+async function resetTimeOtp(){
     let loginButton = document.getElementById("loginButtonId");
     let timeoutMessage=document.getElementById("timeoutMessageId");
     loginButton.disabled = true;
@@ -133,7 +133,7 @@ function validateName(){
 function validateEmail(){
     let doctorEmail = document.getElementById("doctorEmailId").value;
     let doctorEmailError = document.getElementById("doctorEmailErrorId");
-    let emailPattern = /^[A-Za-z0-9._]+@gmail\.com$/;
+    let emailPattern = /^[a-z0-9._]+@gmail\.com$/;
 
     if (!emailPattern.test(doctorEmail)) {
         doctorEmailError.innerHTML = "Email must follow this pattern: username@gmail.com";
@@ -144,14 +144,14 @@ function validateEmail(){
 
 function validatePhone(){
     let doctorPhone = document.getElementById("doctorPhoneId");
-    let doctorPhoneError = document.getElementById("doctorPhoneErrorId");
-    doctorPhone.value = doctorPhone.value.replace(/[^0-9]/g, '');
-    let phonePattern=/^[6-9]\d{9}$/;
-    if (!phonePattern.test(doctorPhone.value)) {
-        doctorPhoneError.innerHTML = "Phone must start with 6 to 9 and be exactly 10 digits.";
-    } else {
-        doctorPhoneError.innerHTML = "";
-    }
+        let doctorPhoneError = document.getElementById("doctorPhoneErrorId");
+        doctorPhone.value = doctorPhone.value.replace(/[^0-9]/g, '');
+        let phonePattern=/^[6-9]\d{9}$/;
+        if (!phonePattern.test(doctorPhone.value)) {
+            doctorPhoneError.innerHTML = "Phone must start with 6 to 9 and be exactly 10 digits.";
+        } else {
+            doctorPhoneError.innerHTML = "";
+        }
 }
 
 
@@ -202,6 +202,13 @@ function checkDoctorEmail(){
     }
 }
 
+let doctorSelectMessage= document.getElementById("doctorSelectMessageId");
+doctorSelectMessage.innerHTML="Select Doctor";
+function displayEmail(){
+doctorSelectMessage.innerHTML=" ";
+let doctorName=document.getElementById("doctorNameId").value;
+document.getElementById("doctorEmail").value=doctorName;
+}
 
 window.addEventListener("pageshow", function(event) {
     if (event.persisted) {

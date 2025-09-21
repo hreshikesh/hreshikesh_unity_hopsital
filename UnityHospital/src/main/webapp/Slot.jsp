@@ -64,11 +64,17 @@
             <h3 class="text-center text-dark">Choose a Slot</h3>
             <div class="mb-3">
                 <label for="doctorNameId" class="form-label fw-semibold">Doctor</label>
-                <select class="form-select" name="doctorName" id="doctorNameId"  required>
-                    <c:forEach var="name" items="${names}">
-                        <option value="${name}">${name}</option>
+                <select class="form-select" name="email" id="doctorNameId" onchange="displayEmail()" required>
+                    <option selected disabled>Select Doctor</option>
+                    <c:forEach var="dto" items="${doctordto}">
+                        <option value="${dto.doctorEmail}">${dto.doctorName}</option>
                     </c:forEach>
                 </select>
+            </div>
+            <div class="mb-3">
+                <label for="doctorEmail" class="form-label fw-semibold">Email</label>
+                <input class="form-control" type="email" id="doctorEmail" readonly>
+                <span id="doctorSelectMessageId" class="text-warning"></span>
             </div>
                 <div class="mb-3">
                     <label for="timeIntervalId" class="form-label fw-semibold">Slot</label>
@@ -79,13 +85,14 @@
                 </select>
                     <p class="text-warning text-center" id="intervalErrorId">${update}</p>
             </div>
+
+
             <div class="d-grid">
                 <button type="submit" id="setSlotButtonId" class="btn btn-dark fw-bold">Set Slot</button>
             </div>
         </form>
     </div>
 </c:if>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>

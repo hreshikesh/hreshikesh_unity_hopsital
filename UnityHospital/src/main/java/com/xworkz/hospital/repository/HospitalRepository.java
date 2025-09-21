@@ -26,11 +26,11 @@ public interface HospitalRepository {
 
     boolean saveTimeInterval(TimeSlotEntity entity);
 
-    List<String> findDoctorBySpecialization(String specialization);
+    List<DoctorEntity>  findDoctorBySpecialization(String specialization);
 
     List<TimeSlotEntity> findAllIntervals(String specialization);
 
-    boolean setTimeSlot(String doctorName,String timeInterval);
+    boolean setTimeSlot(String  email,String timeInterval);
 
     long checkIntervalForSpecification(String specialization,String timeInterval);
 

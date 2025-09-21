@@ -211,15 +211,15 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     }
 
     @Override
-    public List<String> findDoctorBySpecialization(String specialization) {
+    public List<DoctorEntity> findDoctorBySpecialization(String specialization) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
-        List<String> doctorNames=null;
+        List<DoctorEntity> doctors=null;
         try {
             transaction.begin();
             Query query=manager.createNamedQuery("doctorBySpecialization");
             query.setParameter("specializationBy",specialization);
-            doctorNames=query.getResultList();
+            doctors=query.getResultList();
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -228,7 +228,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         } finally {
             manager.close();
         }
-        return doctorNames;
+        return doctors;
     }
 
     @Override
@@ -253,14 +253,14 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     }
 
     @Override
-    public boolean setTimeSlot(String doctorName, String timeInterval) {
+    public boolean setTimeSlot(String email, String timeInterval) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
         try {
             transaction.begin();
             Query query=manager.createNamedQuery("setTimeInterval");
             query.setParameter("timeSlot",timeInterval);
-            query.setParameter("doctor",doctorName);
+            query.setParameter("email",email);
             query.executeUpdate();
             transaction.commit();
             return true;
@@ -343,7 +343,20 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     @Override
     public List<HospitalEntity> getAllWithOtp() {
         EntityManager manager = entityManagerFactory.createEntityManager();
-        return manager.createNamedQuery("findAllOTP").getResultList();
+        EntityTransaction transaction=manager.getTransaction();
+        List<HospitalEntity> hospitalEntities=null;
+        try {
+            transaction.begin();
+            hospitalEntities= manager.createNamedQuery("findAllOTP").getResultList();
+            transaction.commit();
+        }catch (Exception e){
+            if(transaction.isActive()){
+                transaction.rollback();
+            }e.printStackTrace();
+        }finally {
+            manager.close();
+        }
+        return hospitalEntities;
     }
 
 }
