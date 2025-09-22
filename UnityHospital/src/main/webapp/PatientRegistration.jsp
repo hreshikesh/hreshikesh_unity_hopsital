@@ -26,22 +26,33 @@
 <div class="container py-3 d-flex justify-content-center">
     <form class="bg-success p-5 rounded shadow w-75" action="registerPatient" method="post">
         <h2 class="text-center text-light mb-3">Patient Registration</h2>
-
+        <c:if test="${not empty result}">
+            <p class="text-center mt-3 text-warning">${result}</p>
+        </c:if>
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    <c:forEach var="err" items="${error}">
+                        <li>${err.defaultMessage}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 
         <div class="row mb-3 g-3">
             <div class="col-md-5">
                 <label for="patientNameId" class="form-label fw-semibold text-dark">Full Name</label>
-                <input type="text" class="form-control" id="patientNameId" name="name" oninput="validatePatientName()" placeholder="Enter Patient Name" required>
+                <input type="text" class="form-control" id="patientNameId" name="name" oninput="validatePatientName()" value="${dto.name}" placeholder="Enter Patient Name" required>
                 <span class="text-warning" id="patientNameErrorId"></span>
             </div>
             <div class="col-md-3">
                 <label for="patientAgeId" class="form-label fw-semibold text-dark">Age</label>
-                <input type="number" class="form-control" id="patientAgeId" oninput="validatePatientAge()" name="age" min="0" max="100" required>
+                <input type="number" class="form-control" id="patientAgeId" oninput="validatePatientAge()" name="age" value="${dto.age}" min="0" max="100" required>
                 <span class="text-warning" id="patientAgeErrorId"></span>
             </div>
             <div class="col-md-4">
                 <label for="bloodGroupId" class="form-label fw-semibold text-dark">Blood Group</label>
-                <select class="form-select" id="bloodGroupId" name="bloodGroup" onchange="validateBloodGroup()" required>
+                <select class="form-select" id="bloodGroupId" name="bloodGroup" onchange="validateBloodGroup()"required>
                     <option selected disabled>Select Blood Group</option>
                     <c:forEach var="bloodGroupDto" items="${bloodGroupDtos}">
                         <option value="${bloodGroupDto.bloodGroup}"
@@ -57,12 +68,12 @@
         <div class="row mb-3 g-3">
             <div class="col-md-6">
                 <label for="patientEmailid" class="form-label fw-semibold text-dark">Email</label>
-                <input type="email" class="form-control" id="patientEmailId" name="email" oninput="validateEmail()" placeholder="example@gmail.com" required>
+                <input type="email" class="form-control" id="patientEmailId" name="email" oninput="validateEmail()"  value="${dto.email}" placeholder="example@gmail.com" required>
                 <span class="text-warning" id="patientEmailErrorId"></span>
             </div>
             <div class="col-md-6">
                 <label for="patientPhoneId" class="form-label fw-semibold text-dark">Phone</label>
-                <input type="text" class="form-control" id="patientPhoneId" name="phone" maxlength="10" placeholder="9876543210" oninput="validatePhone()" required>
+                <input type="text" class="form-control" id="patientPhoneId" name="phone" maxlength="10" placeholder="9876543210" value="${dto.phone}" oninput="validatePhone()" required>
                 <span class="text-warning" id="patientPhoneErrorId"></span>
             </div>
         </div>
@@ -71,12 +82,12 @@
         <div class="row mb-2 g-3">
             <div class="col-md-6">
                 <label for="patientAddressId" class="form-label fw-semibold text-dark">Address</label>
-                <textarea class="form-control" id="patientAddressId" name="address" rows="2" placeholder="Enter full address..." oninput="validatePatientAddress()" required></textarea>
+                <textarea class="form-control" id="patientAddressId" name="address" rows="2"  placeholder="Enter full address..." oninput="validatePatientAddress()" required>${dto.address}</textarea>
                 <span class="text-warning" id="patientAddressError"></span>
             </div>
             <div class="col-md-6">
                 <label for="patientDiseaseId" class="form-label fw-semibold text-dark">Disease / Symptoms</label>
-                <textarea class="form-control" id="patientDiseaseId" name="disease" rows="2" placeholder="Describe symptoms..." oninput="validatePatientDisease()" required></textarea>
+                <textarea class="form-control" id="patientDiseaseId" name="disease" rows="2" placeholder="Describe symptoms..." oninput="validatePatientDisease()" required>${dto.disease}</textarea>
                 <span class="text-warning" id="patientDiseaseError"></span>
             </div>
         </div>
@@ -88,8 +99,7 @@
                 <select class="form-select" id="specialization" name="specialization" onchange="fetchDoctor()" required>
                     <option selected disabled>Select Specialization</option>
                     <c:forEach var="specializationDto" items="${specializationDtos}">
-                        <option value="${specializationDto.specialization}"
-                        <c:if test="${specializationDto.specialization eq dto.specialization}">selected="selected"</c:if>>
+                        <option value="${specializationDto.specialization}">
                         ${specializationDto.specialization}
                         </option>
                     </c:forEach>
@@ -113,21 +123,23 @@
 
             <div class="col-md-4">
                 <label for="slotId" class="form-label fw-semibold text-dark">Appointment Slot</label>
-                <input type="text" class="form-control" id="slotId" name="slot" required disabled readonly>
+                <input type="text" class="form-control" id="slotId" name="slot" value="${dto.slot}"  required disabled readonly>
                 <span class="text-warning" id="doctorSlotErrorId"></span>
             </div>
         </div>
 
         <div class="mb-3 col-md-3  mx-auto">
             <label for="fees" class="form-label fw-semibold text-dark">Fees</label>
-            <input type="number" class="form-control" id="fees" name="fees" min="0" required>
+            <input type="number" class="form-control" id="fees" value="${dto.fees}"  name="fees" min="0" required>
         </div>
 
         <div class="d-grid mt-2">
-            <button type="submit" class="btn btn-dark  btn-lg">Register Patient</button>
+            <button type="submit" class="btn btn-dark  btn-lg" onsubmit="checkData()">Register Patient</button>
         </div>
 
     </form>
+
+
 </div>
 <script src="js/patient.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>

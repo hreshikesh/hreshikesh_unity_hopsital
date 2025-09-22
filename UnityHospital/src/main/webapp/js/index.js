@@ -204,6 +204,7 @@ function checkDoctorEmail(){
 
 let doctorSelectMessage= document.getElementById("doctorSelectMessageId");
 doctorSelectMessage.innerHTML="Select Doctor";
+
 function displayEmail(){
 doctorSelectMessage.innerHTML=" ";
 let doctorName=document.getElementById("doctorNameId").value;

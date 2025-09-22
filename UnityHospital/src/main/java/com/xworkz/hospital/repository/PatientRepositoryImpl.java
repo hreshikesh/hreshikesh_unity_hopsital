@@ -1,6 +1,8 @@
 package com.xworkz.hospital.repository;
 
+import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.entity.BloodGroupEntity;
+import com.xworkz.hospital.entity.PateintEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,5 +56,24 @@ public class PatientRepositoryImpl  implements PatientRepository{
             manager.close();
         }
         return interval;
+    }
+
+    @Override
+    public boolean savePatientDetails(PateintEntity entity) {
+        EntityManager manager=entityManagerFactory.createEntityManager();
+        EntityTransaction transaction=manager.getTransaction();
+        try {
+            transaction.begin();
+            manager.persist(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return false;
     }
 }

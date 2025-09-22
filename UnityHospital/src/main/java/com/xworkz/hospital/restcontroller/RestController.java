@@ -112,4 +112,5 @@ public class RestController {
                    return ResponseEntity.ok(interval);
                }
        }
+
 }

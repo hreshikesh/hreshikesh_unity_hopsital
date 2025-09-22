@@ -123,26 +123,32 @@ let specialization=document.getElementById("specialization").value;
     if(this.responseText==="No Doctors Found"||this.responseText==="No doctors"){
     doctorNameSelect.disabled=true;
     doctorError.innerHTML="No doctors found";
+
     }else{
     doctorError.innerHTML="";
         doctorNameSelect.disabled=false;
-
         let names=this.responseText.split(",");
         for(let i=0;i<names.length;i++){
         let [name,email]=names[i].split("|");
         console.log(name,email)
                let option = document.createElement("option");
-                 option.value = email;
-                  option.textContent = name;
+                 option.value = name;
+                     option.textContent = name;
+                     option.setAttribute("email", email);
                    doctorNameSelect.appendChild(option);
+                   }
         }
     }
 }
-}
+
 
 
 async function fetchTimeSlot(){
-let doctorEmail=document.getElementById("doctorName").value;
+let doctorNameSelect=document.getElementById("doctorName");
+let selectedOption = doctorNameSelect.options[doctorNameSelect.selectedIndex];
+console.log(selectedOption);
+let doctorEmail = selectedOption.getAttribute("email");
+console.log(doctorEmail)
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 doctorSlotError.innerHTML="";
 let slot=document.getElementById("slotId");
@@ -156,5 +162,8 @@ doctorSlotError.innerHTML="Timeslot not assigned"
 doctorSlotError.innerHTML="";
 slot.disabled=false;
 slot.value=interval;
+console.log(slot.value)
 }
 }
+
+
