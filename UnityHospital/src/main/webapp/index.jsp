@@ -35,7 +35,7 @@
         <img src="images/courosel4.png" class="w-100 h-100 object-fit-cover opacity-25" alt="Hospital">
     </div>
     <div class="container text-center text-success position-relative">
-        <h1 class="display-4 fw-bold">Unity Hospital</h1>
+        <h1 class="display-4 fw-bold quintessential-regular">Unity Hospital</h1>
         <p class="lead mt-4">Compassionate care. Advanced medicine. Healthy future.</p>
         <p>At Unity Hospital, we are committed to providing world-class healthcare services with a personal touch. Our
             team of experts ensures the highest standards of medical care and patient comfort.</p>

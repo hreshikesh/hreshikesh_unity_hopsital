@@ -1,9 +1,9 @@
 package com.xworkz.hospital.configuarartion;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -62,12 +62,12 @@ public class HospitalConfiguaration implements WebMvcConfigurer {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource source = new DriverManagerDataSource();
-        source.setDriverClassName(driver);
-        source.setUrl(url);
-        source.setUsername(username);
-        source.setPassword(password);
-        return source;
+        HikariDataSource dataSource=new HikariDataSource();
+        dataSource.setDriverClassName(driver);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        dataSource.setJdbcUrl(url);
+        return dataSource;
     }
 
 
