@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         .quintessential-regular {
   font-family: "Quintessential", serif;
@@ -45,7 +46,7 @@
                 </c:forEach>
             </select>
         </div>
-        <div class="d-grid">
+        <div class="d-grid mb-3">
             <button type="submit" class="btn btn-dark fw-bold">Doctors</button>
         </div>
         <c:if test="${not empty result}">
@@ -54,33 +55,45 @@
         <c:if test="${not empty update}">
             <p class="text-warning text-center">${update}</p>
         </c:if>
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    <c:forEach var="err" items="${error}">
+                        <li>${err.defaultMessage}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
     </form>
 </div>
 
 
 <c:if test="${check}">
+
     <div class="container d-flex justify-content-center align-items-center mt-5">
-        <form class="bg-success p-4 rounded shadow w-100" style="max-width:600px;" action="doctorSave" enctype="multipart/form-data" method="post">
+        <form class="bg-success p-4 rounded shadow w-100" style="max-width:600px;" action="doctorSave" method="post">
             <h3 class="text-center text-dark">Choose a Slot</h3>
+            <input type="hidden" value="${specializationEntered}" name="specialization">
             <div class="mb-3">
                 <label for="doctorNameId" class="form-label fw-semibold">Doctor</label>
-                <select class="form-select" name="email" id="doctorNameId" onchange="displayEmail()" required>
+                <select class="form-select" name="doctorName" id="doctorNameId" onchange="displayEmail()"  required>
                     <option selected disabled>Select Doctor</option>
                     <c:forEach var="dto" items="${doctordto}">
-                        <option value="${dto.doctorEmail}">${dto.doctorName}</option>
+                        <option value="${dto.doctorName}" data-email="${dto.doctorEmail}" <c:if test="${dto.doctorName eq dtos.doctorName}">selected</c:if>>${dto.doctorName}</option>
                     </c:forEach>
                 </select>
             </div>
             <div class="mb-3">
                 <label for="doctorEmail" class="form-label fw-semibold">Email</label>
-                <input class="form-control" type="email" id="doctorEmail" readonly>
+                <input class="form-control" name="doctorEmail" type="email" value="${dtos.doctorEmail}" id="doctorEmail" readonly>
                 <span id="doctorSelectMessageId" class="text-warning"></span>
             </div>
                 <div class="mb-3">
                     <label for="timeIntervalId" class="form-label fw-semibold">Slot</label>
-                <select class="form-select" name="timeInterval" id="timeIntervalId" required>
+                <select class="form-select" name="interval" id="timeIntervalId" onchange="checkInterval()" required>
+                    <option selected disabled>Select Slot</option>
                     <c:forEach var="timeInterval" items="${timeIntervals}">
-                        <option value="${timeInterval}">${timeInterval}</option>
+                        <option value="${timeInterval}" <c:if test="${timeInterval eq dtos.interval}">selected</c:if>>${timeInterval}</option>
                     </c:forEach>
                 </select>
                     <p class="text-warning text-center" id="intervalErrorId">${update}</p>
@@ -88,7 +101,7 @@
 
 
             <div class="d-grid">
-                <button type="submit" id="setSlotButtonId" class="btn btn-dark fw-bold">Set Slot</button>
+                <button type="submit" id="setSlotButtonId" class="btn btn-dark fw-bold" disabled>Set Slot</button>
             </div>
         </form>
     </div>

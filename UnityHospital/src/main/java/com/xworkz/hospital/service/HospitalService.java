@@ -1,6 +1,7 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
@@ -35,14 +36,15 @@ public interface HospitalService {
 
    List<TimeSlotDto> findAllIntervals(String specialization);
 
-   boolean setTimeSlot(String  email,String timeInterval);
+   boolean checkInterval(String email, String interval);
+
+
+    String setTimeSlot(DoctorTimeSlotDto dto);
 
    int checkIntervalForSpecification(String specialization,String timeInterval);
 
    boolean deleteDoctor(String email);
 
     List<SpecializationDto> getAllSpecialization();
-
-
 
 }

@@ -1,5 +1,6 @@
 package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
@@ -264,16 +265,28 @@ public class HopsitalController {
 
 
     @RequestMapping("doctorSave")
-    public String updateDoctorTable(String email,String timeInterval,Model model){
-    boolean isSet=hospitalService.setTimeSlot(email,timeInterval);
-        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
-        model.addAttribute("specializations",specializationDto);
-    if(isSet){
-        model.addAttribute("update","Slot has been set");
+    public String setDoctorSlot(@RequestParam String specialization,@Valid DoctorTimeSlotDto dto,BindingResult result,Model model){
+        List<SpecializationDto> specializationDto = hospitalService.getAllSpecialization();
+        if(result.hasErrors()){
+            model.addAttribute("error",result.getAllErrors());
+            model.addAttribute("specializations", specializationDto);
+            model.addAttribute("check",true);
+            model.addAttribute("specializationEntered",specialization);
+            model.addAttribute("dtos",dto);
+        }
+        else {
+            String isSet = hospitalService.setTimeSlot(dto);
 
-    }else {
-        model.addAttribute("update","Slot has not been set");
-    }
+            model.addAttribute("specializations", specializationDto);
+            if (isSet.equals("saveSuccess")) {
+                model.addAttribute("update", "Slot has been set");
+            } else if(isSet.equals("saveFail") || isSet==null){
+                model.addAttribute("update", "Slot has not been set");
+                model.addAttribute("check",true);
+                model.addAttribute("specializationEntered",specialization);
+                model.addAttribute("dtos",dto);
+            }
+        }
     return "Slot";
     }
 

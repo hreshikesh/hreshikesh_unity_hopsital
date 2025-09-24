@@ -1,9 +1,6 @@
 package com.xworkz.hospital.repository;
 
-import com.xworkz.hospital.entity.DoctorEntity;
-import com.xworkz.hospital.entity.HospitalEntity;
-import com.xworkz.hospital.entity.SpecializationEntity;
-import com.xworkz.hospital.entity.TimeSlotEntity;
+import com.xworkz.hospital.entity.*;
 
 import java.util.List;
 
@@ -30,7 +27,7 @@ public interface HospitalRepository {
 
     List<TimeSlotEntity> findAllIntervals(String specialization);
 
-    boolean setTimeSlot(String  email,String timeInterval);
+    boolean setTimeSlot(DoctorTimeSlotEntity entity);
 
     long checkIntervalForSpecification(String specialization,String timeInterval);
 
@@ -39,6 +36,9 @@ public interface HospitalRepository {
     List<SpecializationEntity> getAllSpecialization();
 
     List<HospitalEntity> getAllWithOtp();
+
+
+    long checkInterval(String email, String interval);
 
 
 }

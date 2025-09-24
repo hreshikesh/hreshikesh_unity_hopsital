@@ -105,12 +105,22 @@ public class RestController {
 
     @GetMapping("/fetchTimeSlot")
     public ResponseEntity<String> getTimeSlot(@RequestParam String email){
-               String interval=patientService.getTimeSlot(email);
-               if(interval==null ){
+               List<String> interval=patientService.getTimeSlot(email);
+               if(interval==null ||interval.isEmpty()){
                    return ResponseEntity.ok("Not Assigned");
                }else{
-                   return ResponseEntity.ok(interval);
+                   return ResponseEntity.ok(String.join(",",interval));
                }
+       }
+
+
+       @GetMapping("checkSlot")
+       public ResponseEntity<String> checkSlotAssigned(@RequestParam String email,@RequestParam String interval){
+        boolean status=service.checkInterval(email,interval);
+        if(status){
+          return   ResponseEntity.ok("notset");
+        }
+        return ResponseEntity.ok("set");
        }
 
 }

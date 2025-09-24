@@ -38,7 +38,7 @@ public class PatientServiceImpl  implements  PatientService{
     }
 
     @Override
-    public String getTimeSlot(String email) {
+    public List<String> getTimeSlot(String email) {
         return repository.getTimeSlot(email);
     }
 
@@ -50,7 +50,7 @@ public class PatientServiceImpl  implements  PatientService{
             BeanUtils.copyProperties(dto,entity);
             if(repository.savePatientDetails(entity)){
                 emailService.getEmail(dto.getEmail(),"Appointment Confirmation for "+dto.getName()+" – Unity Hospital","Dear "+dto.getName()+","+"\n\nYour Appointment has been scheduled. Please go through the details"+
-                        "\n\nPatient Name : "+dto.getName()+"\nPatient Age : "+dto.getAge()+"\nPatient Disease/Symptoms : "+dto.getDisease()+
+                        "\n\nRegistration ID : "+dto.getRegistrationId()+"\n\nPatient Name : "+dto.getName()+"\nPatient Age : "+dto.getAge()+"\nPatient Disease/Symptoms : "+dto.getDisease()+
                         "\nDoctor Name : "+dto.getDoctorName()+"\nDoctor Speciality : "+dto.getSpecialization()+"\nDoctor Timings : "+dto.getSlot()+
                         "\n\nFor Further enquiries please visit the reception"+
                         "\n\nThanks & Regards\n\nUnity Hospital\n67th cross, Attiguppe, Bengaluru \nPhone: +91 98765 43210"

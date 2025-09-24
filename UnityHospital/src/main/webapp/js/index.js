@@ -207,9 +207,30 @@ doctorSelectMessage.innerHTML="Select Doctor";
 
 function displayEmail(){
 doctorSelectMessage.innerHTML=" ";
-let doctorName=document.getElementById("doctorNameId").value;
-document.getElementById("doctorEmail").value=doctorName;
+let doctorName=document.getElementById("doctorNameId");
+let selectedOption=doctorName.options[doctorName.selectedIndex];
+document.getElementById("doctorEmail").value=selectedOption.getAttribute("data-email");
 }
+
+
+
+async function checkInterval(){
+const setSlotButton=document.getElementById("setSlotButtonId");
+const timeInterval=document.getElementById("timeIntervalId").value;
+const docEmail=document.getElementById("doctorEmail").value;
+const intervalError=document.getElementById("intervalErrorId");
+intervalError.innerHTML="";
+setSlotButton.disabled=true;
+const result=await axios.get("http://localhost:8080/UnityHospital/checkSlot?email="+docEmail+"&interval="+timeInterval);
+const response=result.data;
+if(response==="notset"){
+setSlotButton.disabled=false;
+}else{
+setSlotButton.disabled=true;
+intervalError.innerHTML="Time Slot already set"
+}
+}
+
 
 window.addEventListener("pageshow", function(event) {
     if (event.persisted) {

@@ -10,7 +10,7 @@ import java.util.List;
 public interface PatientRepository {
     List<BloodGroupEntity> getAllBloodGroup();
 
-    String getTimeSlot(String email);
+    List<String> getTimeSlot(String email);
 
     boolean savePatientDetails(PateintEntity entity);
 }

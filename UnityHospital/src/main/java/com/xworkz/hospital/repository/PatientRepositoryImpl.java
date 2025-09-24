@@ -37,15 +37,15 @@ public class PatientRepositoryImpl  implements PatientRepository{
     }
 
     @Override
-    public String getTimeSlot(String email) {
+    public List<String> getTimeSlot(String email) {
         EntityManager manager=entityManagerFactory.createEntityManager();
         EntityTransaction transaction=manager.getTransaction();
-        String interval="";
+        List<String> interval=null;
         try {
             transaction.begin();
             Query query=manager.createNamedQuery("getInterval");
             query.setParameter("email",email);
-            interval=(String) query.getSingleResult();
+            interval=query.getResultList();
 
             transaction.commit();
         } catch (Exception e) {

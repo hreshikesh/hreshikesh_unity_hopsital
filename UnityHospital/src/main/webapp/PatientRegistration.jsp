@@ -123,7 +123,10 @@
 
             <div class="col-md-4">
                 <label for="slotId" class="form-label fw-semibold text-dark">Appointment Slot</label>
-                <input type="text" class="form-control" id="slotId" name="slot" value="${dto.slot}"  required disabled readonly>
+                <select class="form-select"  id="slotId" name="slot" required disabled>
+
+                </select>
+
                 <span class="text-warning" id="doctorSlotErrorId"></span>
             </div>
         </div>

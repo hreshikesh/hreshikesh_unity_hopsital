@@ -33,14 +33,14 @@
     </div>
 </nav>
 
-<div>
-    ${status}
+<div class="text-warning text-center">
+   <span> ${status}</span>
 </div>
-<h3 class="text-dark text-center">Doctor of Unity Hospital</h3>
-<table class="mt-3 table table-success table-striped-columns table table-bordered  text-center text-dark ">
+<h3 class="text-dark text-center m-3">Doctor of Unity Hospital</h3>
+<table class="mt-3 table table-success table-striped-columns w-75 table-center table table-bordered  text-center text-dark mx-auto ">
     <thead>
     <tr>
-        <th scope="col">#</th>
+        <th scope="col">No</th>
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">PhoneNo</th>
@@ -48,8 +48,8 @@
         <th scope="col">Qualification</th>
         <th scope="col">Experience</th>
         <th scope="col">Photo</th>
-        <th scope="col">update</th>
-        <th scope="col">delete</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
     </tr>
     </thead>
     <tbody>

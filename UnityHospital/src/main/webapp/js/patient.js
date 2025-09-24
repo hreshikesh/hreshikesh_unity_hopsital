@@ -152,7 +152,13 @@ console.log(doctorEmail)
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 doctorSlotError.innerHTML="";
 let slot=document.getElementById("slotId");
-slot.value="";
+slot.innerHTML = "";
+let defaultOption = document.createElement("option");
+        defaultOption.textContent = "Select Slot";
+        defaultOption.value = "";
+        defaultOption.disabled=true;
+        defaultOption.selected=true;
+        slot.appendChild(defaultOption);
 const result=await axios.get("http://localhost:8080/UnityHospital/fetchTimeSlot?email="+doctorEmail);
 const interval=result.data;
 if(interval==="Not Assigned"){
@@ -161,8 +167,14 @@ doctorSlotError.innerHTML="Timeslot not assigned"
 }else{
 doctorSlotError.innerHTML="";
 slot.disabled=false;
-slot.value=interval;
-console.log(slot.value)
+let intervals=interval.split(",");
+console.log(intervals.length)
+for(let i=0;i<intervals.length;i++){
+    let option = document.createElement("option");
+                 option.value = intervals[i];
+                     option.textContent = intervals[i];
+                  slot.appendChild(option);
+}
 }
 }
 

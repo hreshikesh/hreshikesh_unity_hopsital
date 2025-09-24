@@ -1,9 +1,6 @@
 package com.xworkz.hospital.repository;
 
-import com.xworkz.hospital.entity.DoctorEntity;
-import com.xworkz.hospital.entity.HospitalEntity;
-import com.xworkz.hospital.entity.SpecializationEntity;
-import com.xworkz.hospital.entity.TimeSlotEntity;
+import com.xworkz.hospital.entity.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -137,6 +134,14 @@ public class HospitalRepositoryImpl implements HospitalRepository {
            entity1.setExperience(entity.getExperience());
            entity1.setImagePath(entity.getImagePath());
            manager.merge(entity1);
+
+
+           Query query=manager.createNamedQuery("updatedoctorName");
+           query.setParameter("name",entity.getDoctorName());
+           query.setParameter("email",entity.getDoctorEmail());
+           query.executeUpdate();
+
+
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -253,15 +258,12 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     }
 
     @Override
-    public boolean setTimeSlot(String email, String timeInterval) {
+    public boolean setTimeSlot(DoctorTimeSlotEntity entity) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();
         try {
             transaction.begin();
-            Query query=manager.createNamedQuery("setTimeInterval");
-            query.setParameter("timeSlot",timeInterval);
-            query.setParameter("email",email);
-            query.executeUpdate();
+            manager.persist(entity);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -359,4 +361,26 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         return hospitalEntities;
     }
 
+
+    @Override
+    public long checkInterval(String email, String interval) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction=manager.getTransaction();
+        long count=0L;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("checkSlot");
+            query.setParameter("email",email);
+            query.setParameter("interval",interval);
+            count=(long)query.getSingleResult();
+            transaction.commit();
+        }catch (Exception e){
+            if(transaction.isActive()){
+                transaction.rollback();
+            }e.printStackTrace();
+        }finally {
+            manager.close();
+        }
+        return count;
+    }
 }

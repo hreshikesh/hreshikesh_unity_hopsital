@@ -1,12 +1,10 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.dto.TimeSlotDto;
-import com.xworkz.hospital.entity.DoctorEntity;
-import com.xworkz.hospital.entity.HospitalEntity;
-import com.xworkz.hospital.entity.SpecializationEntity;
-import com.xworkz.hospital.entity.TimeSlotEntity;
+import com.xworkz.hospital.entity.*;
 import com.xworkz.hospital.repository.HospitalRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,9 +116,12 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public boolean updateDoctor(DoctorDto dto) {
-        DoctorEntity entity=new DoctorEntity();
-        BeanUtils.copyProperties(dto,entity);
-        return hopsitalRepository.updateDoctor(entity);
+        if(dto!=null) {
+            DoctorEntity entity = new DoctorEntity();
+            BeanUtils.copyProperties(dto, entity);
+            return hopsitalRepository.updateDoctor(entity);
+        }
+        return false;
     }
 
     @Override
@@ -176,8 +177,30 @@ public class HospitalServiceImpl implements HospitalService {
     }
 
     @Override
-    public boolean setTimeSlot(String  email, String timeInterval) {
-        return hopsitalRepository.setTimeSlot(email,timeInterval);
+    public boolean checkInterval(String email, String interval) {
+        long count= hopsitalRepository.checkInterval(email,interval);
+        if(count==0L){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String setTimeSlot(DoctorTimeSlotDto dto){
+        DoctorTimeSlotEntity entity=new DoctorTimeSlotEntity();
+        if(dto!=null){
+            BeanUtils.copyProperties(dto,entity);
+            long count=hopsitalRepository.checkInterval(dto.getDoctorEmail(), dto.getInterval());
+                if(count==0L){
+                    boolean check= hopsitalRepository.setTimeSlot(entity);
+                    if(check){
+                        return "saveSuccess";
+                    }else{
+                        return "saveFail";
+                    }
+                }
+            }
+        return null;
     }
 
     @Override
