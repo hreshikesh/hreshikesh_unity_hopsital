@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -34,53 +34,54 @@
 </nav>
 
 <div class="text-warning text-center">
-   <span> ${status}</span>
+    <span> ${status}</span>
 </div>
-<h3 class="text-dark text-center m-3">Doctor of Unity Hospital</h3>
-<table class="mt-3 table table-success table-striped-columns w-75 table-center table table-bordered  text-center text-dark mx-auto ">
-    <thead>
-    <tr>
-        <th scope="col">No</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">PhoneNo</th>
-        <th scope="col">Specialization</th>
-        <th scope="col">Qualification</th>
-        <th scope="col">Experience</th>
-        <th scope="col">Photo</th>
-        <th scope="col">Update</th>
-        <th scope="col">Delete</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="dto" items="${dtolist}" varStatus="loop">
-    <tr>
-        <th scope="row">${loop.count}</th>
-        <td>${dto.doctorName}</td>
-        <td>${dto.doctorEmail}</td>
-        <td>${dto.doctorPhone}</td>
-        <td>${dto.specialization}</td>
-        <td>${dto.qualification}</td>
-        <td>${dto.experience}</td>
-        <td><img src="download?imagePath=${dto.imagePath}" class="rounded mx-auto d-block " width="100px" height="200px"></td>
-        <td>
-            <form action="updateClick">
-                <input type="hidden" value="${dto.doctorEmail}" name="email">
-                <button type="submit" class="btn btn-success mx-auto">update</button>
-            </form>
-        </td>
-        <td>
-            <form action="deleteDoctor">
-                <input type="hidden" value="${dto.doctorEmail}" name="email">
-                <button type="submit" class="btn mx-auto"><i class="bi bi-trash text-danger"></i></button>
-            </form>
-        </td>
+<main>
+    <h3 class="text-dark text-center mt-3">Doctor of Unity Hospital</h3>
+    <div class="album py-5 ">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                <c:forEach var="dto" items="${dtolist}" varStatus="loop">
+                    <div class="col ">
+                        <div class="card shadow-lg border-1 border border-dark bg-transparent  rounded-1  h-100">
+                            <div class="text-center mt-3">
+                                <img src="download?imagePath=${dto.imagePath}"
+                                     class="rounded-circle border border-1 border-dark shadow-lg"
+                                     width="150" height="120" alt="Doctor Image">
+                            </div>
 
-    </tr>
-    </c:forEach>
-    </tbody>
-</table>
+                            <div class="card-body text-center">
+                                <h5 class="card-title fw-bold text-dark">${dto.doctorName}</h5>
+                                <p class="mb-1"><i class="bi bi-envelope"></i> ${dto.doctorEmail}</p>
+                                <p class="mb-1"><i class="bi bi-telephone"></i> ${dto.doctorPhone}</p>
+                                <p class="mb-1"><span class="fw-semibold">Specialization:</span> ${dto.specialization}</p>
+                                <p class="mb-1"><span class="fw-semibold">Qualification:</span> ${dto.qualification}</p>
+                                <p class="mb-1"><span class="fw-semibold">Experience:</span> ${dto.experience} years</p>
+                            </div>
 
+                            <div class="card-footer bg-dark border-0 text-center">
+                                <div class="btn-group">
+                                    <form action="updateClick" method="post">
+                                        <input type="hidden" value="${dto.doctorEmail}" name="email">
+                                        <button type="submit" class="btn btn-sm btn-outline-success">
+                                            <i class="bi bi-pencil-square"></i> Update
+                                        </button>
+                                    </form>
+                                    <form action="deleteDoctor" method="post" class="ms-2">
+                                        <input type="hidden" value="${dto.doctorEmail}" name="email">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>
 </body>

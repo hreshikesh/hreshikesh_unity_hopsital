@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @NamedQuery(name = "findAllTImeSlots",query = "select e from TimeSlotEntity e where specialization=:specializationBy")
-public class TimeSlotEntity {
+public class TimeSlotEntity extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

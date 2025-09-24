@@ -20,7 +20,7 @@ import javax.persistence.*;
 @NamedQuery(name = "doctorBySpecialization",query = "select e from DoctorEntity e where specialization=:specializationBy ")
 
 
-public class DoctorEntity {
+public class DoctorEntity extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -38,4 +38,6 @@ public class DoctorEntity {
     private int experience;
     @Column(name = "image_path")
     private String imagePath;
+
+
 }

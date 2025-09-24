@@ -98,6 +98,8 @@ function validateDoctorName() {
 
  let doctorError=document.getElementById("doctorNameError");
   doctorError.innerHTML="Choose Specialization";
+
+
 function fetchDoctor(){
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 doctorSlotError.innerHTML="";
@@ -127,7 +129,7 @@ let specialization=document.getElementById("specialization").value;
     }else{
     doctorError.innerHTML="";
         doctorNameSelect.disabled=false;
-        let names=this.responseText.split(",");
+        let names=this.responseText.split(",");//ram|ram@gmail.com,amr|amar@hgmail.com,.|,
         for(let i=0;i<names.length;i++){
         let [name,email]=names[i].split("|");
         console.log(name,email)

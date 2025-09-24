@@ -88,7 +88,9 @@ public class RestController {
         if (doctor.isEmpty()) {
             return "No Doctors Found";
         }
+
         List<String> matchedDoctor = new ArrayList<>();
+
         for (DoctorDto dto : doctor) {
             if (specialization.equals(dto.getSpecialization())) {
                 matchedDoctor.add(dto.getDoctorName()+"|"+dto.getDoctorEmail());

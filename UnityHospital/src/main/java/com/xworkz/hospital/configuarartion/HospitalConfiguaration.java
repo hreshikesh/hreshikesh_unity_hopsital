@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "com.xworkz.hospital")
 @EnableWebMvc
-@EnableAsync
 @PropertySource("classpath:application.properties")
 public class HospitalConfiguaration implements WebMvcConfigurer {
 
@@ -33,43 +32,13 @@ public class HospitalConfiguaration implements WebMvcConfigurer {
         registry.jsp("/", ".jsp");
     }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
-        LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-        factoryBean.setDataSource(dataSource());
-        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        factoryBean.setPackagesToScan("com.xworkz.hospital.entity");
-        return factoryBean;
-    }
+
 
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
         return new PropertySourcesPlaceholderConfigurer();
     }
-
-    @Value("${db.driver}")
-    private String driver;
-
-    @Value("${db.url}")
-    private String url;
-
-    @Value("${db.username}")
-    private String username;
-
-    @Value("${db.password}")
-    private String password;
-
-    @Bean
-    public DataSource dataSource() {
-        HikariDataSource dataSource=new HikariDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        dataSource.setJdbcUrl(url);
-        return dataSource;
-    }
-
 
 
 

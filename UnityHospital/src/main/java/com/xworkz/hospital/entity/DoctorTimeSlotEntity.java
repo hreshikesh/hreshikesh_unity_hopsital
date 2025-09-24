@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NamedQuery(name = "getInterval",query = "select e.interval from DoctorTimeSlotEntity e where e.doctorEmail=:email")
 @NamedQuery(name = "checkSlot",query = "select count(e) from DoctorTimeSlotEntity e where e.doctorEmail=:email and e.interval=:interval ")
 @NamedQuery(name = "updatedoctorName",query = "update DoctorTimeSlotEntity e set e.doctorName=:name where e.doctorEmail=:email ")
-public class DoctorTimeSlotEntity {
+public class DoctorTimeSlotEntity extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
