@@ -56,6 +56,7 @@
             <img src="download?imagePath=${dto.imagePath}" class="rounded-circle mx-auto d-block mb-4" style="width:25%;" alt="profile">
 
 
+            <input type="hidden" value="${dto.id}" name="id">
             <div class="mb-3">
                 <label for="doctorNameId" class="form-label fw-semibold">Name</label>
                 <input type="text" class="form-control" id="doctorNameId" oninput="validateName()" name="doctorName"
@@ -111,7 +112,7 @@
 
             <div class="mb-3">
                 <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
-                <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*">
+                <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*" >
             </div>
 
             <div class="d-grid">

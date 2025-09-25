@@ -11,6 +11,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "com.xworkz.hospital")
@@ -23,8 +24,18 @@ public class DatabaseConfig {
         factoryBean.setDataSource(dataSource());
         factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         factoryBean.setPackagesToScan("com.xworkz.hospital.entity");
+
+
+        Properties jpaProperties = new Properties();
+        jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update");
+        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
+        jpaProperties.setProperty("hibernate.show_sql", "true");
+        jpaProperties.setProperty("hibernate.format_sql", "true");
+        factoryBean.setJpaProperties(jpaProperties);
+
         return factoryBean;
     }
+
     @Value("${db.driver}")
     private String driver;
 

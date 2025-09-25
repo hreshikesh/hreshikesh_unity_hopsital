@@ -1,16 +1,19 @@
 package com.xworkz.hospital.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorDto {
+
+    private int id;
+
     @NotNull(message = "Invalid data for Name")
     @Size(min = 3,max = 10,message = "Size size between 3 and 10")
     @Pattern(regexp = "^[A-Za-z]+$")
@@ -31,5 +34,8 @@ public class DoctorDto {
     @Min(value = 0,message = "Experience should not be less than 0")
     @Max(value = 50,message = "Experience should not be greater than 50")
     private int experience;
+
+    private MultipartFile image;
+
     private String imagePath;
 }

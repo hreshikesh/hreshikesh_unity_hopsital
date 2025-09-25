@@ -1,8 +1,5 @@
 package com.xworkz.hospital.controller;
-import com.xworkz.hospital.dto.DoctorDto;
-import com.xworkz.hospital.dto.DoctorTimeSlotDto;
-import com.xworkz.hospital.dto.SpecializationDto;
-import com.xworkz.hospital.dto.TimeSlotDto;
+import com.xworkz.hospital.dto.*;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
@@ -80,15 +77,10 @@ public class HopsitalController {
     }
 
 
-    private String fileUpload(String name,MultipartFile file) throws IOException {
-        byte[] filePart= file.getBytes();
-        Path path=Paths.get("D:\\moduleImages\\"+name+System.currentTimeMillis()+".jpg");
-        Files.write(path,filePart);
-        return path.getFileName().toString();
-    }
+
 
     @PostMapping("registerDoctor")
-    public ModelAndView registerDoctor(@RequestParam("image")MultipartFile file, @Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
+    public ModelAndView registerDoctor(@Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
         List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
         view.addObject("specializations",specializationDto);
         if(result.hasErrors()){
@@ -96,19 +88,8 @@ public class HopsitalController {
             view.addObject("dto",dto);
             view.addObject("error",result.getAllErrors());
         }else{
-            if(!file.isEmpty()) {
-                String imagePath = fileUpload(dto.getDoctorName(), file);
-                dto.setImagePath(imagePath);
-            }else{
-               DoctorDto dto1= hospitalService.searchByEmail(dto.getDoctorEmail());
-               if(dto1!=null) {
-                   dto.setImagePath(dto1.getImagePath());
-               }else{
-                   dto.setImagePath(null);
-               }
-            }
-            boolean status=hospitalService.saveDoctor(dto);
 
+            boolean status=hospitalService.saveDoctor(dto);
             view.setViewName("Doctor");
             if(status){
                 view.addObject("status","Registered SuccessFully");
@@ -128,6 +109,7 @@ public class HopsitalController {
         if(dto==null ){
             model.addAttribute("result","Doctor not found");
         }else{
+
             model.addAttribute("dto",dto);
             List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
             model.addAttribute("specializations",specializationDto);
@@ -136,37 +118,49 @@ public class HopsitalController {
     }
 
     @RequestMapping("updateDoctor")
-    public ModelAndView updateDoctor(@RequestParam("image")MultipartFile file,@Valid DoctorDto dto,BindingResult result,ModelAndView view) throws IOException {
-        List<SpecializationDto> specializationDto= hospitalService.getAllSpecialization();
-        view.addObject("specializations",specializationDto);
-        if(result.hasErrors()){
-            view.setViewName("Update");
-            view.addObject("dto",dto);
-            view.addObject("error",result.getAllErrors());
-        }else{
-            if(!file.isEmpty()) {
-                String imagePath = fileUpload(dto.getDoctorName(), file);
-                dto.setImagePath(imagePath);
-            }else{
-                DoctorDto dto1= hospitalService.searchByEmail(dto.getDoctorEmail());
-                dto.setImagePath(dto1.getImagePath());
-            }
-           boolean status= hospitalService.updateDoctor(dto);
-            view.setViewName("Update");
-            view.addObject("dto",dto);
-            if(status){
-                view.addObject("status","Updated SuccessFully");
-            }else {
-                view.addObject("status","Doctor Details Not Updated");
+    public ModelAndView updateDoctor(@Valid DoctorDto dto,BindingResult result,ModelAndView view) throws IOException {
+
+        List<SpecializationDto> specializationDto = hospitalService.getAllSpecialization();
+        view.addObject("specializations", specializationDto);
+
+        if (dto.getImage() == null || dto.getImage().isEmpty()) {
+            DoctorDto existingDto = hospitalService.searchByEmail(dto.getDoctorEmail());
+            if (existingDto != null && existingDto.getImagePath() != null) {
+                dto.setImagePath(existingDto.getImagePath());
             }
         }
+
+
+        if (result.hasErrors()) {
+            view.setViewName("Update");
+            view.addObject("dto", dto);
+            view.addObject("error", result.getAllErrors());
+        } else {
+
+            boolean status = hospitalService.updateDoctor(dto);
+
+            DoctorDto updatedDto = hospitalService.searchByEmail(dto.getDoctorEmail());
+            if (updatedDto != null && updatedDto.getImagePath() != null) {
+                dto.setImagePath(updatedDto.getImagePath());
+            }
+
+            view.setViewName("Update");
+            view.addObject("dto", dto);
+
+            if (status) {
+                view.addObject("status", "Updated Successfully");
+            } else {
+                view.addObject("status", "Doctor Details Not Updated");
+            }
+        }
+
         return view;
     }
 
     @GetMapping("download")
     public void download(HttpServletResponse response,@RequestParam String imagePath)throws IOException{
         response.setContentType("image/jpeg");
-        File file=new File("D:\\moduleImages\\"+imagePath);
+        File file=new File("D:\\unity_hospital\\"+imagePath);
         InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
         ServletOutputStream outputStream= response.getOutputStream();
         IOUtils.copy(inputStream,outputStream);
@@ -244,11 +238,10 @@ public class HopsitalController {
            modelAndView.addObject("result","No Doctors found for "+specialization);
            modelAndView.setViewName("Slot");
        }else {
-
            modelAndView.addObject("specializationEntered",specialization);
            modelAndView.addObject("check",true);
            modelAndView.addObject("doctordto",doctors);
-           if(timeSlotDtos==null){
+           if(timeSlotDtos==null||timeSlotDtos.isEmpty()){
                modelAndView.addObject("result","No Time Slots set  Please Set the TIme Slots");
            }else{
                for(TimeSlotDto timeSlotDto:timeSlotDtos){
@@ -276,7 +269,6 @@ public class HopsitalController {
         }
         else {
             String isSet = hospitalService.setTimeSlot(dto);
-
             model.addAttribute("specializations", specializationDto);
             if (isSet.equals("saveSuccess")) {
                 model.addAttribute("update", "Slot has been set");

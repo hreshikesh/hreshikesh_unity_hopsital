@@ -24,4 +24,9 @@ public class DoctorTimeSlotEntity extends AuditEntity{
     private String doctorEmail;
     @Column(name = "doctor_time_interval")
     private String interval;
+
+@ManyToOne
+    @JoinColumn(name = "doctor_id",referencedColumnName = "id",nullable = false)
+    private DoctorEntity doctor;
+
 }

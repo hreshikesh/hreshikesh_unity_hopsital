@@ -2,6 +2,7 @@ package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.entity.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -99,6 +100,7 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         return false;
     }
 
+
     @Override
     public DoctorEntity searchByEmail(String email) {
         EntityManager manager = entityManagerFactory.createEntityManager();
@@ -126,22 +128,8 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         EntityTransaction transaction = manager.getTransaction();
         try {
             transaction.begin();
-           DoctorEntity entity1= searchByEmail(entity.getDoctorEmail());
-           entity1.setDoctorName(entity.getDoctorName());
-           entity1.setDoctorPhone(entity.getDoctorPhone());
-           entity1.setSpecialization(entity.getSpecialization());
-           entity1.setQualification(entity.getQualification());
-           entity1.setExperience(entity.getExperience());
-           entity1.setImagePath(entity.getImagePath());
-           manager.merge(entity1);
-
-
-           Query query=manager.createNamedQuery("updatedoctorName");
-           query.setParameter("name",entity.getDoctorName());
-           query.setParameter("email",entity.getDoctorEmail());
-           query.executeUpdate();
-
-
+            log.info(String.valueOf(entity.getId()));
+            manager.merge(entity);
             transaction.commit();
             return true;
         } catch (Exception e) {

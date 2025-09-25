@@ -7,6 +7,7 @@ import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.SpecializationEntity;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface HospitalService {
@@ -18,11 +19,11 @@ public interface HospitalService {
 
     String verifyOtp(String Otp,String email);
 
-    boolean saveDoctor(DoctorDto dto);
+    boolean saveDoctor(DoctorDto dto) throws IOException;
 
     DoctorDto  searchByEmail(String email);
 
-    boolean updateDoctor(DoctorDto dto);
+    boolean updateDoctor(DoctorDto dto) throws IOException;
 
     List<DoctorDto> getAllDoctor();
 
@@ -37,7 +38,6 @@ public interface HospitalService {
    List<TimeSlotDto> findAllIntervals(String specialization);
 
    boolean checkInterval(String email, String interval);
-
 
     String setTimeSlot(DoctorTimeSlotDto dto);
 

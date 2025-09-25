@@ -60,4 +60,6 @@ public class PateintEntity extends AuditEntity{
 
     @Column(name = "saved_time")
     private LocalDateTime localDateTime;
+
+
 }
