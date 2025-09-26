@@ -72,7 +72,6 @@ public class HopsitalController {
     public String verifyOtpAndLogin(Model model, HttpSession session) {
         model.addAttribute("email",(String) session.getAttribute("adminEmail1"));
         session.setAttribute("adminLoggedIn",true);
-        hospitalService.resetOtp((String) session.getAttribute("adminEmail1"));
         return "Home";
     }
 

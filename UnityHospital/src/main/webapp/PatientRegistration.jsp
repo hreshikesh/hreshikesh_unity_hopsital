@@ -119,7 +119,8 @@
                 </div>
                 <span class="text-warning" id="doctorNameError"></span>
             </div>
-
+            <input type="hidden" name="doctorId" id="doctorIdInput" required>
+            <input type="hidden" name="slotId" id="slotInputId" required>
 
             <div class="col-md-4">
                 <label for="slotId" class="form-label fw-semibold text-dark">Appointment Slot</label>

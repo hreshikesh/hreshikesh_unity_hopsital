@@ -1,9 +1,13 @@
 package com.xworkz.hospital.service;
 
 import com.xworkz.hospital.dto.BloodGroupDto;
+import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.entity.BloodGroupEntity;
+import com.xworkz.hospital.entity.DoctorEntity;
+import com.xworkz.hospital.entity.DoctorTimeSlotEntity;
 import com.xworkz.hospital.entity.PateintEntity;
+import com.xworkz.hospital.repository.HospitalRepository;
 import com.xworkz.hospital.repository.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +28,9 @@ public class PatientServiceImpl  implements  PatientService{
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    HospitalRepository hospitalRepository;
+
     @Override
     public List<BloodGroupDto> getAllBloodGroup() {
         List<BloodGroupEntity> entities=repository.getAllBloodGroup();
@@ -38,16 +45,35 @@ public class PatientServiceImpl  implements  PatientService{
     }
 
     @Override
-    public List<String> getTimeSlot(String email) {
-        return repository.getTimeSlot(email);
+    public List<DoctorTimeSlotDto> getTimeSlot(int id) {
+        List<DoctorTimeSlotEntity> entities=repository.getTimeSlot(id);
+
+        List<DoctorTimeSlotDto> dtos=new ArrayList<>();
+        for(DoctorTimeSlotEntity entity:entities){
+            DoctorTimeSlotDto dto=new DoctorTimeSlotDto();
+            BeanUtils.copyProperties(entity,dto);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 
     @Override
     public boolean savePatientDetails(PatientDto dto) {
         if(dto!=null){
             PateintEntity entity=new PateintEntity();
-            entity.setLocalDateTime(LocalDateTime.now());
             BeanUtils.copyProperties(dto,entity);
+
+           DoctorEntity entity1= hospitalRepository.findById(dto.getDoctorId());
+           log.info(entity1.toString());
+           if(entity1!=null){
+               entity.setDoctor(entity1);
+           }
+
+         DoctorTimeSlotEntity entity2=  repository.getInterval(dto.getSlotId());
+           if(entity2!=null){
+               entity.setSlotEntity(entity2);
+           }
+
             if(repository.savePatientDetails(entity)){
                 emailService.getEmail(dto.getEmail(),"Appointment Confirmation for "+dto.getName()+" – Unity Hospital","Dear "+dto.getName()+","+"\n\nYour Appointment has been scheduled. Please go through the details"+
                         "\n\nRegistration ID : "+dto.getRegistrationId()+"\n\nPatient Name : "+dto.getName()+"\nPatient Age : "+dto.getAge()+"\nPatient Disease/Symptoms : "+dto.getDisease()+

@@ -11,6 +11,8 @@ public interface HospitalRepository {
 
     void updateTable(HospitalEntity entity);
 
+    DoctorEntity findById(int id);
+
     boolean saveDoctor(DoctorEntity entity);
 
     DoctorEntity searchByEmail(String email);

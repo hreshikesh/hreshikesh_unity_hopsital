@@ -5,6 +5,7 @@ package com.xworkz.hospital.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,10 +15,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @NamedQuery(name = "findByName",query = "select e from DoctorEntity e where doctorEmail=:email")
 @NamedQuery(name = "getAllDoctor",query = "select e from DoctorEntity e")
 @NamedQuery(name = "doctorEmailCount",query = "select count(e.doctorEmail) from DoctorEntity e where doctorEmail=:email")
 @NamedQuery(name = "doctorBySpecialization",query = "select e from DoctorEntity e where specialization=:specializationBy ")
+@NamedQuery(name="getDoctorDetailsById",query = "select e from  DoctorEntity e where e.id=:id")
 
 
 public class DoctorEntity extends AuditEntity{
@@ -47,6 +50,10 @@ public class DoctorEntity extends AuditEntity{
     @OneToOne(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true)
     private ImageEntity imageEntity;
 
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<DoctorTimeSlotEntity> doctorTimeSlotEntities=new ArrayList<>();
 
+    @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<PateintEntity> patientEntities =new ArrayList<>();
 
 }

@@ -82,6 +82,27 @@ public class HospitalRepositoryImpl implements HospitalRepository {
     }
 
     @Override
+    public DoctorEntity findById(int id) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        DoctorEntity entity=null;
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("getDoctorDetailsById");
+            query.setParameter("id", id);
+            entity =(DoctorEntity) query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return entity;
+    }
+
+    @Override
     public boolean saveDoctor(DoctorEntity entity) {
         EntityManager manager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = manager.getTransaction();

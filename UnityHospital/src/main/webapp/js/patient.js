@@ -129,14 +129,14 @@ let specialization=document.getElementById("specialization").value;
     }else{
     doctorError.innerHTML="";
         doctorNameSelect.disabled=false;
-        let names=this.responseText.split(",");//ram|ram@gmail.com,amr|amar@hgmail.com,.|,
+        let names=this.responseText.split(",");
         for(let i=0;i<names.length;i++){
-        let [name,email]=names[i].split("|");
-        console.log(name,email)
+        let [name,id]=names[i].split("|");
+        console.log(name,id)
                let option = document.createElement("option");
                  option.value = name;
                      option.textContent = name;
-                     option.setAttribute("email", email);
+                     option.setAttribute("id", id);
                    doctorNameSelect.appendChild(option);
                    }
         }
@@ -149,8 +149,8 @@ async function fetchTimeSlot(){
 let doctorNameSelect=document.getElementById("doctorName");
 let selectedOption = doctorNameSelect.options[doctorNameSelect.selectedIndex];
 console.log(selectedOption);
-let doctorEmail = selectedOption.getAttribute("email");
-console.log(doctorEmail)
+const doctorInput=document.getElementById("doctorIdInput");
+doctorInput.value = selectedOption.getAttribute("id");
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 doctorSlotError.innerHTML="";
 let slot=document.getElementById("slotId");
@@ -161,21 +161,24 @@ let defaultOption = document.createElement("option");
         defaultOption.disabled=true;
         defaultOption.selected=true;
         slot.appendChild(defaultOption);
-const result=await axios.get("http://localhost:8080/UnityHospital/fetchTimeSlot?email="+doctorEmail);
+const result=await axios.get("http://localhost:8080/UnityHospital/fetchTimeSlot?id="+doctorInput.value);
 const interval=result.data;
 if(interval==="Not Assigned"){
 slot.disabled=true;
 doctorSlotError.innerHTML="Timeslot not assigned"
 }else{
+let slotInput=document.getElementById("slotInputId");
 doctorSlotError.innerHTML="";
 slot.disabled=false;
-let intervals=interval.split(",");
-console.log(intervals.length)
+let intervals=interval.split("|");
+console.log(intervals)
 for(let i=0;i<intervals.length;i++){
+    let [timeslot,id]=intervals[i].split(",")
     let option = document.createElement("option");
-                 option.value = intervals[i];
-                     option.textContent = intervals[i];
+                 option.value = timeslot;
+                 option.textContent = timeslot;
                   slot.appendChild(option);
+                  slotInput.value=id;
 }
 }
 }

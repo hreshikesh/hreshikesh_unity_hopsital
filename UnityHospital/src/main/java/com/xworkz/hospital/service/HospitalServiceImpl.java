@@ -288,6 +288,8 @@ public class HospitalServiceImpl implements HospitalService {
 
                     doctorTimeSlotEntity.setDoctor(doctorEntity);
 
+                    doctorEntity.getDoctorTimeSlotEntities().add(doctorTimeSlotEntity);
+
                     boolean check= hopsitalRepository.setTimeSlot(doctorTimeSlotEntity);
                     if(check){
                         return "saveSuccess";

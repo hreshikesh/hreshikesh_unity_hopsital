@@ -53,4 +53,8 @@ public class PatientDto {
 
     @NotNull(message = "Disease cannot be empty")
     private String fees;
+
+
+    private int slotId;
+    private int doctorId;
 }

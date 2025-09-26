@@ -1,6 +1,8 @@
 package com.xworkz.hospital.restcontroller;
 
 import com.xworkz.hospital.dto.DoctorDto;
+import com.xworkz.hospital.dto.DoctorTimeSlotDto;
+import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.service.HospitalService;
 import com.xworkz.hospital.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
@@ -93,7 +95,7 @@ public class RestController {
 
         for (DoctorDto dto : doctor) {
             if (specialization.equals(dto.getSpecialization())) {
-                matchedDoctor.add(dto.getDoctorName()+"|"+dto.getDoctorEmail());
+                matchedDoctor.add(dto.getDoctorName()+"|"+dto.getId());
             }
         }
         if (matchedDoctor.isEmpty()) {
@@ -106,12 +108,17 @@ public class RestController {
 
 
     @GetMapping("/fetchTimeSlot")
-    public ResponseEntity<String> getTimeSlot(@RequestParam String email){
-               List<String> interval=patientService.getTimeSlot(email);
+    public ResponseEntity<String> getTimeSlot(@RequestParam int id){
+               List<DoctorTimeSlotDto> interval=patientService.getTimeSlot(id);
                if(interval==null ||interval.isEmpty()){
                    return ResponseEntity.ok("Not Assigned");
                }else{
-                   return ResponseEntity.ok(String.join(",",interval));
+                   List<String> mappedValues=new ArrayList<>();
+                   for(DoctorTimeSlotDto dto:interval){
+                       log.info(dto.getInterval()+"|"+dto.getId());
+                       mappedValues.add(dto.getInterval()+","+dto.getId());
+                   }
+                   return ResponseEntity.ok(String.join("|",mappedValues));
                }
        }
 

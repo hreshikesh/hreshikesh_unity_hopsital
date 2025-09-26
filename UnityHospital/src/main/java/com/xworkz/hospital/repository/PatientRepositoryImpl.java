@@ -1,7 +1,9 @@
 package com.xworkz.hospital.repository;
 
+import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.entity.BloodGroupEntity;
+import com.xworkz.hospital.entity.DoctorTimeSlotEntity;
 import com.xworkz.hospital.entity.PateintEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,14 +39,14 @@ public class PatientRepositoryImpl  implements PatientRepository{
     }
 
     @Override
-    public List<String> getTimeSlot(String email) {
+    public List<DoctorTimeSlotEntity> getTimeSlot(int  id) {
         EntityManager manager=entityManagerFactory.createEntityManager();
         EntityTransaction transaction=manager.getTransaction();
-        List<String> interval=null;
+        List<DoctorTimeSlotEntity> interval=null;
         try {
             transaction.begin();
             Query query=manager.createNamedQuery("getInterval");
-            query.setParameter("email",email);
+            query.setParameter("id",id);
             interval=query.getResultList();
 
             transaction.commit();
@@ -75,5 +77,26 @@ public class PatientRepositoryImpl  implements PatientRepository{
             manager.close();
         }
         return false;
+    }
+
+    @Override
+    public DoctorTimeSlotEntity getInterval(int id) {
+        EntityManager manager=entityManagerFactory.createEntityManager();
+        EntityTransaction transaction=manager.getTransaction();
+        DoctorTimeSlotEntity interval=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("getIntervalById");
+            query.setParameter("id",id);
+            interval=(DoctorTimeSlotEntity) query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return interval;
     }
 }

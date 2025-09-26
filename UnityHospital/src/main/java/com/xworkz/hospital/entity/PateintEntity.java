@@ -58,8 +58,13 @@ public class PateintEntity extends AuditEntity{
     private String fees;
 
 
-    @Column(name = "saved_time")
-    private LocalDateTime localDateTime;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="doctor_id",referencedColumnName = "id",nullable = false)
+    private DoctorEntity doctor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="slot_id",referencedColumnName = "id",nullable = false)
+    private DoctorTimeSlotEntity slotEntity;
 
 
 }
