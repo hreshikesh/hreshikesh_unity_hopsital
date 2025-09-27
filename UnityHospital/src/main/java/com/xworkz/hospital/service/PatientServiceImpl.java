@@ -61,7 +61,18 @@ public class PatientServiceImpl  implements  PatientService{
     public boolean savePatientDetails(PatientDto dto) {
         if(dto!=null){
             PateintEntity entity=new PateintEntity();
-            BeanUtils.copyProperties(dto,entity);
+            entity.setRegistrationId(dto.getRegistrationId());
+            entity.setName(dto.getName());
+            entity.setAge(dto.getAge());
+            entity.setBloodGroup(dto.getBloodGroup());
+            entity.setEmail(dto.getEmail());
+            entity.setPhone(dto.getPhone());
+            entity.setAddress(dto.getAddress());
+            entity.setDisease(dto.getDisease());
+            entity.setSpecialization(dto.getSpecialization());
+            entity.setFees(dto.getFees());
+            entity.setDoctorName(dto.getDoctorName());
+            entity.setSlot(dto.getSlot());
 
            DoctorEntity entity1= hospitalRepository.findById(dto.getDoctorId());
            log.info(entity1.toString());

@@ -99,7 +99,7 @@
             </div>
 
             <div class="col-12">
-                <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
+                <label for="profilePhoto" class="form-label fw-semibold" onchange="profilePhotoValidate()">Choose Profile Photo</label>
                 <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*">
             </div>
         </div>

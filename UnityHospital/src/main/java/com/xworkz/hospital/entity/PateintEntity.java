@@ -5,8 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "patient_info")

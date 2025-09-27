@@ -160,10 +160,12 @@ public class HopsitalController {
     public void download(HttpServletResponse response,@RequestParam String imagePath)throws IOException{
         response.setContentType("image/jpeg");
         File file=new File("D:\\unity_hospital\\"+imagePath);
-        InputStream inputStream=new BufferedInputStream(new FileInputStream(file));
-        ServletOutputStream outputStream= response.getOutputStream();
-        IOUtils.copy(inputStream,outputStream);
-        response.flushBuffer();
+        if(file.exists()) {
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+            ServletOutputStream outputStream = response.getOutputStream();
+            IOUtils.copy(inputStream, outputStream);
+            response.flushBuffer();
+        }
     }
 
     @GetMapping("alldoctor")

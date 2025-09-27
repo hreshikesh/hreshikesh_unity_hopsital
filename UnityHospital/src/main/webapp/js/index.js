@@ -184,8 +184,14 @@ let experience=document.getElementById("experienceId");
  }else{
  experienceError.innerHTML="";
  }
+}
+
+
+function profilePhotoValidate(){
+let file=document
 
 }
+
 
 
 function checkDoctorEmail(){
