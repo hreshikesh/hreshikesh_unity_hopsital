@@ -86,8 +86,14 @@ public class HopsitalController {
             view.setViewName("Doctor");
             view.addObject("dto",dto);
             view.addObject("error",result.getAllErrors());
-        }else{
-
+            return view;
+        }
+        if (dto.getImage().getSize()>1*1024*1024) {
+            view.setViewName("Doctor");
+            view.addObject("dto",dto);
+            view.addObject("imageError", "Image Size Cannot exceed 1MB");
+            return view;
+        }
             boolean status=hospitalService.saveDoctor(dto);
             view.setViewName("Doctor");
             if(status){
@@ -95,9 +101,9 @@ public class HopsitalController {
             }else {
                 view.addObject("dto",dto);
                 view.addObject("status","Doctor Not Registered");
-            }
         }
         return view;
+
     }
 
 
@@ -134,7 +140,19 @@ public class HopsitalController {
             view.setViewName("Update");
             view.addObject("dto", dto);
             view.addObject("error", result.getAllErrors());
-        } else {
+            return view;
+        }
+
+        if (dto.getImage().getSize()>1*1024*1024) {
+            view.setViewName("Update");
+            DoctorDto existingDto = hospitalService.searchByEmail(dto.getDoctorEmail());
+            if (existingDto != null && existingDto.getImagePath() != null) {
+                dto.setImagePath(existingDto.getImagePath());
+            }
+            view.addObject("dto",dto);
+            view.addObject("imageError", "Image Size Cannot exceed 1MB");
+            return view;
+        }
 
             boolean status = hospitalService.updateDoctor(dto);
 
@@ -151,8 +169,6 @@ public class HopsitalController {
             } else {
                 view.addObject("status", "Doctor Details Not Updated");
             }
-        }
-
         return view;
     }
 

@@ -188,9 +188,17 @@ let experience=document.getElementById("experienceId");
 
 
 function profilePhotoValidate(){
-let file=document
-
+let fileInput=document.getElementById("profilePhotoId");
+let imageError=document.getElementById("imageErrorId");
+const file=fileInput.files[0];
+const fileSize=1*1024*1024;
+if(file.size>fileSize){
+      imageError.innerHTML="Image size should not be above 1MB";
+}else{
+  imageError.innerHTML=" ";
 }
+}
+
 
 
 

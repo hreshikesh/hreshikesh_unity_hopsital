@@ -42,11 +42,18 @@
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <ul class="mb-0">
                     <c:forEach var="err" items="${error}">
-                        <li>${err.defaultMessage}</li>
+                        <li class="text-danger small">${err.defaultMessage}</li>
                     </c:forEach>
                 </ul>
             </div>
         </c:if>
+
+        <c:if test="${not empty imageError}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="text-danger small" >${imageError}</span>
+            </div>
+        </c:if>
+
 
         <div class="row g-3">
             <div class="col-md-6">
@@ -99,8 +106,11 @@
             </div>
 
             <div class="col-12">
-                <label for="profilePhoto" class="form-label fw-semibold" onchange="profilePhotoValidate()">Choose Profile Photo</label>
-                <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*">
+                <label for="profilePhotoId" class="form-label fw-semibold" >Choose Profile Photo</label>
+                <input class="form-control" type="file" id="profilePhotoId" name="image" accept="image/*" onchange="profilePhotoValidate()">
+                <span class="text-warning small" id="imageErrorId"></span>
+
+
             </div>
         </div>
 

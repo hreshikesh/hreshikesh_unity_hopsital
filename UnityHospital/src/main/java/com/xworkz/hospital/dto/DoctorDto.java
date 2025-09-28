@@ -34,7 +34,6 @@ public class DoctorDto {
     @Min(value = 0,message = "Experience should not be less than 0")
     @Max(value = 50,message = "Experience should not be greater than 50")
     private int experience;
-
     private MultipartFile image;
 
     private String imagePath;

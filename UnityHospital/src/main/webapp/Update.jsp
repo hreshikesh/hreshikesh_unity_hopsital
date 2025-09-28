@@ -35,22 +35,31 @@
 
 <div class="container text-center mb-3">
 
-    <c:if test="${not empty error}">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <ul class="mb-0">
-                <c:forEach var="err" items="${error}">
-                    <li>${err.defaultMessage}</li>
-                </c:forEach>
-            </ul>
-        </div>
-    </c:if>
-</div>
+
+
 
 
 <c:if test="${not empty dto}">
     <div class="container d-flex justify-content-center align-items-center my-4">
         <form class="bg-success p-4 rounded shadow w-100" style="max-width:600px;" action="updateDoctor" enctype="multipart/form-data" method="post">
             <h2 class="text-center text-light mb-4">Doctor Registration</h2>
+
+            <c:if test="${not empty error}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul class="mb-0">
+                        <c:forEach var="err" items="${error}">
+                            <li>${err.defaultMessage}</li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:if>
+
+    <c:if test="${not empty imageError}">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="text-danger small" >${imageError}</span>
+        </div>
+    </c:if>
+
 
 
             <img src="download?imagePath=${dto.imagePath}" class="rounded-circle mx-auto d-block mb-4" style="width:25%;" alt="profile">
@@ -111,23 +120,28 @@
 
 
             <div class="mb-3">
-                <label for="profilePhoto" class="form-label fw-semibold">Choose Profile Photo</label>
-                <input class="form-control" type="file" id="profilePhoto" name="image" accept="image/*" >
+                <label for="profilePhotoId" class="form-label fw-semibold">Choose Profile Photo</label>
+                <input class="form-control" type="file" id="profilePhotoId" name="image" accept="image/*" onchange="profilePhotoValidate()">
+                <span class="text-warning small" id="imageErrorId"></span>
             </div>
 
             <div class="d-grid">
                 <button type="submit" class="btn btn-dark fw-bold">Update Doctor</button>
             </div>
+
+
+            <div class="container text-center mb-3">
+                <c:if test="${not empty status}">
+                    <p class="text-warning">${status}</p>
+                </c:if>
+            </div>
+
         </form>
     </div>
 </c:if>
 
 
-<div class="container text-center mb-3">
-    <c:if test="${not empty status}">
-        <p class="text-warning">${status}</p>
-    </c:if>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>

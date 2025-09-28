@@ -211,7 +211,6 @@ public class HospitalServiceImpl implements HospitalService {
           DoctorDto dto=new DoctorDto();
 
           BeanUtils.copyProperties(entity,dto);
-
           if (entity.getImageEntity() != null && entity.getImageEntity().getImageName() != null) {
               dto.setImagePath(entity.getImageEntity().getImageName());
               log.info(dto.getImagePath());

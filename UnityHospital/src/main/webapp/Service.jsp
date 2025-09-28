@@ -30,7 +30,6 @@
     </div>
 </nav>
 
-
 <section class="d-flex flex-column justify-content-center align-items-center text-center text-success py-5">
     <h1 class="display-4 fw-bold quintessential-regular">Unity Hospital</h1>
     <p class="lead mt-3">Compassionate care. Advanced medicine. Healthy future.</p>
@@ -67,6 +66,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
