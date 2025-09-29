@@ -17,6 +17,7 @@
   font-weight: 400;
   font-style: normal;
 }
+
     </style>
 </head>
 <body class="bg-success-subtle">
@@ -33,64 +34,74 @@
 </nav>
 
 
-<div class="container text-center mb-3">
+<div class="container d-flex justify-content-center align-items-center my-4">
+    <form class="bg-success p-4 rounded-4 shadow-lg w-100"
+          style="max-width:700px;" action="updateDoctor" enctype="multipart/form-data" method="post">
 
+        <h2 class="text-center text-light mb-4 quintessential-regular">Doctor Registration</h2>
 
+        <!-- Alerts -->
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0">
+                    <c:forEach var="err" items="${error}">
+                        <li>${err.defaultMessage}</li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </c:if>
 
+        <c:if test="${not empty imageError}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="text-danger small">${imageError}</span>
+            </div>
+        </c:if>
 
-
-<c:if test="${not empty dto}">
-    <div class="container d-flex justify-content-center align-items-center my-4">
-        <form class="bg-success p-4 rounded shadow w-100" style="max-width:600px;" action="updateDoctor" enctype="multipart/form-data" method="post">
-            <h2 class="text-center text-light mb-4">Doctor Registration</h2>
-
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <ul class="mb-0">
-                        <c:forEach var="err" items="${error}">
-                            <li>${err.defaultMessage}</li>
-                        </c:forEach>
-                    </ul>
-                </div>
-            </c:if>
-
-    <c:if test="${not empty imageError}">
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <span class="text-danger small" >${imageError}</span>
+        <!-- Profile Photo -->
+        <div class="text-center mb-4">
+            <img src="download?imagePath=${dto.imagePath}"
+                 class="rounded-circle border border-3 border-light shadow-sm"
+                 style="width:120px; height:120px; object-fit:cover;"
+                 alt="profile">
         </div>
-    </c:if>
 
+        <input type="hidden" value="${dto.id}" name="id">
 
-
-            <img src="download?imagePath=${dto.imagePath}" class="rounded-circle mx-auto d-block mb-4" style="width:25%;" alt="profile">
-
-
-            <input type="hidden" value="${dto.id}" name="id">
-            <div class="mb-3">
-                <label for="doctorNameId" class="form-label fw-semibold">Name</label>
-                <input type="text" class="form-control" id="doctorNameId" oninput="validateName()" name="doctorName"
-                       value="${dto.doctorName}" minlength="3" maxlength="10" required>
+        <!-- Name & Email -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label for="doctorNameId" class="form-label fw-semibold text-light">Name</label>
+                <input type="text" class="form-control" id="doctorNameId"
+                       name="doctorName" value="${dto.doctorName}" minlength="3" maxlength="30" required>
                 <span class="text-warning small" id="doctorNameErrorId"></span>
             </div>
-
-
-            <div class="mb-3">
-                <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
-                <input type="email" class="form-control" id="doctorEmailId"  name="doctorEmail"
-                       value="${dto.doctorEmail}" readonly>
+            <div class="col-md-6">
+                <label for="doctorEmailId" class="form-label fw-semibold text-light">Email</label>
+                <input type="email" class="form-control" id="doctorEmailId"
+                       name="doctorEmail" value="${dto.doctorEmail}" readonly>
             </div>
+        </div>
 
-
-            <div class="mb-3">
-                <label for="doctorPhoneId" class="form-label fw-semibold">Phone</label>
-                <input type="text" class="form-control" id="doctorPhoneId" oninput="validatePhone();" name="doctorPhone"
-                       value="${dto.doctorPhone}" maxlength="10" required>
+        <!-- Phone & Experience -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label for="doctorPhoneId" class="form-label fw-semibold text-light">Phone</label>
+                <input type="text" class="form-control" id="doctorPhoneId"
+                       name="doctorPhone" value="${dto.doctorPhone}" maxlength="10" required>
                 <span class="text-warning small" id="doctorPhoneErrorId"></span>
             </div>
+            <div class="col-md-6">
+                <label for="experienceId" class="form-label fw-semibold text-light">Experience (Years)</label>
+                <input type="number" class="form-control" id="experienceId"
+                       name="experience" value="${dto.experience}" min="0" max="50" required>
+                <span class="text-warning small" id="experienceErrorId"></span>
+            </div>
+        </div>
 
-
-            <div class="mb-3">
-                <label for="specializationId" class="form-label fw-semibold">Specialization</label>
+        <!-- Specialization & Qualification -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label for="specializationId" class="form-label fw-semibold text-light">Specialization</label>
                 <select class="form-select" name="specialization" id="specializationId" required>
                     <option selected disabled>Select Specialization</option>
                     <c:forEach var="specializationDto" items="${specializations}">
@@ -100,45 +111,37 @@
                         </option>
                     </c:forEach>
                 </select>
-                <span class="text-warning small" id="specializationErrorId"></span>
             </div>
-
-            <div class="mb-3">
-                <label for="qualificationId" class="form-label fw-semibold">Qualification</label>
-                <input type="text" class="form-control" id="qualificationId" name="qualification"
-                       placeholder="e.g., MBBS, MD" value="${dto.qualification}" oninput="validateQualification()" maxlength="10" required>
+            <div class="col-md-6">
+                <label for="qualificationId" class="form-label fw-semibold text-light">Qualification</label>
+                <input type="text" class="form-control" id="qualificationId"
+                       name="qualification" value="${dto.qualification}" maxlength="20" required>
                 <span class="text-warning small" id="qualificationErrorId"></span>
             </div>
+        </div>
 
+        <!-- Profile Photo Upload -->
+        <div class="mb-3">
+            <label for="profilePhotoId" class="form-label fw-semibold text-light">Choose Profile Photo</label>
+            <input class="form-control" type="file" id="profilePhotoId" name="image" accept="image/*">
+            <span class="text-warning small" id="imageErrorId"></span>
+        </div>
 
-            <div class="mb-3">
-                <label for="experienceId" class="form-label fw-semibold">Experience (Years)</label>
-                <input type="number" class="form-control" id="experienceId" name="experience" oninput="validateExperience()" value="${dto.experience}"
-                       min="0" max="50" placeholder="e.g., 5" required>
-                <span class="text-warning small" id="experienceErrorId"></span>
-            </div>
+        <!-- Submit -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-dark fw-bold py-2">Update Doctor</button>
+        </div>
 
+        <!-- Status -->
+        <div class="container text-center mt-3">
+            <c:if test="${not empty status}">
+                <p class="text-warning">${status}</p>
+            </c:if>
+        </div>
+    </form>
 
-            <div class="mb-3">
-                <label for="profilePhotoId" class="form-label fw-semibold">Choose Profile Photo</label>
-                <input class="form-control" type="file" id="profilePhotoId" name="image" accept="image/*" onchange="profilePhotoValidate()">
-                <span class="text-warning small" id="imageErrorId"></span>
-            </div>
+</div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-dark fw-bold">Update Doctor</button>
-            </div>
-
-
-            <div class="container text-center mb-3">
-                <c:if test="${not empty status}">
-                    <p class="text-warning">${status}</p>
-                </c:if>
-            </div>
-
-        </form>
-    </div>
-</c:if>
 
 
 
