@@ -35,10 +35,9 @@ public class HopsitalController {
     @Autowired
     HospitalService hospitalService;
 
-
     @RequestMapping("admin")
     public String goTOAdmin(){
-        return "admin";
+        return "Admin";
     }
 
     @RequestMapping("index")
