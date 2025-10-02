@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css">
+
     <style>
         .quintessential-regular {
   font-family: "Quintessential", serif;
@@ -24,9 +26,9 @@
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
-        <div class="d-flex">
-            <a href="admin" class="btn btn-outline-success">Admin Login</a>
-        </div>
+        <a href="admin" class="btn  fw-bold px-3 d-flex align-items-center">
+            <i class="bi bi-person-circle me-2 text-success link-light fs-4"></i>
+        </a>
     </div>
 </nav>
 

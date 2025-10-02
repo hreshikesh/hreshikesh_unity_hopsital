@@ -13,7 +13,6 @@
 </head>
 <body class="bg-success-subtle">
 
-<!-- Navbar -->
 <nav class="navbar bg-dark navbar-dark shadow">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
@@ -26,19 +25,16 @@
     </div>
 </nav>
 
-<!-- Main Form -->
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <form class="bg-success text-dark p-5 rounded shadow-lg w-50" action="home" method="post" id="adminForm">
 
-        <!-- Title -->
         <h2 class="text-center text-dark mb-2">Welcome Admin!</h2>
 
-        <!-- OTP status (moved here) -->
         <p class="text-center mb-4">
             <span id="otpStatusId" class="text-warning fw-semibold"></span>
         </p>
 
-        <!-- Email -->
+
         <div class="mb-3 text-center">
             <input type="email" class="form-control w-50 mx-auto" id="emailId"
                    onchange="checkEmail()" name="email"
@@ -46,14 +42,12 @@
             <span class="text-danger small" id="emailError"></span>
         </div>
 
-        <!-- Send OTP -->
         <div class="mb-3 text-center">
             <button type="button" class="btn btn-dark w-50 fw-bold" id="sendOtpButton" onclick="sendOtp()">
                 Send OTP
             </button>
         </div>
 
-        <!-- OTP Section -->
         <div id="otpContainerId" class="d-none">
 
             <div class="mb-3 text-center">

@@ -36,7 +36,7 @@ timer = setInterval(function(){
 const remainingTime = Math.floor((expiryTime - Date.now()) / 1000);
 
 if(remainingTime > 0){
-timeCountEl.textContent = `You can resend OTP in ${remainingTime}s`;
+timeCountEl.textContent = `Resend OTP in ${remainingTime}s`;
 resend.disabled = true;
 timeoutMessage.textContent = "";
 } else {
