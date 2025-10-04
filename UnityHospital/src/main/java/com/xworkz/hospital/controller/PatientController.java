@@ -3,6 +3,7 @@ package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.BloodGroupDto;
 import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.dto.SpecializationDto;
+import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.HospitalService;
 import com.xworkz.hospital.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +27,12 @@ public class PatientController {
     @Autowired
     PatientService patientService;
 
+    @Autowired
+    DoctorService doctorService;
+
     @GetMapping("patient")
     public  String goToPatientRegistration(Model model){
-        List<SpecializationDto> specializationDtos=hospitalService.getAllSpecialization();
+        List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
        List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
        log.info(dtos.toString());
         model.addAttribute("specializationDtos",specializationDtos);
@@ -39,7 +43,7 @@ public class PatientController {
     @RequestMapping("registerPatient")
     public ModelAndView registerPatient(@Valid PatientDto dto, BindingResult result,ModelAndView view){
         view.setViewName("PatientRegistration");
-        List<SpecializationDto> specializationDtos=hospitalService.getAllSpecialization();
+        List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
         List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
         view.addObject("bloodGroupDtos",dtos);
         view.addObject("specializationDtos",specializationDtos);

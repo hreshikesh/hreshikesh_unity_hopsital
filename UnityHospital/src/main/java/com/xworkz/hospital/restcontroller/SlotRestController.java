@@ -2,8 +2,10 @@ package com.xworkz.hospital.restcontroller;
 
 import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.DoctorTimeSlotDto;
+import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.HospitalService;
 import com.xworkz.hospital.service.PatientService;
+import com.xworkz.hospital.service.SlotService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,13 @@ public class SlotRestController {
     @Autowired
     HospitalService service;
 
+    @Autowired
+    DoctorService doctorService;
+
+
+    @Autowired
+    SlotService slotService;
+
 
     @Autowired
     PatientService patientService;
@@ -27,7 +36,7 @@ public class SlotRestController {
 
     @GetMapping("checkInterval/{specialization}/{timeInterval}")
     public String checkIntervalPresent(@PathVariable String specialization, @PathVariable String timeInterval) {
-        int count = service.checkIntervalForSpecification(specialization, timeInterval);
+        int count =slotService.checkIntervalForSpecification(specialization, timeInterval);
         log.info(specialization);
         log.info(String.valueOf(count));
         if (count >= 1) {
@@ -41,7 +50,7 @@ public class SlotRestController {
     @GetMapping("fetchDoctor/{specialization}")
     public String fetchDoctor(@PathVariable String specialization, Model model) {
         log.info(specialization);
-        List<DoctorDto> doctor = service.getAllDoctor();
+        List<DoctorDto> doctor = doctorService.getAllDoctor();
         if (doctor.isEmpty()) {
             return "No Doctors Found";
         }
@@ -80,7 +89,7 @@ public class SlotRestController {
 
     @GetMapping("checkSlot")
     public ResponseEntity<String> checkSlotAssigned(@RequestParam String email,@RequestParam String interval){
-        boolean status=service.checkInterval(email,interval);
+        boolean status=slotService.checkInterval(email,interval);
         if(status){
             return   ResponseEntity.ok("notset");
         }

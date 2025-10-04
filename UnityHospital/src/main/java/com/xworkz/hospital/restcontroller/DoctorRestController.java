@@ -1,5 +1,6 @@
 package com.xworkz.hospital.restcontroller;
 
+import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class DoctorRestController {
     @Autowired
-    HospitalService service;
+    DoctorService service;
 
     @GetMapping("checkDoctorEmail/{doctorEmail}")
     public String checkDoctorEmail(@PathVariable String doctorEmail) {
