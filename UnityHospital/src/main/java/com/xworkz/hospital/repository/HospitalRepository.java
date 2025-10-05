@@ -11,36 +11,11 @@ public interface HospitalRepository {
 
     void updateTable(HospitalEntity entity);
 
-    DoctorEntity findById(int id);
-
-    boolean saveDoctor(DoctorEntity entity);
-
-    DoctorEntity searchByEmail(String email);
-
-    boolean updateDoctor(DoctorEntity entity);
-
-    List<DoctorEntity> getAllDoctor();
-
-    long getEmailCount(String email);
-
-    boolean saveTimeInterval(TimeSlotEntity entity);
-
-    List<DoctorEntity>  findDoctorBySpecialization(String specialization);
-
-    List<TimeSlotEntity> findAllIntervals(String specialization);
-
-    boolean setTimeSlot(DoctorTimeSlotEntity entity);
-
-    long checkIntervalForSpecification(String specialization,String timeInterval);
-
-    boolean deleteDoctor(String email);
-
-    List<SpecializationEntity> getAllSpecialization();
 
     List<HospitalEntity> getAllWithOtp();
 
 
-    long checkInterval(String email, String interval);
+
 
 
 }

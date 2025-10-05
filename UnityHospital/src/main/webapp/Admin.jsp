@@ -20,7 +20,7 @@
             <span class="fw-bold fs-5" style="font-family:'Quintessential', serif;">UNITY HOSPITAL</span>
         </a>
         <div>
-            <a href="index" class="btn btn-outline-success">Back</a>
+            <a href="index" class="btn btn-outline-success"><i class="bi bi-arrow-return-left"></i></a>
         </div>
     </div>
 </nav>

@@ -7,6 +7,7 @@ import com.xworkz.hospital.entity.BloodGroupEntity;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.DoctorTimeSlotEntity;
 import com.xworkz.hospital.entity.PateintEntity;
+import com.xworkz.hospital.repository.DoctorRepository;
 import com.xworkz.hospital.repository.HospitalRepository;
 import com.xworkz.hospital.repository.PatientRepository;
 import org.slf4j.Logger;
@@ -30,6 +31,9 @@ public class PatientServiceImpl  implements  PatientService{
 
     @Autowired
     HospitalRepository hospitalRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
 
     @Override
     public List<BloodGroupDto> getAllBloodGroup() {
@@ -74,7 +78,7 @@ public class PatientServiceImpl  implements  PatientService{
             entity.setDoctorName(dto.getDoctorName());
             entity.setSlot(dto.getSlot());
 
-           DoctorEntity entity1= hospitalRepository.findById(dto.getDoctorId());
+           DoctorEntity entity1= doctorRepository.findById(dto.getDoctorId());
            log.info(entity1.toString());
            if(entity1!=null){
                entity.setDoctor(entity1);

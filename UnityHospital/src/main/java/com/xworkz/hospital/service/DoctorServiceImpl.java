@@ -5,6 +5,7 @@ import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.ImageEntity;
 import com.xworkz.hospital.entity.SpecializationEntity;
+import com.xworkz.hospital.repository.DoctorRepository;
 import com.xworkz.hospital.repository.HospitalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -23,15 +24,18 @@ import java.util.List;
 @Slf4j
 public class DoctorServiceImpl implements DoctorService {
 
+
+
+
     @Autowired
-    HospitalRepository hopsitalRepository;
+    DoctorRepository doctorRepository;
 
     @Autowired
     EmailService emailService;
 
     @Override
     public List<SpecializationDto> getAllSpecialization() {
-        List<SpecializationEntity> entity=hopsitalRepository.getAllSpecialization();
+        List<SpecializationEntity> entity=doctorRepository.getAllSpecialization();
         List<SpecializationDto> dtos=new ArrayList<>();
         for (SpecializationEntity entity1:entity){
             SpecializationDto dto=new SpecializationDto();
@@ -74,7 +78,7 @@ public class DoctorServiceImpl implements DoctorService {
 
             entity.setImageEntity(entity1);
 
-            status= hopsitalRepository.saveDoctor(entity);
+            status= doctorRepository.saveDoctor(entity);
 
 
             if (status) {
@@ -99,7 +103,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public DoctorDto searchByEmail(String email) {
-        DoctorEntity doctorEntity=hopsitalRepository.searchByEmail(email);
+        DoctorEntity doctorEntity=doctorRepository.searchByEmail(email);
         if(doctorEntity==null){
             return null;
         }else {
@@ -117,7 +121,7 @@ public class DoctorServiceImpl implements DoctorService {
     public boolean updateDoctor(DoctorDto dto) throws IOException {
         if(dto == null) return false;
 
-        DoctorEntity doctorEntity = hopsitalRepository.searchByEmail(dto.getDoctorEmail());
+        DoctorEntity doctorEntity = doctorRepository.searchByEmail(dto.getDoctorEmail());
 
         if(doctorEntity == null) return false;
 
@@ -147,14 +151,14 @@ public class DoctorServiceImpl implements DoctorService {
             imageEntity.setDoctor(doctorEntity);
         }
 
-        return hopsitalRepository.updateDoctor(doctorEntity);
+        return doctorRepository.updateDoctor(doctorEntity);
 
     }
 
 
     @Override
     public List<DoctorDto> getAllDoctor() {
-        List<DoctorEntity> entities=hopsitalRepository.getAllDoctor();
+        List<DoctorEntity> entities=doctorRepository.getAllDoctor();
         List<DoctorDto> dtos=new ArrayList<>();
         for (DoctorEntity entity:entities){
             DoctorDto dto=new DoctorDto();
@@ -172,12 +176,12 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public long getEmailCount(String email) {
-        return hopsitalRepository.getEmailCount(email);
+        return doctorRepository.getEmailCount(email);
     }
 
     @Override
     public boolean deleteDoctor(String email) {
-        return hopsitalRepository.deleteDoctor(email);
+        return doctorRepository.deleteDoctor(email);
 
     }
 

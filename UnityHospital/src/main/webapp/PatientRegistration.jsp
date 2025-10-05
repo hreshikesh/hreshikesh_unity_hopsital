@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body class="bg-success-subtle">
@@ -18,7 +19,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="Home" class="btn btn-outline-success">Home</a>
+            <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
         </div>
     </div>
 </nav>

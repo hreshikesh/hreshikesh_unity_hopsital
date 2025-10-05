@@ -21,7 +21,6 @@ public class HospitalServiceImpl implements HospitalService {
     @Autowired
             EmailService emailService;
 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public int findEmail(String email) {

@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         .quintessential-regular {
@@ -29,7 +30,7 @@
         </a>
         <div class="d-flex gap-3">
             <a href="setSlot" class="btn btn-outline-success">Set Slot</a>
-            <a href="Home" class="btn btn-outline-success">Home</a>
+            <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
         </div>
     </div>
 </nav>

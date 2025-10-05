@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
         .quintessential-regular {
   font-family: "Quintessential", serif;
@@ -25,7 +26,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="index" class="btn btn-outline-success">Back</a>
+            <a href="index" class="btn btn-outline-success"><i class="bi bi-arrow-return-left"></i></a>
         </div>
     </div>
 </nav>
@@ -39,7 +40,7 @@
     <div class="row text-center">
         <div class="col-md-4 mb-3">
             <div class="card h-100 shadow-sm">
-                <div class="card-body bg-dark text-success">
+                <div class="card-body bg-success-subtle  shadow-lg border border-success text-success">
                     <img src="images/outpatient.png" width="150" height="150" class="rounded-circle object-fit-cover mb-3 border border-success border-4">
                     <h5 class="card-title text-success">Outpatient Care</h5>
                     <p class="card-text">Comprehensive consultation and treatment by expert doctors.</p>
@@ -48,7 +49,7 @@
         </div>
         <div class="col-md-4 mb-3">
             <div class="card h-100 shadow-sm">
-                <div class="card-body bg-dark text-success">
+                <div class="card-body bg-success-subtle  shadow-lg border border-success text-success">
                     <img src="images/emergency.png" alt="Outpatient" width="150" height="150" class="rounded-circle object-fit-cover mb-3 border border-success border-4">
                     <h5 class="card-title text-success">Emergency Services</h5>
                     <p class="card-text">24/7 emergency and trauma care with advanced facilities.</p>
@@ -57,7 +58,7 @@
         </div>
         <div class="col-md-4 mb-3">
             <div class="card h-100 shadow-sm">
-                <div class="card-body bg-dark text-success">
+                <div class="card-body bg-success-subtle  shadow-lg border border-success text-success">
                     <img src="images/surgicalcare.png" alt="Outpatient" width="150" height="150" class="rounded-circle object-fit-cover mb-3 border border-success border-4">
                     <h5 class="card-title text-success">Surgical Care</h5>
                     <p class="card-text">State-of-the-art operation theatres for advanced surgeries.</p>

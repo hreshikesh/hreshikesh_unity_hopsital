@@ -5,7 +5,9 @@ import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.entity.DoctorTimeSlotEntity;
 import com.xworkz.hospital.entity.TimeSlotEntity;
+import com.xworkz.hospital.repository.DoctorRepositoryImpl;
 import com.xworkz.hospital.repository.HospitalRepository;
+import com.xworkz.hospital.repository.SlotRepositoryImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +22,28 @@ public class SlotServiceImpl implements  SlotService{
     @Autowired
     HospitalRepository hopsitalRepository;
 
+    @Autowired
+    DoctorRepositoryImpl doctorRepository;
+
+    @Autowired
+    SlotRepositoryImpl slotRepository;
+
 
     @Override
     public boolean saveTimeInterval(TimeSlotDto dto) {
         TimeSlotEntity entity=new TimeSlotEntity();
         BeanUtils.copyProperties(dto,entity);
-        return hopsitalRepository.saveTimeInterval(entity);
+        return slotRepository.saveTimeInterval(entity);
     }
 
     @Override
     public List<DoctorEntity> findDoctorBySpecialization(String specialization) {
-        return hopsitalRepository.findDoctorBySpecialization(specialization);
+        return slotRepository.findDoctorBySpecialization(specialization);
     }
 
     @Override
     public List<TimeSlotDto> findAllIntervals(String specialization) {
-        List<TimeSlotEntity> entities=hopsitalRepository.findAllIntervals(specialization);
+        List<TimeSlotEntity> entities=slotRepository.findAllIntervals(specialization);
         if(entities==null){
             return  null;
         }else{
@@ -51,7 +59,7 @@ public class SlotServiceImpl implements  SlotService{
 
     @Override
     public boolean checkInterval(String email, String interval) {
-        long count= hopsitalRepository.checkInterval(email,interval);
+        long count= slotRepository.checkInterval(email,interval);
         if(count==0L){
             return true;
         }
@@ -66,9 +74,9 @@ public class SlotServiceImpl implements  SlotService{
     public String setTimeSlot(DoctorTimeSlotDto dto){
         DoctorTimeSlotEntity doctorTimeSlotEntity=new DoctorTimeSlotEntity();
         if(dto!=null){
-            long count=hopsitalRepository.checkInterval(dto.getDoctorEmail(), dto.getInterval());
+            long count=slotRepository.checkInterval(dto.getDoctorEmail(), dto.getInterval());
             if(count==0L){
-                DoctorEntity doctorEntity=hopsitalRepository.searchByEmail(dto.getDoctorEmail());
+                DoctorEntity doctorEntity=doctorRepository.searchByEmail(dto.getDoctorEmail());
                 doctorTimeSlotEntity.setInterval(dto.getInterval());
                 doctorTimeSlotEntity.setDoctorName(dto.getDoctorName());
                 doctorTimeSlotEntity.setDoctorEmail(dto.getDoctorEmail());
@@ -77,7 +85,7 @@ public class SlotServiceImpl implements  SlotService{
 
                 doctorEntity.getDoctorTimeSlotEntities().add(doctorTimeSlotEntity);
 
-                boolean check= hopsitalRepository.setTimeSlot(doctorTimeSlotEntity);
+                boolean check= slotRepository.setTimeSlot(doctorTimeSlotEntity);
                 if(check){
                     return "saveSuccess";
                 }else{
@@ -90,7 +98,7 @@ public class SlotServiceImpl implements  SlotService{
 
     @Override
     public int checkIntervalForSpecification(String specialization, String timeInterval) {
-        long count=hopsitalRepository.checkIntervalForSpecification(specialization,timeInterval);
+        long count=slotRepository.checkIntervalForSpecification(specialization,timeInterval);
         int convertedCount=Math.toIntExact(count);
         return convertedCount;
     }
