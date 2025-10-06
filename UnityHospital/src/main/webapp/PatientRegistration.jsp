@@ -9,6 +9,13 @@
     <%@ page isELIgnored="false" %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        .quintessential-regular {
+  font-family: "Quintessential", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+    </style>
 </head>
 <body class="bg-success-subtle">
 
@@ -16,7 +23,7 @@
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
-            <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
+            <span class=" fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
             <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
@@ -43,16 +50,19 @@
         <div class="row mb-3 g-3">
             <div class="col-md-5">
                 <label for="patientNameId" class="form-label fw-semibold text-dark">Full Name</label>
+                <span class="text-danger">*</span>
                 <input type="text" class="form-control" id="patientNameId" name="name" oninput="validatePatientName()" value="${dto.name}" placeholder="Enter Patient Name" required>
                 <span class="text-warning" id="patientNameErrorId"></span>
             </div>
             <div class="col-md-3">
                 <label for="patientAgeId" class="form-label fw-semibold text-dark">Age</label>
+                <span class="text-danger">*</span>
                 <input type="number" class="form-control" id="patientAgeId" oninput="validatePatientAge()" name="age" value="${dto.age}" min="0" max="100" required>
                 <span class="text-warning" id="patientAgeErrorId"></span>
             </div>
             <div class="col-md-4">
                 <label for="bloodGroupId" class="form-label fw-semibold text-dark">Blood Group</label>
+                <span class="text-danger">*</span>
                 <select class="form-select" id="bloodGroupId" name="bloodGroup" onchange="validateBloodGroup()"required>
                     <option selected disabled>Select Blood Group</option>
                     <c:forEach var="bloodGroupDto" items="${bloodGroupDtos}">
@@ -69,6 +79,7 @@
         <div class="row mb-3 g-3">
             <div class="col-md-6">
                 <label for="patientEmailid" class="form-label fw-semibold text-dark">Email</label>
+                <span class="text-danger">*</span>
                 <input type="email" class="form-control" id="patientEmailId" name="email" oninput="validateEmail()"  value="${dto.email}" placeholder="example@gmail.com" required>
                 <span class="text-warning" id="patientEmailErrorId"></span>
             </div>
@@ -83,11 +94,13 @@
         <div class="row mb-2 g-3">
             <div class="col-md-6">
                 <label for="patientAddressId" class="form-label fw-semibold text-dark">Address</label>
+                <span class="text-danger">*</span>
                 <textarea class="form-control" id="patientAddressId" name="address" rows="2"  placeholder="Enter full address..." oninput="validatePatientAddress()" required>${dto.address}</textarea>
                 <span class="text-warning" id="patientAddressError"></span>
             </div>
             <div class="col-md-6">
                 <label for="patientDiseaseId" class="form-label fw-semibold text-dark">Disease / Symptoms</label>
+                <span class="text-danger">*</span>
                 <textarea class="form-control" id="patientDiseaseId" name="disease" rows="2" placeholder="Describe symptoms..." oninput="validatePatientDisease()" required>${dto.disease}</textarea>
                 <span class="text-warning" id="patientDiseaseError"></span>
             </div>
@@ -97,6 +110,7 @@
         <div class="row mb-3 g-3">
             <div class="col-md-4">
                 <label for="specialization" class="form-label fw-semibold text-dark">Doctor Specialization</label>
+                <span class="text-danger">*</span>
                 <select class="form-select" id="specialization" name="specialization" onchange="fetchDoctor()" required>
                     <option selected disabled>Select Specialization</option>
                     <c:forEach var="specializationDto" items="${specializationDtos}">
@@ -111,6 +125,7 @@
 
             <div class="col-md-4">
                 <label for="doctorName" class="form-label fw-semibold text-dark">Doctor Name</label>
+                <span class="text-danger">*</span>
                 <div class="input-group input-group-md ">
                     <span class="input-group-text">Dr.</span>
                     <select class="form-select" id="doctorName" name="doctorName" onchange="fetchTimeSlot()" required>
@@ -125,16 +140,16 @@
 
             <div class="col-md-4">
                 <label for="slotId" class="form-label fw-semibold text-dark">Appointment Slot</label>
+                <span class="text-danger">*</span>
                 <select class="form-select"  id="slotId" name="slot" required disabled>
-
                 </select>
-
                 <span class="text-warning" id="doctorSlotErrorId"></span>
             </div>
         </div>
 
         <div class="mb-3 col-md-3  mx-auto">
             <label for="fees" class="form-label fw-semibold text-dark">Fees</label>
+            <span class="text-danger">*</span>
             <input type="number" class="form-control" id="fees" value="${dto.fees}"  name="fees" min="0" required>
         </div>
 

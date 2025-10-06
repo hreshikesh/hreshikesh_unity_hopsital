@@ -1,12 +1,10 @@
 package com.xworkz.hospital.configuarartion;
-
 import com.xworkz.hospital.audit.AuditorAwareImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
 import javax.servlet.http.HttpSession;
 
 @Configuration

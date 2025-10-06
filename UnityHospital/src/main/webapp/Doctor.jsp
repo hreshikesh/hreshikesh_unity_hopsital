@@ -59,6 +59,7 @@
         <div class="row g-3">
             <div class="col-md-6">
                 <label for="doctorNameId" class="form-label fw-semibold">Name</label>
+                <span class="text-danger">*</span>
                 <input type="text" class="form-control" id="doctorNameId" oninput="validateName()" name="doctorName"
                        minlength="3" maxlength="10" value="${dto.doctorName}" required>
                 <span class="text-warning small" id="doctorNameErrorId"></span>
@@ -66,6 +67,7 @@
 
             <div class="col-md-6">
                 <label for="doctorEmailId" class="form-label fw-semibold">Email</label>
+                <span class="text-danger">*</span>
                 <input type="email" class="form-control" id="doctorEmailId" name="doctorEmail"
                        oninput="validateEmail()" onchange="checkDoctorEmail()" value="${dto.doctorEmail}" required>
                 <span class="text-warning small" id="doctorEmailErrorId"></span>
@@ -73,6 +75,7 @@
 
             <div class="col-md-6">
                 <label for="doctorPhoneId" class="form-label fw-semibold">Phone</label>
+                <span class="text-danger">*</span>
                 <input type="text" class="form-control" id="doctorPhoneId" name="doctorPhone"
                        oninput="validatePhone();" maxlength="10" value="${dto.doctorPhone}" required>
                 <span class="text-warning small" id="doctorPhoneErrorId"></span>
@@ -80,6 +83,7 @@
 
             <div class="col-md-6">
                 <label for="specializationId" class="form-label fw-semibold">Specialization</label>
+                <span class="text-danger">*</span>
                 <select class="form-select" name="specialization" id="specializationId" required>
                     <option selected disabled>Select Specialization</option>
                     <c:forEach var="specializationDto" items="${specializations}">
@@ -94,6 +98,7 @@
 
             <div class="col-md-6">
                 <label for="qualificationId" class="form-label fw-semibold">Qualification</label>
+                <span class="text-danger">*</span>
                 <input type="text" class="form-control" id="qualificationId" name="qualification"
                        placeholder="e.g., MBBS, MD" value="${dto.qualification}" oninput="validateQualification()" maxlength="10" required>
                 <span class="text-warning small" id="qualificationErrorId"></span>
@@ -101,6 +106,7 @@
 
             <div class="col-md-6">
                 <label for="experienceId" class="form-label fw-semibold">Experience (Years)</label>
+                <span class="text-danger">*</span>
                 <input type="number" class="form-control" id="experienceId" name="experience"
                        oninput="validateExperience()" value="${dto.experience}" min="0" max="50" placeholder="e.g., 5" required>
                 <span class="text-warning small" id="experienceErrorId"></span>
