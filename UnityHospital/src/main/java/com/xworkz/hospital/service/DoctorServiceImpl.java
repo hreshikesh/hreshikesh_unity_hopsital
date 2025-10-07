@@ -3,10 +3,9 @@ package com.xworkz.hospital.service;
 import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.entity.DoctorEntity;
-import com.xworkz.hospital.entity.ImageEntity;
+import com.xworkz.hospital.entity.DoctorImageEntity;
 import com.xworkz.hospital.entity.SpecializationEntity;
 import com.xworkz.hospital.repository.DoctorRepository;
-import com.xworkz.hospital.repository.HospitalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +60,10 @@ public class DoctorServiceImpl implements DoctorService {
             BeanUtils.copyProperties(dto, entity);
 
             boolean status = false;
-            ImageEntity entity1 =null;
+            DoctorImageEntity entity1 =null;
             if(dto.getImage()!=null&&!dto.getImage().isEmpty()){
 
-                entity1=new ImageEntity();
+                entity1=new DoctorImageEntity();
 
                 String imageName = fileUpload(dto.getDoctorName(), dto.getImage());
                 entity1.setImageName(imageName);
@@ -76,7 +75,7 @@ public class DoctorServiceImpl implements DoctorService {
 
             }
 
-            entity.setImageEntity(entity1);
+            entity.setDoctorImageEntity(entity1);
 
             status= doctorRepository.saveDoctor(entity);
 
@@ -109,8 +108,8 @@ public class DoctorServiceImpl implements DoctorService {
         }else {
             DoctorDto dto = new DoctorDto();
             BeanUtils.copyProperties(doctorEntity, dto);
-            if(doctorEntity.getImageEntity()!=null && doctorEntity.getImageEntity().getImageName()!=null){
-                dto.setImagePath(doctorEntity.getImageEntity().getImageName());
+            if(doctorEntity.getDoctorImageEntity()!=null && doctorEntity.getDoctorImageEntity().getImageName()!=null){
+                dto.setImagePath(doctorEntity.getDoctorImageEntity().getImageName());
             }
             return dto;
         }
@@ -135,20 +134,20 @@ public class DoctorServiceImpl implements DoctorService {
         if(dto.getImage() != null && !dto.getImage().isEmpty()){
             String imageName = fileUpload(dto.getDoctorName(), dto.getImage());
 
-            ImageEntity imageEntity = doctorEntity.getImageEntity();
+            DoctorImageEntity doctorImageEntity = doctorEntity.getDoctorImageEntity();
 
-            if(imageEntity == null){
-                imageEntity = new ImageEntity();
+            if(doctorImageEntity == null){
+                doctorImageEntity = new DoctorImageEntity();
             }
 
-            imageEntity.setImageName(imageName);
-            imageEntity.setImageOriginalName(dto.getImage().getOriginalFilename());
-            imageEntity.setImagePath("D:\\unity_hospital\\" + imageName);
-            imageEntity.setSize(dto.getImage().getSize());
+            doctorImageEntity.setImageName(imageName);
+            doctorImageEntity.setImageOriginalName(dto.getImage().getOriginalFilename());
+            doctorImageEntity.setImagePath("D:\\unity_hospital\\" + imageName);
+            doctorImageEntity.setSize(dto.getImage().getSize());
 
 
-            doctorEntity.setImageEntity(imageEntity);
-            imageEntity.setDoctor(doctorEntity);
+            doctorEntity.setDoctorImageEntity(doctorImageEntity);
+            doctorImageEntity.setDoctor(doctorEntity);
         }
 
         return doctorRepository.updateDoctor(doctorEntity);
@@ -164,8 +163,8 @@ public class DoctorServiceImpl implements DoctorService {
             DoctorDto dto=new DoctorDto();
 
             BeanUtils.copyProperties(entity,dto);
-            if (entity.getImageEntity() != null && entity.getImageEntity().getImageName() != null) {
-                dto.setImagePath(entity.getImageEntity().getImageName());
+            if (entity.getDoctorImageEntity() != null && entity.getDoctorImageEntity().getImageName() != null) {
+                dto.setImagePath(entity.getDoctorImageEntity().getImageName());
                 log.info(dto.getImagePath());
             }
 

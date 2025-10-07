@@ -13,9 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -41,7 +43,7 @@ public class PatientController {
     }
 
     @RequestMapping("registerPatient")
-    public ModelAndView registerPatient(@Valid PatientDto dto, BindingResult result,ModelAndView view){
+    public ModelAndView registerPatient(@Valid PatientDto dto, BindingResult result,ModelAndView view) throws IOException {
         view.setViewName("PatientRegistration");
         List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
         List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
@@ -72,4 +74,19 @@ public class PatientController {
     }
 
 
+    @RequestMapping("getAppointments")
+    public ModelAndView getAppointments(@RequestParam int doctorId, ModelAndView modelAndView){
+        log.info(String.valueOf(doctorId));
+        List<SpecializationDto> specializations=doctorService.getAllSpecialization();
+        modelAndView.addObject("specializations",specializations);
+        modelAndView.setViewName("Appointment");
+       List<PatientDto> patientDtos= patientService.getPatient(doctorId);
+       if(patientDtos==null || patientDtos.isEmpty()){
+           modelAndView.addObject("result","No Appointments for today");
+           return modelAndView;
+       }else{
+           modelAndView.addObject("dtos",patientDtos);
+           return modelAndView;
+       }
+    }
 }

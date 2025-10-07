@@ -48,7 +48,7 @@ public class DoctorEntity extends AuditEntity{
 
 
     @OneToOne(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true)
-    private ImageEntity imageEntity;
+    private DoctorImageEntity doctorImageEntity;
 
     @OneToMany(mappedBy = "doctor",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
     private List<DoctorTimeSlotEntity> doctorTimeSlotEntities=new ArrayList<>();

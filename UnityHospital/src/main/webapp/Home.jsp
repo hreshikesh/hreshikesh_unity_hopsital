@@ -38,6 +38,9 @@
                 <li class="nav-item">
                     <a class="nav-link link-success fs-5" href="slot">Slot</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link link-success fs-5" href="appointment">Appointments</a>
+                </li>
 
             </ul>
         </div>

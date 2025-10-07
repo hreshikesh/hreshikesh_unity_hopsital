@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -98,5 +99,26 @@ public class PatientRepositoryImpl  implements PatientRepository{
             manager.close();
         }
         return interval;
+    }
+
+    @Override
+    public List<PateintEntity> getPatient(int id) {
+        EntityManager manager=entityManagerFactory.createEntityManager();
+        EntityTransaction transaction=manager.getTransaction();
+        List<PateintEntity> pateintEntities=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("getPatientByDoctorId");
+            query.setParameter("id",id);
+           pateintEntities= query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return pateintEntities;
     }
 }

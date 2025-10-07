@@ -17,4 +17,9 @@ public interface PatientRepository {
     boolean savePatientDetails(PateintEntity entity);
 
     DoctorTimeSlotEntity getInterval(int id);
+
+
+    List<PateintEntity> getPatient(int id);
+
+
 }

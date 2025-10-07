@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalTime;
@@ -86,6 +87,14 @@ public class HopsitalController {
         List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
         model.addAttribute("specializations",specializationDto);
         return "SetSlot";
+    }
+
+
+    @RequestMapping("appointment")
+    public String gotoAppointment(Model model){
+        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        model.addAttribute("specializations",specializationDto);
+        return "Appointment";
     }
 
 

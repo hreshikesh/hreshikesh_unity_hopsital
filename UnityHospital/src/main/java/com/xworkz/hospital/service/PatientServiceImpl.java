@@ -3,10 +3,7 @@ package com.xworkz.hospital.service;
 import com.xworkz.hospital.dto.BloodGroupDto;
 import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.PatientDto;
-import com.xworkz.hospital.entity.BloodGroupEntity;
-import com.xworkz.hospital.entity.DoctorEntity;
-import com.xworkz.hospital.entity.DoctorTimeSlotEntity;
-import com.xworkz.hospital.entity.PateintEntity;
+import com.xworkz.hospital.entity.*;
 import com.xworkz.hospital.repository.DoctorRepository;
 import com.xworkz.hospital.repository.HospitalRepository;
 import com.xworkz.hospital.repository.PatientRepository;
@@ -15,9 +12,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -29,8 +32,6 @@ public class PatientServiceImpl  implements  PatientService{
     @Autowired
     EmailService emailService;
 
-    @Autowired
-    HospitalRepository hospitalRepository;
 
     @Autowired
     DoctorRepository doctorRepository;
@@ -61,35 +62,90 @@ public class PatientServiceImpl  implements  PatientService{
         return dtos;
     }
 
+
+    private String patientProfileUpload(String name, MultipartFile file) throws IOException {
+        byte[] filePart= file.getBytes();
+        Path path= Paths.get("D:\\pateintProfile\\"+name+System.currentTimeMillis()+".jpg");
+        Files.write(path,filePart);
+        return path.getFileName().toString();
+    }
+
+
+    private String patientSymptomsUpload(String name, MultipartFile file) throws IOException {
+        byte[] filePart= file.getBytes();
+        Path path= Paths.get("D:\\patientSymptoms\\"+name+System.currentTimeMillis()+".jpg");
+        Files.write(path,filePart);
+        return path.getFileName().toString();
+    }
+
+
+
     @Override
-    public boolean savePatientDetails(PatientDto dto) {
+    public boolean savePatientDetails(PatientDto dto) throws IOException {
         if(dto!=null){
-            PateintEntity entity=new PateintEntity();
-            entity.setRegistrationId(dto.getRegistrationId());
-            entity.setName(dto.getName());
-            entity.setAge(dto.getAge());
-            entity.setBloodGroup(dto.getBloodGroup());
-            entity.setEmail(dto.getEmail());
-            entity.setPhone(dto.getPhone());
-            entity.setAddress(dto.getAddress());
-            entity.setDisease(dto.getDisease());
-            entity.setSpecialization(dto.getSpecialization());
-            entity.setFees(dto.getFees());
-            entity.setDoctorName(dto.getDoctorName());
-            entity.setSlot(dto.getSlot());
+            PateintEntity pateintEntity=new PateintEntity();
+            pateintEntity.setRegistrationId(dto.getRegistrationId());
+            pateintEntity.setName(dto.getName());
+            pateintEntity.setAge(dto.getAge());
+            pateintEntity.setBloodGroup(dto.getBloodGroup());
+            pateintEntity.setEmail(dto.getEmail());
+            pateintEntity.setPhone(dto.getPhone());
+            pateintEntity.setAddress(dto.getAddress());
+            pateintEntity.setDisease(dto.getDisease());
+            pateintEntity.setSpecialization(dto.getSpecialization());
+            pateintEntity.setFees(dto.getFees());
+            pateintEntity.setDoctorName(dto.getDoctorName());
+            pateintEntity.setSlot(dto.getSlot());
 
            DoctorEntity entity1= doctorRepository.findById(dto.getDoctorId());
            log.info(entity1.toString());
            if(entity1!=null){
-               entity.setDoctor(entity1);
+               pateintEntity.setDoctor(entity1);
            }
 
          DoctorTimeSlotEntity entity2=  repository.getInterval(dto.getSlotId());
            if(entity2!=null){
-               entity.setSlotEntity(entity2);
+               pateintEntity.setSlotEntity(entity2);
            }
 
-            if(repository.savePatientDetails(entity)){
+            PatientProfileEntity patientProfileEntity=null;
+           if(dto.getProfile()!=null && !dto.getProfile().isEmpty()){
+
+               patientProfileEntity=new PatientProfileEntity();
+               String imageName=patientProfileUpload(dto.getName(), dto.getProfile());
+
+               patientProfileEntity.setSize(dto.getProfile().getSize());
+               patientProfileEntity.setImagePath("D:\\pateintProfile\\"+imageName);
+               patientProfileEntity.setImageOriginalName(dto.getProfile().getOriginalFilename());
+               patientProfileEntity.setImageName(imageName);
+
+               patientProfileEntity.setPateintEntity(pateintEntity);
+
+               pateintEntity.setPatientProfileEntity(patientProfileEntity);
+
+           }
+
+
+           if(dto.getSymptomsImage()!=null && !dto.getSymptomsImage().isEmpty()){
+
+               for(MultipartFile file:dto.getSymptomsImage()){
+                   PatientSymtomsImageEntity symtomsImageEntity=new PatientSymtomsImageEntity();
+                      String imageName=  patientProfileUpload(dto.getName(),file);
+                      symtomsImageEntity.setImageOriginalName(file.getOriginalFilename());
+                      symtomsImageEntity.setImageName(imageName);
+                      symtomsImageEntity.setImagePath("D:\\patientSymptoms\\"+imageName);
+                      symtomsImageEntity.setSize(file.getSize());
+                      symtomsImageEntity.setPateintEntity(pateintEntity);
+
+                      pateintEntity.getPatientSymtomsImageEntityList().add(symtomsImageEntity);
+               }
+
+
+           }
+
+
+
+            if(repository.savePatientDetails(pateintEntity)){
                 emailService.getEmail(dto.getEmail(),"Appointment Confirmation for "+dto.getName()+" – Unity Hospital","Dear "+dto.getName()+","+"\n\nYour Appointment has been scheduled. Please go through the details"+
                         "\n\nRegistration ID : "+dto.getRegistrationId()+"\n\nPatient Name : "+dto.getName()+"\nPatient Age : "+dto.getAge()+"\nPatient Disease/Symptoms : "+dto.getDisease()+
                         "\nDoctor Name : "+dto.getDoctorName()+"\nDoctor Speciality : "+dto.getSpecialization()+"\nDoctor Timings : "+dto.getSlot()+
@@ -100,5 +156,21 @@ public class PatientServiceImpl  implements  PatientService{
             }
         }
         return false;
+    }
+
+    @Override
+    public List<PatientDto> getPatient(int id) {
+        List<PateintEntity> pateintEntities=repository.getPatient(id);
+        List<PatientDto> patientDtos=new ArrayList<>();
+        if(pateintEntities!=null&&!pateintEntities.isEmpty()){
+            for(PateintEntity pateintEntity:pateintEntities){
+                PatientDto dto=new PatientDto();
+                dto.setName(pateintEntity.getName());
+                dto.setId(pateintEntity.getId());
+                dto.setRegistrationId(pateintEntity.getRegistrationId());
+                patientDtos.add(dto);
+            }
+        }
+        return patientDtos;
     }
 }

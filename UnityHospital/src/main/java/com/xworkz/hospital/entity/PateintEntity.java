@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "patient_info")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedQuery(name = "getPatientByDoctorId",query = "select e from PateintEntity e where  doctor.id=:id")
 public class PateintEntity extends AuditEntity{
 
     @Id
@@ -63,6 +66,15 @@ public class PateintEntity extends AuditEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="slot_id",referencedColumnName = "id",nullable = false)
     private DoctorTimeSlotEntity slotEntity;
+
+
+
+    @OneToOne(mappedBy = "pateintEntity",cascade = CascadeType.ALL,orphanRemoval = true)
+    private PatientProfileEntity patientProfileEntity;
+
+
+    @OneToMany(mappedBy = "pateintEntity",cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<PatientSymtomsImageEntity> patientSymtomsImageEntityList=new ArrayList<>();
 
 
 }

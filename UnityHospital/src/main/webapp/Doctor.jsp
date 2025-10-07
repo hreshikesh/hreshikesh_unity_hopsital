@@ -116,8 +116,6 @@
                 <label for="profilePhotoId" class="form-label fw-semibold" >Choose Profile Photo</label>
                 <input class="form-control" type="file" id="profilePhotoId" name="image" accept="image/*" onchange="profilePhotoValidate()">
                 <span class="text-warning small" id="imageErrorId"></span>
-
-
             </div>
         </div>
 

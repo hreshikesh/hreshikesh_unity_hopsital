@@ -5,6 +5,7 @@ import com.xworkz.hospital.dto.DoctorTimeSlotDto;
 import com.xworkz.hospital.dto.PatientDto;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PatientService {
@@ -12,5 +13,7 @@ public interface PatientService {
 
     List<DoctorTimeSlotDto> getTimeSlot(int id);
 
-   boolean savePatientDetails(PatientDto dto);
+   boolean savePatientDetails(PatientDto dto) throws IOException;
+
+   List<PatientDto> getPatient(int id);
 }

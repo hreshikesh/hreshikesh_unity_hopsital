@@ -1,6 +1,9 @@
 package com.xworkz.hospital.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -9,15 +12,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "doctor_image_entity")
-public class ImageEntity extends AuditEntity {
+@Table(name = "patient_symptom_image")
+public class PatientSymtomsImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="doctor_id",referencedColumnName = "id")
-    private DoctorEntity doctor;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="patient_id",referencedColumnName = "id")
+    private PateintEntity pateintEntity;
 
     @Column(name = "image_name")
     private String imageName;

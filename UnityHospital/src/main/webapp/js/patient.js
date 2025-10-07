@@ -102,7 +102,7 @@ function validateDoctorName() {
 
 function fetchDoctor(){
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
-doctorSlotError.innerHTML="";
+if(doctorSlotError) doctorSlotError.innerHTML="";
 let specialization=document.getElementById("specialization").value;
 
 
@@ -181,6 +181,14 @@ for(let i=0;i<intervals.length;i++){
                   slotInput.value=id;
 }
 }
+}
+
+function setDoctorId(){
+let doctorNameSelect=document.getElementById("doctorName");
+let selectedOption = doctorNameSelect.options[doctorNameSelect.selectedIndex];
+console.log(selectedOption);
+const doctorInput=document.getElementById("doctorIdInput");
+doctorInput.value = selectedOption.getAttribute("id");
 }
 
 

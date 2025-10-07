@@ -32,7 +32,7 @@
 </nav>
 
 <div class="container py-3 d-flex justify-content-center">
-    <form class="bg-success p-5 rounded shadow w-75" action="registerPatient" method="post">
+    <form class="bg-success p-5 rounded shadow w-75" action="registerPatient" method="post" enctype="multipart/form-data">
         <h2 class="text-center text-light mb-3">Patient Registration</h2>
         <c:if test="${not empty result}">
             <p class="text-center mt-3 text-warning">${result}</p>
@@ -147,15 +147,33 @@
             </div>
         </div>
 
-        <div class="mb-3 col-md-3  mx-auto">
+        <div class="row mb-3 g-3">
+
+        <div class="mb-3 col-4  ">
             <label for="fees" class="form-label fw-semibold text-dark">Fees</label>
             <span class="text-danger">*</span>
             <input type="number" class="form-control" id="fees" value="${dto.fees}"  name="fees" min="0" required>
         </div>
 
+
+        <div class="col-4">
+            <label for="patientProfilePhotoId" class="form-label fw-semibold" >Choose Profile Photo</label>
+            <input class="form-control" type="file" id="patientProfilePhotoId" name="profile" accept="image/*" >
+        </div>
+
+
+        <div class="col-4">
+            <label for="symptomsPhoto" class="form-label fw-semibold" >Choose Symptoms Photo</label>
+            <input class="form-control" type="file" id="symptomsPhoto" multiple  name="symptomsImage" accept="image/*">
+            <span class="text-warning small" id="imageErrorId"></span>
+        </div>
+
+        </div>
+
         <div class="d-grid mt-2">
             <button type="submit" class="btn btn-dark  btn-lg" onsubmit="checkData()">Register Patient</button>
         </div>
+
 
     </form>
 

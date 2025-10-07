@@ -3,13 +3,17 @@ package com.xworkz.hospital.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientDto {
+
+    private int id;
 
     private  String  registrationId;
 
@@ -57,4 +61,13 @@ public class PatientDto {
 
     private int slotId;
     private int doctorId;
+
+
+    private MultipartFile profile;
+
+    private List<MultipartFile> symptomsImage;
+
+    private String profilePath;
+    private List<String> symptomsPath;
+
 }
