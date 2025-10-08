@@ -19,7 +19,7 @@ public class HospitalServiceImpl implements HospitalService {
     @Autowired
     HospitalRepository hopsitalRepository;
     @Autowired
-            EmailService emailService;
+    EmailService emailService;
 
 
     @Override

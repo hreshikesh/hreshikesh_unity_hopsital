@@ -21,5 +21,7 @@ public interface PatientRepository {
 
     List<PateintEntity> getPatient(int id);
 
+    PateintEntity getPatientDetails(int id);
+
 
 }

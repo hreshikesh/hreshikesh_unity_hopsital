@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,10 +14,10 @@
     <%@ page isELIgnored="false" %>
     <style>
         .quintessential-regular {
-  font-family: "Quintessential", serif;
-  font-weight: 400;
-  font-style: normal;
-}
+            font-family: "Quintessential", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
     </style>
 </head>
 <body class="bg-success-subtle">
@@ -33,9 +33,10 @@
     </div>
 </nav>
 
-<form action="getAppointments">
-    <div class="row mb-3 g-3">
-        <div class="col-md-4">
+<div class="container m-5  justify-content-center align-items-center">
+    <h2 class="text-success text-center">Appointment</h2>
+    <form action="getAppointments" class="bg-success mx-auto w-25 p-5 m-2" method="post">
+        <div class="col-12">
             <label for="specialization" class="form-label fw-semibold text-dark">Doctor Specialization</label>
             <span class="text-danger">*</span>
             <select class="form-select" id="specialization" name="specialization" onchange="fetchDoctor()" required>
@@ -49,11 +50,10 @@
             <span class="text-warning" id="specializationError"></span>
         </div>
 
-
-        <div class="col-md-4">
+        <div class="col-12 mt-3">
             <label for="doctorName" class="form-label fw-semibold text-dark">Doctor Name</label>
             <span class="text-danger">*</span>
-            <div class="input-group input-group-md ">
+            <div class="input-group input-group-md">
                 <span class="input-group-text">Dr.</span>
                 <select class="form-select" id="doctorName" name="doctorName" onchange="setDoctorId()" required>
                     <option selected disabled>Select Doctor</option>
@@ -61,38 +61,38 @@
             </div>
             <span class="text-warning" id="doctorNameError"></span>
         </div>
+
         <input type="hidden" name="doctorId" id="doctorIdInput" required>
-    </div>
+
+        <div class="d-grid mt-4 mx-auto">
+            <button type="submit" class="btn btn-dark fw-bold w-100 mx-auto">Check Appointments</button>
+        </div>
+    </form>
+    <c:if test="${not empty result}">
+        <p class="text-center text-primary">${result}</p>
+    </c:if>
+</div>
 
 
-    <div class="d-grid mt-4">
-        <button type="submit" class="btn btn-dark fw-bold">Register Doctor</button>
-    </div>
-</form>
-
-<c:if test="${not empty result}">
-    <p class="text-center text-primary">${result}</p>
-</c:if>
 
 <c:if test="${not empty dtos}">
-    <p class="text-center text-dark">Total Appointment ${dtos.size()}</p>
+    <hr class="bg-success w-75 mx-auto border-2 border-top border-success my-3">
+    <p class="text-center fw-bold alert alert-info">Total Appointment ${dtos.size()}</p>
     <div class="container my-5 d-flex justify-content-center align-items-center gap-4">
-
-    <c:forEach var="dto" items="${dtos}" varStatus="loop">
-
+        <c:forEach var="dto" items="${dtos}" varStatus="loop">
             <div class="card text-center border-success bg-success-subtle" style="width: 18rem;">
-                <div class="card-body">
-                    <input type="hidden" value="${dto.id}" name="patientId">
-                    <span>${dto.registrationId}</span><br>
-                    <span>${dto.name}</span><br>
-                    <a href="details" class="btn btn-success btn-sm">Details</a>
-                </div>
+                <form action="details">
+                    <div class="card-body">
+                        <input type="hidden" value="${dto.id}" name="patientId">
+                        <span class="fw-semibold">${dto.registrationId}</span><br>
+                        <span class="opacity-75 mb-5">${dto.name}</span><br>
+                        <button type="submit" class="btn btn-outline-success btn-sm">Details</button>
+                    </div>
+                </form>
             </div>
-
-    </c:forEach>
+        </c:forEach>
     </div>
 </c:if>
-
 
 <script src="js/patient.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>

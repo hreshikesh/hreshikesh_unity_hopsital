@@ -30,16 +30,16 @@
         <div class="d-flex justify-content-center align-items-center">
             <ul class="nav nav-underline">
                 <li class="nav-item">
-                    <a class="nav-link link-success fs-5" aria-current="page" href="#">Home</a>
+                    <a class="nav-link link-success fs-6 mx-2" aria-current="page" href="#"><i class="bi bi-house mx-1"></i>Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-success fs-5" href="alldoctor">Doctors</a>
+                    <a class="nav-link link-success fs-6 mx-2" href="alldoctor"><i class="bi bi-person-fill mx-1"></i>Doctors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-success fs-5" href="slot">Slot</a>
+                    <a class="nav-link link-success fs-6 mx-2" href="slot"><i class="bi bi-plus mx-1"></i>Slot</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link link-success fs-5" href="appointment">Appointments</a>
+                    <a class="nav-link link-success fs-6 mx-2" href="appointment"><i class="bi bi-journal-bookmark-fill mx-1"></i>Appointments</a>
                 </li>
 
             </ul>

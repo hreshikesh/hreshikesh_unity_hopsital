@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data

@@ -7,6 +7,7 @@ import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.HospitalService;
 import com.xworkz.hospital.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 @Controller
@@ -40,6 +43,18 @@ public class PatientController {
         model.addAttribute("specializationDtos",specializationDtos);
         model.addAttribute("bloodGroupDtos",dtos);
         return "PatientRegistration";
+    }
+
+    @GetMapping("preview")
+    public void preview(HttpServletResponse response, @RequestParam String imagePath)throws IOException {
+        response.setContentType("image/jpeg");
+        File file = new File("D:\\pateintProfile\\" + imagePath);
+        if (file.exists()) {
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+            ServletOutputStream outputStream = response.getOutputStream();
+            IOUtils.copy(inputStream, outputStream);
+            response.flushBuffer();
+        }
     }
 
     @RequestMapping("registerPatient")
@@ -75,18 +90,37 @@ public class PatientController {
 
 
     @RequestMapping("getAppointments")
-    public ModelAndView getAppointments(@RequestParam int doctorId, ModelAndView modelAndView){
-        log.info(String.valueOf(doctorId));
-        List<SpecializationDto> specializations=doctorService.getAllSpecialization();
-        modelAndView.addObject("specializations",specializations);
-        modelAndView.setViewName("Appointment");
-       List<PatientDto> patientDtos= patientService.getPatient(doctorId);
-       if(patientDtos==null || patientDtos.isEmpty()){
-           modelAndView.addObject("result","No Appointments for today");
-           return modelAndView;
-       }else{
-           modelAndView.addObject("dtos",patientDtos);
-           return modelAndView;
-       }
+    public String  getAppointment(@RequestParam(defaultValue = "0") int doctorId, Model model){
+        if(doctorId==0){
+            List<SpecializationDto> specializations=doctorService.getAllSpecialization();
+            model.addAttribute("specializations",specializations);
+            model.addAttribute("result","Select Doctor to check appointments");
+            return "Appointment";
+        }else {
+            log.info(String.valueOf(doctorId));
+            List<SpecializationDto> specializations = doctorService.getAllSpecialization();
+            model.addAttribute("specializations", specializations);
+            List<PatientDto> patientDtos = patientService.getPatient(doctorId);
+            if (patientDtos == null || patientDtos.isEmpty()) {
+                model.addAttribute("result", "No Appointments for today");
+                return "Appointment";
+            } else {
+                model.addAttribute("dtos", patientDtos);
+                return "Appointment";
+            }
+        }
+    }
+
+    @RequestMapping("details")
+    public String getPatientDetails(@RequestParam int patientId,Model model){
+log.info(String.valueOf(patientId));
+      PatientDto patientDto=  patientService.getPatientDetails(patientId);
+      if(patientDto==null){
+          model.addAttribute("result","Patient Details cannot be found");
+          return "Appointment";
+      }else{
+          model.addAttribute("dto",patientDto);
+          return "Details";
+      }
     }
 }
