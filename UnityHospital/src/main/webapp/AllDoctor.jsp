@@ -38,6 +38,7 @@
 </div>
 <main>
     <h3 class="text-dark text-center mt-3">Doctor of Unity Hospital</h3>
+    <p class="text-center text-warning">${deleteMessage}</p>
     <div class="album py-5 ">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
@@ -54,25 +55,49 @@
                                 <h5 class="card-title fw-bold text-dark">${dto.doctorName}</h5>
                                 <p class="mb-1"><i class="bi bi-envelope"></i> ${dto.doctorEmail}</p>
                                 <p class="mb-1"><i class="bi bi-telephone"></i> ${dto.doctorPhone}</p>
-                                <p class="mb-1"><span class="fw-semibold">Specialization:</span> ${dto.specialization}</p>
+                                <p class="mb-1"><span class="fw-semibold">Specialization:</span> ${dto.specialization}
+                                </p>
                                 <p class="mb-1"><span class="fw-semibold">Qualification:</span> ${dto.qualification}</p>
                                 <p class="mb-1"><span class="fw-semibold">Experience:</span> ${dto.experience} years</p>
                             </div>
 
-                            <div class="card-footer bg-dark border-0 text-center">
-                                <div class="btn-group">
+                            <div class="card-footer bg-dark border-0 text-center ">
+                                <div class="btn-group gap-2">
                                     <form action="updateClick" method="post">
                                         <input type="hidden" value="${dto.doctorEmail}" name="email">
                                         <button type="submit" class="btn btn-sm btn-outline-success">
                                             <i class="bi bi-pencil-square"></i> Update
                                         </button>
                                     </form>
-                                    <form action="deleteDoctor" method="post" class="ms-2">
-                                        <input type="hidden" value="${dto.doctorEmail}" name="email">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </button>
-                                    </form>
+
+
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteModal">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+
+                                    <div class="modal fade " id="confirmDeleteModal" tabindex="-1"
+                                         aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-dark text-success">
+                                                    <h1 class="modal-title fs-5 " id="confirmDeleteLabel">Confirm
+                                                        Deletion</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body bg-success-subtle">
+                                                    Are you sure you want to delete this doctor?
+                                                    <form action="deleteDoctor" method="post" class="d-inline">
+                                                        <input type="hidden" value="${dto.doctorEmail}" name="email">
+                                                        <button type="submit" class="btn btn-danger">Yes, Delete
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

@@ -4,6 +4,9 @@ create database unity_hospital;
 use unity_hospital;
 
 
+insert into unity_hopsital_signin (email) values("ailhreshikesh@gmail.com");
+insert into unity_hopsital_signin (email) values("ailhrishikesh@gmail.com");
+
 
 INSERT INTO doctor_specialization (doctor_specialization) VALUES
 ('Cardiologist'),

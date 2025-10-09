@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
     <style>
@@ -28,13 +29,14 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="alldoctor" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
+            <a href="alldoctor" class="btn btn-outline-success"><i class="bi bi-arrow-return-left"></i></a>
         </div>
     </div>
 </nav>
 
 
 <div class="container d-flex justify-content-center align-items-center my-4">
+
     <form class="bg-success p-4 rounded-4 shadow-lg w-100"
           style="max-width:700px;" action="updateDoctor" enctype="multipart/form-data" method="post">
 
@@ -140,7 +142,6 @@
             </c:if>
         </div>
     </form>
-
 </div>
 
 

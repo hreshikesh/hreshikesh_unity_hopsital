@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PatientServiceImpl  implements  PatientService{
@@ -65,18 +66,12 @@ public class PatientServiceImpl  implements  PatientService{
 
     private String patientProfileUpload(String name, MultipartFile file) throws IOException {
         byte[] filePart= file.getBytes();
-        Path path= Paths.get("D:\\pateintProfile\\"+name+System.currentTimeMillis()+".jpg");
+        Path path= Paths.get("D:\\pateintProfile\\"+name+ UUID.randomUUID() +".jpg");
         Files.write(path,filePart);
         return path.getFileName().toString();
     }
 
 
-    private String patientSymptomsUpload(String name, MultipartFile file) throws IOException {
-        byte[] filePart= file.getBytes();
-        Path path= Paths.get("D:\\patientSymptoms\\"+name+System.currentTimeMillis()+".jpg");
-        Files.write(path,filePart);
-        return path.getFileName().toString();
-    }
 
 
 

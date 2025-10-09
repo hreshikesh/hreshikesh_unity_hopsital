@@ -19,16 +19,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.text.DateFormatter;
 import javax.validation.Valid;
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @Slf4j
 @RequestMapping("/")
 public class PatientController {
-    @Autowired
-    HospitalService hospitalService;
+
     @Autowired
     PatientService patientService;
 
@@ -72,8 +76,10 @@ public class PatientController {
                     StringBuilder sb=new StringBuilder();
                     sb.append("unity");
                     sb.append(dto.getName().substring(0,2));
-                    sb.append(String.valueOf(dto.getPhone()).substring(0,2));
-                    sb.append(dto.getSpecialization().substring(0,2));
+                    sb.append("-");
+                    sb.append(new SimpleDateFormat("yyMM").format(new Date()));
+                    sb.append("-");
+                    sb.append(String.valueOf(new Random().nextInt(9000)+1000));
                     dto.setRegistrationId(sb.toString().toUpperCase());
                     log.info(dto.getRegistrationId());
                     boolean check=patientService.savePatientDetails(dto);
@@ -89,38 +95,5 @@ public class PatientController {
     }
 
 
-    @RequestMapping("getAppointments")
-    public String  getAppointment(@RequestParam(defaultValue = "0") int doctorId, Model model){
-        if(doctorId==0){
-            List<SpecializationDto> specializations=doctorService.getAllSpecialization();
-            model.addAttribute("specializations",specializations);
-            model.addAttribute("result","Select Doctor to check appointments");
-            return "Appointment";
-        }else {
-            log.info(String.valueOf(doctorId));
-            List<SpecializationDto> specializations = doctorService.getAllSpecialization();
-            model.addAttribute("specializations", specializations);
-            List<PatientDto> patientDtos = patientService.getPatient(doctorId);
-            if (patientDtos == null || patientDtos.isEmpty()) {
-                model.addAttribute("result", "No Appointments for today");
-                return "Appointment";
-            } else {
-                model.addAttribute("dtos", patientDtos);
-                return "Appointment";
-            }
-        }
-    }
 
-    @RequestMapping("details")
-    public String getPatientDetails(@RequestParam int patientId,Model model){
-log.info(String.valueOf(patientId));
-      PatientDto patientDto=  patientService.getPatientDetails(patientId);
-      if(patientDto==null){
-          model.addAttribute("result","Patient Details cannot be found");
-          return "Appointment";
-      }else{
-          model.addAttribute("dto",patientDto);
-          return "Details";
-      }
-    }
 }

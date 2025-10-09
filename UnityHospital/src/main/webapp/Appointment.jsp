@@ -42,7 +42,7 @@
             <select class="form-select" id="specialization" name="specialization" onchange="fetchDoctor()" required>
                 <option selected disabled>Select Specialization</option>
                 <c:forEach var="specializationDto" items="${specializations}">
-                    <option value="${specializationDto.specialization}">
+                    <option value="${specializationDto.specialization}" <c:if test="${specializationDto.specialization eq selectedSpecialization}">selected</c:if>>
                         ${specializationDto.specialization}
                     </option>
                 </c:forEach>
@@ -55,14 +55,17 @@
             <span class="text-danger">*</span>
             <div class="input-group input-group-md">
                 <span class="input-group-text">Dr.</span>
-                <select class="form-select" id="doctorName" name="doctorName" onchange="setDoctorId()" required>
+                <select class="form-select" id="doctorName" name="doctorName"   onchange="setDoctorId()" <c:if test="${not empty selectedDoctorName}">disabled</c:if> required>
                     <option selected disabled>Select Doctor</option>
+                    <c:if test="${not empty selectedDoctorName}">
+                        <option value="${selectedDoctorName}" selected disabled>${selectedDoctorName}</option>
+                    </c:if>
                 </select>
             </div>
             <span class="text-warning" id="doctorNameError"></span>
         </div>
 
-        <input type="hidden" name="doctorId" id="doctorIdInput" required>
+        <input type="hidden" name="doctorId" id="doctorIdInput" value="${selectedDoctorId}" required>
 
         <div class="d-grid mt-4 mx-auto">
             <button type="submit" class="btn btn-dark fw-bold w-100 mx-auto">Check Appointments</button>
@@ -81,7 +84,7 @@
     <div class="container my-5 d-flex justify-content-center align-items-center gap-4">
         <c:forEach var="dto" items="${dtos}" varStatus="loop">
             <div class="card text-center border-success bg-success-subtle" style="width: 18rem;">
-                <form action="details">
+                <form action="details" method="post">
                     <div class="card-body">
                         <input type="hidden" value="${dto.id}" name="patientId">
                         <span class="fw-semibold">${dto.registrationId}</span><br>

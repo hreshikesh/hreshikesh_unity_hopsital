@@ -13,7 +13,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
     <style>
-        .quintessential-regular {
+ .quintessential-regular {
   font-family: "Quintessential", serif;
   font-weight: 400;
   font-style: normal;

@@ -46,8 +46,13 @@ public class HopsitalController {
     public String goToService(){return "Service";}
 
     @RequestMapping("Home")
-    public String goToHome(){
+    public String goToHome(HttpSession session)
+    {
+        session.removeAttribute("selectedSpecialization");
+        session.removeAttribute("selectedDoctorName");
+        session.removeAttribute("selectedDoctorId");
         return "Home";
+
     }
 
     @RequestMapping("doctor")
@@ -71,10 +76,6 @@ public class HopsitalController {
         return "Home";
     }
 
-
-
-
-
     @RequestMapping("slot")
     public String goToSlot(Model model){
         List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
@@ -96,6 +97,17 @@ public class HopsitalController {
         model.addAttribute("specializations",specializationDto);
         return "Appointment";
     }
+
+    @RequestMapping("toappointment")
+    public String backToAppointment(Model model,HttpSession session){
+        model.addAttribute("selectedSpecialization",session.getAttribute("specialization"));
+        model.addAttribute("selectedDoctorName",session.getAttribute("doctorName"));
+        model.addAttribute("selectedDoctorId",session.getAttribute("doctorId"));
+        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        model.addAttribute("specializations",specializationDto);
+        return "Appointment";
+    }
+
 
 
 }
