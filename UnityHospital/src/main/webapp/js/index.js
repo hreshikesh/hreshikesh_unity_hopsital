@@ -13,6 +13,7 @@ emailError.innerHTML=this.responseText;
 }
 
 
+
 let timer;
 function timeCount(){
 let timeCountEl = document.getElementById("timeCountId");

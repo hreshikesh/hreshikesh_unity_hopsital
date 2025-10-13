@@ -3,6 +3,8 @@ package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.service.DoctorService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +25,13 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/")
+@Tag(name = "Doctor Controller",description = "This controller is for doctor in unity hospital")
 public class DoctorController {
     @Autowired
     DoctorService doctorService;
 
     @PostMapping("registerDoctor")
+    @Operation(summary = "Register a doctor",description = "creates a new record in the doctor table")
     public ModelAndView registerDoctor(@Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
         List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
         view.addObject("specializations",specializationDto);
@@ -58,6 +62,7 @@ public class DoctorController {
 
 
     @RequestMapping("updateClick")
+    @Operation(summary = "Loads the update page")
     public String updateRedirect(String email, Model model){
         DoctorDto dto= doctorService.searchByEmail(email);
         if(dto==null ){
@@ -72,6 +77,7 @@ public class DoctorController {
     }
 
     @RequestMapping("updateDoctor")
+    @Operation(summary = "Update  doctor details",description = "updates the existing doctor details in the  db")
     public ModelAndView updateDoctor(@Valid DoctorDto dto,BindingResult result,ModelAndView view) throws IOException {
 
         List<SpecializationDto> specializationDto = doctorService.getAllSpecialization();
@@ -122,6 +128,7 @@ public class DoctorController {
     }
 
     @GetMapping("download")
+    @Operation(summary = "Image preview",description = "previews the image")
     public void download(HttpServletResponse response, @RequestParam String imagePath)throws IOException{
         response.setContentType("image/jpeg");
         File file=new File("D:\\unity_hospital\\"+imagePath);
@@ -134,6 +141,7 @@ public class DoctorController {
     }
 
     @GetMapping("alldoctor")
+    @Operation(summary = "Get all doctor details",description = "Fetching all doctor details from db")
     public ModelAndView getAllDoctors(ModelAndView modelAndView){
 
         List<DoctorDto> list=doctorService.getAllDoctor();
@@ -149,6 +157,7 @@ public class DoctorController {
 
 
     @RequestMapping("deleteDoctor")
+    @Operation(summary = "delete a doctor",description = "deletea  record in the doctor table")
     public String deleteDoctorDetails(String email,Model model){
         boolean check=doctorService.deleteDoctor(email);
 
