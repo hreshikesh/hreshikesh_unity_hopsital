@@ -10,7 +10,7 @@ public class HospitalInitializer extends AbstractAnnotationConfigDispatcherServl
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{HospitalConfiguaration.class, DatabaseConfig.class, AuditorConfig.class, EmailConfig.class, SwaggerConfig.class};
+        return new Class[]{HospitalConfiguaration.class, DatabaseConfig.class, AuditorConfig.class, EmailConfig.class};
     }
 
     @Override

@@ -109,5 +109,11 @@ public class HopsitalController {
     }
 
 
+    @RequestMapping("specialization")
+    public String gotoSpecialization(){
+        return "Specialization";
+    }
+
+
 
 }

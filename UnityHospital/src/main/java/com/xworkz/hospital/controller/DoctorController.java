@@ -3,8 +3,6 @@ package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.service.DoctorService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;

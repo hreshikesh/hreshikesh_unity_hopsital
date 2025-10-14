@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quintessential&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
     <style>
@@ -40,6 +41,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link link-success fs-6 mx-2" href="appointment"><i class="bi bi-journal-bookmark-fill mx-1"></i>Appointments</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <button class="nav-link link-success  btn   dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        other
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-success">
+                        <li><a class="dropdown-item text-success" href="specialization"><i class="bi bi-plus-square  mx-2"></i>Specialization</a></li>
+                    </ul>
                 </li>
 
             </ul>
@@ -81,6 +90,9 @@
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>
