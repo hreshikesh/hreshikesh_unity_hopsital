@@ -35,7 +35,7 @@
 
 
 <div class="container">
-    <form class="bg-success p-5 rounded shadow" style="max-width: 800px; margin:auto;"
+    <form class="bg-success p-5  rounded shadow" style="max-width: 720px; margin:auto;"
           action="registerDoctor" enctype="multipart/form-data" method="post">
         <h2 class="text-center text-light mb-4">Doctor Registration</h2>
 
@@ -123,12 +123,46 @@
             <button type="submit" class="btn btn-dark fw-bold">Register Doctor</button>
         </div>
 
-        <c:if test="${not empty status}">
-            <p class="text-center mt-3 text-warning">${status}</p>
-        </c:if>
+
     </form>
 </div>
+<c:if test="${not empty status}">
+    <c:if test="${status eq 'Registered SuccessFully'}">
+    <div class="position-fixed bottom-0 end-0  p-3 " >
+        <div class="toast align-items-center text-bg-dark " role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body text-success">
+                    ${status}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    </c:if>
+    <c:if test="${status eq 'Doctor Not Registered'}">
+        <div class="position-fixed bottom-0 end-0  p-3 " >
+            <div class="toast align-items-center text-bg-dark " role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body text-danger">
+                        ${status}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </c:if>
+</c:if>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+   const toastElList = document.querySelectorAll('.toast');
+   toastElList.forEach(toastEl => {
+       const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+       toast.show();
+   });
+});
+</script>
 </body>
 </html>
