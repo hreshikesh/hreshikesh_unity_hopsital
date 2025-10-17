@@ -48,8 +48,8 @@
                     <span id="message" class="form-text text-warning"></span>
                 </div>
                 <div class="d-flex justify-content-center gap-2">
-                    <button type="submit" class="btn btn-dark">Add</button>
-                    <button type="reset" class="btn btn-outline-dark">Reset</button>
+                    <button type="submit" class="btn btn-warning"><i class="bi bi-plus-circle mx-2"></i>Add</button>
+                    <button type="reset" class="btn btn-danger"><i class="bi bi-x-circle mx-2"></i>Reset</button>
                 </div>
             </form>
         </div>

@@ -15,7 +15,7 @@ public interface PatientService {
 
    boolean savePatientDetails(PatientDto dto) throws IOException;
 
-   List<PatientDto> getPatient(int id);
+   List<PatientDto> getPatient(int id,int slotId);
 
     PatientDto getPatientDetails(int id);
 

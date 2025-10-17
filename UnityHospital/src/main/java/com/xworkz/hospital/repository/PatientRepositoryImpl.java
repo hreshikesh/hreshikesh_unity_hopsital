@@ -1,7 +1,5 @@
 package com.xworkz.hospital.repository;
 
-import com.xworkz.hospital.dto.DoctorTimeSlotDto;
-import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.entity.BloodGroupEntity;
 import com.xworkz.hospital.entity.DoctorTimeSlotEntity;
 import com.xworkz.hospital.entity.PateintEntity;
@@ -12,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -102,7 +99,7 @@ public class PatientRepositoryImpl  implements PatientRepository{
     }
 
     @Override
-    public List<PateintEntity> getPatient(int id) {
+    public List<PateintEntity> getPatient(int id, int slotId) {
         EntityManager manager=entityManagerFactory.createEntityManager();
         EntityTransaction transaction=manager.getTransaction();
         List<PateintEntity> pateintEntities=null;
@@ -110,6 +107,7 @@ public class PatientRepositoryImpl  implements PatientRepository{
             transaction.begin();
             Query query=manager.createNamedQuery("getPatientByDoctorId");
             query.setParameter("id",id);
+            query.setParameter("slotId",slotId);
            pateintEntities= query.getResultList();
             transaction.commit();
         } catch (Exception e) {

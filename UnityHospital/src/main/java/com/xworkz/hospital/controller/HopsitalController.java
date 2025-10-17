@@ -100,9 +100,6 @@ public class HopsitalController {
 
     @RequestMapping("toappointment")
     public String backToAppointment(Model model,HttpSession session){
-        model.addAttribute("selectedSpecialization",session.getAttribute("specialization"));
-        model.addAttribute("selectedDoctorName",session.getAttribute("doctorName"));
-        model.addAttribute("selectedDoctorId",session.getAttribute("doctorId"));
         List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
         model.addAttribute("specializations",specializationDto);
         return "Appointment";
@@ -112,6 +109,12 @@ public class HopsitalController {
     @RequestMapping("specialization")
     public String gotoSpecialization(){
         return "Specialization";
+    }
+
+
+    @RequestMapping("userSignUp")
+    public String gotoUserSignUp(){
+        return "UserSignUP";
     }
 
 

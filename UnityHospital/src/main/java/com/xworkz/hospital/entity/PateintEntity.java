@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@NamedQuery(name = "getPatientByDoctorId",query = "select e from PateintEntity e where  doctor.id=:id")
+@NamedQuery(name = "getPatientByDoctorId",query = "select e from PateintEntity e where  doctor.id=:id and slotEntity.id=:slotId")
 @NamedQuery(name = "getPatientByPatientId",query = "select e from PateintEntity e where id=:id")
 public class PateintEntity extends AuditEntity{
 

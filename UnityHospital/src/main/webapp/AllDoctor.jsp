@@ -46,9 +46,15 @@
                     <div class="col ">
                         <div class="card shadow-lg border-1 border border-dark bg-transparent  rounded-1  h-100">
                             <div class="text-center mt-3">
+                                <c:if test="${not empty dto.imagePath}">
                                 <img src="download?imagePath=${dto.imagePath}"
                                      class="rounded-circle border border-1 border-dark shadow-lg"
                                      width="150" height="120" alt="Doctor Image">
+                                </c:if>
+                                <c:if test="${empty dto.imagePath}">
+                                    <img src="images/defualtProfile.png" class="rounded-circle border border-1 border-dark shadow-lg"
+                                         width="150" height="120" alt="Doctor Image">
+                                </c:if>
                             </div>
 
                             <div class="card-body text-center">

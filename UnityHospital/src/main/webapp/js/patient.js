@@ -100,10 +100,15 @@ function validateDoctorName() {
   doctorError.innerHTML="Choose Specialization";
 
 
+
 function fetchDoctor(){
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 if(doctorSlotError) doctorSlotError.innerHTML="";
 let specialization=document.getElementById("specialization").value;
+
+const slotSelect=document.getElementById("doctorSlot");
+
+slotSelect.innerHTML = '<option selected disabled>Select Slot</option>';
 
 
     const xhhtp=new XMLHttpRequest();
@@ -146,6 +151,7 @@ let specialization=document.getElementById("specialization").value;
 
 
 async function fetchTimeSlot(){
+
 let doctorNameSelect=document.getElementById("doctorName");
 let selectedOption = doctorNameSelect.options[doctorNameSelect.selectedIndex];
 console.log(selectedOption);
@@ -189,6 +195,36 @@ let selectedOption = doctorNameSelect.options[doctorNameSelect.selectedIndex];
 console.log(selectedOption);
 const doctorInput=document.getElementById("doctorIdInput");
 doctorInput.value = selectedOption.getAttribute("id");
+}
+
+async function fetchAssignedSlot(){
+const slotSelect=document.getElementById("doctorSlot");
+
+slotSelect.innerHTML = '<option selected disabled>Select Slot</option>';
+
+const doctorId=document.getElementById("doctorIdInput");
+const messageDiv = document.getElementById("message");
+messageDiv.textContent = "";
+
+const result=await axios.get("http://localhost:8080/UnityHospital/fetchAssignedSlot?id="+doctorId.value);
+
+ if (result.status === 204) {
+  messageDiv.textContent = "No slots found for this doctor.";
+ }
+  if (result.status ===400 ) {
+   messageDiv.textContent = "No slots found for this doctor.";
+  }
+
+  const data = result.data;
+
+  for (let i = 0; i < data.length; i++) {
+      const slot = data[i];
+      const option = document.createElement("option");
+      option.value = slot.id;
+      option.textContent = slot.interval;
+      slotSelect.appendChild(option);
+  }
+
 }
 
 

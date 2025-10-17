@@ -154,8 +154,8 @@ public class PatientServiceImpl  implements  PatientService{
     }
 
     @Override
-    public List<PatientDto> getPatient(int id) {
-        List<PateintEntity> pateintEntities=repository.getPatient(id);
+    public List<PatientDto> getPatient(int id,int slotId) {
+        List<PateintEntity> pateintEntities=repository.getPatient(id,slotId);
         List<PatientDto> patientDtos=new ArrayList<>();
         if(pateintEntities!=null&&!pateintEntities.isEmpty()){
             for(PateintEntity pateintEntity:pateintEntities){

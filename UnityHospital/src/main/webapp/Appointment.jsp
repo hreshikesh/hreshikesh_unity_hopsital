@@ -33,49 +33,48 @@
     </div>
 </nav>
 
-<div class="container m-5  justify-content-center align-items-center">
-    <h2 class="text-success text-center">Appointment</h2>
+<div class="container m-5 justify-content-center align-items-center"><h2 class="text-success text-center">
+    Appointment</h2>
     <form action="getAppointments" class="bg-success mx-auto w-25 p-5 m-2" method="post">
-        <div class="col-12">
-            <label for="specialization" class="form-label fw-semibold text-dark">Doctor Specialization</label>
+        <div class="col-12"><label for="specialization" class="form-label fw-semibold text-dark">Doctor
+            Specialization</label> <span class="text-danger">*</span> <select class="form-select" id="specialization"
+                                                                              name="specialization"
+                                                                              onchange="fetchDoctor()" required>
+            <option selected disabled>Select Specialization</option>
+            <c:forEach var="specializationDto" items="${specializations}">
+                <option value="${specializationDto.specialization}"
+                <c:if test="${specializationDto.specialization eq selectedSpecialization}">selected</c:if>
+                > ${specializationDto.specialization} </option> </c:forEach>
+        </select> <span class="text-warning" id="specializationError"></span></div>
+        <div class="col-12 mt-3"><label for="doctorName" class="form-label fw-semibold text-dark">Doctor Name</label>
             <span class="text-danger">*</span>
-            <select class="form-select" id="specialization" name="specialization" onchange="fetchDoctor()" required>
-                <option selected disabled>Select Specialization</option>
-                <c:forEach var="specializationDto" items="${specializations}">
-                    <option value="${specializationDto.specialization}" <c:if test="${specializationDto.specialization eq selectedSpecialization}">selected</c:if>>
-                        ${specializationDto.specialization}
-                    </option>
-                </c:forEach>
-            </select>
-            <span class="text-warning" id="specializationError"></span>
+            <div class="input-group input-group-md"><span class="input-group-text">Dr.</span> <select
+                    class="form-select" id="doctorName" name="doctorName" onchange="setDoctorId();fetchAssignedSlot();"
+                <c:if test="${not empty selectedDoctorName}">disabled</c:if>
+                required>
+                <option selected disabled>Select Doctor</option>
+                <c:if test="${not empty selectedDoctorName}">
+                    <option value="${selectedDoctorName}" selected disabled>${selectedDoctorName}</option>
+                </c:if>
+                </select> </div>
+            <span class="text-warning" id="doctorNameError"></span></div>
+        <div class="col-12 mt-3"><label for="doctorSlot" class="form-label fw-semibold text-dark">TimeSlot</label> <span
+                class="text-danger">*</span>
+            <div class="input-group input-group-md"><select class="form-select" id="doctorSlot" name="slot" required>
+                <option selected disabled>Select Slot</option>
+            </select></div>
+            <div id="message" class="mt-3 text-danger fw-semibold"></div>
         </div>
-
-        <div class="col-12 mt-3">
-            <label for="doctorName" class="form-label fw-semibold text-dark">Doctor Name</label>
-            <span class="text-danger">*</span>
-            <div class="input-group input-group-md">
-                <span class="input-group-text">Dr.</span>
-                <select class="form-select" id="doctorName" name="doctorName"   onchange="setDoctorId()" <c:if test="${not empty selectedDoctorName}">disabled</c:if> required>
-                    <option selected disabled>Select Doctor</option>
-                    <c:if test="${not empty selectedDoctorName}">
-                        <option value="${selectedDoctorName}" selected disabled>${selectedDoctorName}</option>
-                    </c:if>
-                </select>
-            </div>
-            <span class="text-warning" id="doctorNameError"></span>
-        </div>
-
         <input type="hidden" name="doctorId" id="doctorIdInput" value="${selectedDoctorId}" required>
-
         <div class="d-grid mt-4 mx-auto">
             <button type="submit" class="btn btn-dark fw-bold w-100 mx-auto">Check Appointments</button>
         </div>
     </form>
+
     <c:if test="${not empty result}">
         <p class="text-center text-primary">${result}</p>
     </c:if>
 </div>
-
 
 
 <c:if test="${not empty dtos}">
@@ -98,6 +97,7 @@
 </c:if>
 
 <script src="js/patient.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

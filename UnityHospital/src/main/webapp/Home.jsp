@@ -55,6 +55,7 @@
         </div>
         <div class="d-flex">
             <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-left"></i></a>
+
         </div>
     </div>
 </nav>

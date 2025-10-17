@@ -1,5 +1,4 @@
 package com.xworkz.hospital.controller;
-
 import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.service.DoctorService;
@@ -24,6 +23,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/")
 public class DoctorController {
+
     @Autowired
     DoctorService doctorService;
 
@@ -63,7 +63,6 @@ public class DoctorController {
         if(dto==null ){
             model.addAttribute("result","Doctor not found");
         }else{
-
             model.addAttribute("dto",dto);
             List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
             model.addAttribute("specializations",specializationDto);
@@ -135,7 +134,6 @@ public class DoctorController {
 
     @GetMapping("alldoctor")
     public ModelAndView getAllDoctors(ModelAndView modelAndView){
-
         List<DoctorDto> list=doctorService.getAllDoctor();
         modelAndView.setViewName("AllDoctor");
         if (list.isEmpty()){
@@ -151,8 +149,6 @@ public class DoctorController {
     @RequestMapping("deleteDoctor")
     public String deleteDoctorDetails(String email,Model model){
         boolean check=doctorService.deleteDoctor(email);
-
-
         if(!check) {
             model.addAttribute("deleteMessage","Doctor not Deleted Successfully");
         }else {
@@ -162,6 +158,5 @@ public class DoctorController {
         model.addAttribute("dtolist", doctorList);
         return "AllDoctor";
     }
-
 
 }

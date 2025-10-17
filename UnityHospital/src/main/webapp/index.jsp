@@ -29,6 +29,9 @@
         <a href="admin" class="btn  fw-bold px-3 d-flex align-items-center">
             <i class="bi bi-person-circle me-2 text-success link-light fs-4"></i>
         </a>
+        <a href="userSignUp" class="btn  fw-bold px-3 d-flex align-items-center">
+            User Sign Up
+        </a>
     </div>
 </nav>
 

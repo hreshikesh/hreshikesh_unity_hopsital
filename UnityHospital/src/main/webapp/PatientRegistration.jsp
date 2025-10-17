@@ -123,6 +123,7 @@
             </div>
 
 
+            <input type="hidden" id="doctorSlot">
             <div class="col-md-4">
                 <label for="doctorName" class="form-label fw-semibold text-dark">Doctor Name</label>
                 <span class="text-danger">*</span>
