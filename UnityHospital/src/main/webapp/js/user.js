@@ -25,40 +25,18 @@ let emailPattern=/^[a-z0-9._]+@gmail\.com$/;
 
 }
 
-function validateUserPassword(){
-let userPassword=document.getElementById("passwordId").value;
-let passwordError=document.getElementById("passwordErrorId");
-let passwordPattern=/^(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=(.*\d){3,}).{8,15}$/;
 
-if(!passwordPattern.test(userPassword)){
-passwordError.innerText="Must have 1sp,3no,1cap Must be 8-15 char";
-}else{
-passwordError.innerText="";
-}
-}
 
-function validateConfirmPassword(){
-let userPassword=document.getElementById("passwordId").value;
-let confirmPassword=document.getElementById("confirmPasswordId").value;
-let cpasswordError=document.getElementById("cpasswordErrorId");
-if(userPassword!==confirmPassword){
-cpasswordError.innerText="Password doesnt match";
-}else{
-cpasswordError.innerText="";
-}
-}
 
-function viewPassword(){
-let password=document.getElementById("passwordId");
-let icon=document.getElementById("toggleIcon");
-if(password.type==="password"){
-password.type="text";
-icon.classList.remove("bi-eye")
-icon.classList.add("bi-eye-slash")
-}else{
-password.type="password";
-icon.classList.remove("bi-eye-slash")
-icon.classList.add("bi-eye")
+function validatePhone(){
+let userPhone=document.getElementById("phoneId");
+let phoneError=document.getElementById("phoneErrorId");
+let phonePattern=/^[6-9]\d{9}$/
+ userPhone.value = userPhone.value.replace(/[^0-9]/g, '');
+if(!phonePattern.test(userPhone.value)){
+phoneError.innerText="Phone must start with 6 to 9 and be exactly 10 digits."
+}else {
+phoneError.innerText=""
 }
 }
 
@@ -72,8 +50,84 @@ const response=result.data;
 if(response === "success"){
 userEmailCheckError.innerHTML=" ";
 }else{
-userEmailCheckError.innerHTML="User Already Present";
+userEmailCheckError.innerHTML="User Email Already Present";
+}
 }
 
 
+async function checkUserMobileNumber(){
+let userPhone=document.getElementById("phoneId").value;
+let userPhoneCheckError=document.getElementById("userPhoneCheckError");
+const result=await axios.get("http://localhost:8080/UnityHospital/checkUserMobileNumber?phone="+userPhone);
+const response=result.data;
+if(response === "success"){
+userPhoneCheckError.innerHTML=" ";
+}else{
+userPhoneCheckError.innerHTML="User Phone No Already Present";
 }
+}
+
+var timer;
+
+function timeCount() {
+    var timeCountEl = document.getElementById("timeCountId");
+    var resend = document.getElementById("resendId");
+    var timeoutMessage = document.getElementById("timeoutMessageId");
+
+    if (!timeCountEl || !resend || !timeoutMessage) return;
+
+    var expiryTime = sessionStorage.getItem("otpExpiry");
+    if (!expiryTime) {
+        expiryTime = Date.now() + 120000; // 2 minutes
+        sessionStorage.setItem("otpExpiry", expiryTime);
+    } else {
+        expiryTime = Number(expiryTime);
+    }
+
+    if (timer) {
+        clearInterval(timer);
+    }
+
+    timer = setInterval(function() {
+        var remaining = Math.floor((expiryTime - Date.now()) / 1000);
+        if (remaining > 0) {
+            timeCountEl.textContent = "Resend OTP in " + remaining + "s";
+            resend.disabled = true;
+            timeoutMessage.textContent = "";
+        } else {
+            timeCountEl.textContent = "";
+            timeoutMessage.textContent = "Time Out. You can resend OTP";
+            resend.disabled = false;
+            clearInterval(timer);
+            sessionStorage.removeItem("otpExpiry");
+        }
+    }, 1000);
+}
+  sessionStorage.removeItem("otpExpiry");
+
+
+function resetTimeOtp() {
+    sessionStorage.removeItem("otpExpiry");
+    timeCount();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    let otpModalEl = document.getElementById('otpSentModal');
+    if (otpModalEl) {
+        let otpModal = new bootstrap.Modal(otpModalEl);
+        otpModal.show();
+    }
+
+    let otpFormEl = document.getElementById('otpForm');
+    if (otpFormEl) {
+        timeCount();
+    }
+
+});
+
+
+
+
+
+
+

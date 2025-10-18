@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Data
 @AllArgsConstructor
@@ -21,9 +19,12 @@ public class UserDto {
     @Pattern(regexp = "[a-z0-9]+@gmail\\.com$",message = "Email should follow userEmail@gmail.com pattern")
     private String userEmail;
 
+    @NotNull(message = "User Phone Cannot be Empty")
+    @Min(value = 6000000000L, message = "Number should start from 6|7|8|9")
+    @Max(value = 9999999999L, message = "Phone number must be 10 digits")
+    private long phone;
 
-    @NotNull(message = "Password Cannot be empty")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=(.*\\d){3,}).{3,15}$", message = "password should have 1sp,1Caps,3 numerics")
-    private String password;
+
+
 
 }

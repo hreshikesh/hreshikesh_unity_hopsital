@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "user_info")
 @NamedQuery(name = "UserEmailCheck",query = "select count(u.userEmail) from UserEntity u where u.userEmail=:email ")
+@NamedQuery(name = "getEntityByEmail",query = "select u from UserEntity u where u.userEmail=:email ")
+@NamedQuery(name = "UserPhoneCheck",query = "select count(u.phone) from UserEntity u where u.phone=:phone ")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +27,18 @@ public class UserEntity {
   @Column(name = "user_email",unique = true)
     private String userEmail;
 
+  @Column(name = "user_phone",unique = true)
+    private long phone;
 
- @Column(name = "user_password")
-    private String password;
 
- @Column(name = "Saved_time")
+
+ @Column(name = "register_time")
     private LocalDateTime localDateTime=LocalDateTime.now();
+
+ @Column(name = "user_otp")
+    private String otp;
+
+ @Column(name = "otp_valid_time")
+    private LocalDateTime loginTime;
 
 }

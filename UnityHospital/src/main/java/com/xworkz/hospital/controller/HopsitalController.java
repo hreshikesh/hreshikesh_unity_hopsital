@@ -117,6 +117,10 @@ public class HopsitalController {
         return "UserSignUP";
     }
 
+    @RequestMapping("signin")
+    public String gotoSignIn(){
+        return "UserSignIn";
+    }
 
 
 }

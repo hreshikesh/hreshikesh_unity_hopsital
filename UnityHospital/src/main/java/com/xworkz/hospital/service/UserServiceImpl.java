@@ -5,8 +5,10 @@ import com.xworkz.hospital.entity.UserEntity;
 import com.xworkz.hospital.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl  implements  UserService{
@@ -17,7 +19,8 @@ public class UserServiceImpl  implements  UserService{
     @Autowired
     EmailService emailService;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+    @Autowired
+    HospitalService hospitalService;
 
 
     @Override
@@ -32,7 +35,6 @@ public class UserServiceImpl  implements  UserService{
     @Override
     public boolean saveUser(UserDto userDto) {
         if(userDto!=null) {
-            userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
             UserEntity entity = new UserEntity();
             BeanUtils.copyProperties(userDto,entity);
             if(checkEmail(userDto.getUserEmail())) {
@@ -55,4 +57,35 @@ public class UserServiceImpl  implements  UserService{
         }
         return false;
     }
+
+    @Override
+    public boolean checkMobileNumber(long phone) {
+        long count =userRepository.checkMobileNumber(phone);
+        if(count==0L
+        ){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String verifyAndSendOtp(String email) {
+        UserEntity userEntity=  userRepository.findByEmail(email);
+        if(userEntity==null){
+            return "Email Not Found";
+        }else{
+            StringBuffer otp = new StringBuffer(6);
+            Random random = new Random();
+            for (int i = 0; i < 6; i++) {
+                otp.append(random.nextInt(10));
+            }
+
+            emailService.getEmail(email, "Your One-Time Password (OTP) for  Login ", "Dear "+userEntity.getUserName()+" ," + "\n\nYour One-Time Password (OTP) is \n\n" + otp+"\n\nThis code is for your  login on Unity Hospital.\n\nThis OTP will expire in 2 minutes\n\nFor security, please do not share this OTP with anyone\n\nThank You,\n\nUnity Hospital\nAttiguppe,Bengalore\nPhone:+91 9876543210");
+            LocalDateTime localDateTime=LocalDateTime.now().plusMinutes(2);
+            userEntity.setLoginTime(localDateTime);
+            userEntity.setOtp(otp.toString());
+            userRepository.updateTable(userEntity);
+            return "sentOtp";
+        }
+        }
 }

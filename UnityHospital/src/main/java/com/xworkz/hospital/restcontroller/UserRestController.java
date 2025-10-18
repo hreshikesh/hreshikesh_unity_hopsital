@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController {
 @Autowired
     UserService userService;
+
     @GetMapping("checkUserEmail")
     public String checkUserEmail(@RequestParam String email){
         boolean status=userService.checkEmail(email);
@@ -23,5 +24,15 @@ public class UserRestController {
 
     }
 
+    @GetMapping("checkUserMobileNumber")
+    public String CheckMobileNumber(@RequestParam("phone") String userPhone){
+        long convertedPhoneNo=Long.parseLong(userPhone);
+        boolean status=userService.checkMobileNumber(convertedPhoneNo);
+        if(status){
+            return "success";
+        }else{
+            return "failure";
+        }
+    }
 
 }

@@ -37,7 +37,7 @@
 </nav>
 
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
-    <div class="card shadow-lg border-success w-100" style="max-width: 400px;">
+    <div class="card shadow-lg border-success w-100 mt-3" style="max-width: 400px;">
         <div class="card-body">
             <h3 class="text-center text-success mb-4 fw-bold">User Sign Up</h3>
             <c:if test="${not empty error}">
@@ -67,22 +67,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="passwordId" class="form-label text-success fw-semibold">Password</label>
-                    <div class="position-relative">
-                        <input type="password" class="form-control border-success" oninput="validateUserPassword()" name="password" id="passwordId" minlength="8" maxlength="15" required>
-                        <button type="button" class="position-absolute top-50 end-0 translate-middle-y text-danger  border-0 bg-transparent" onclick="viewPassword()">
-                            <i class="bi bi-eye" id="toggleIcon"></i>
-                        </button>
-                    </div>
-                    <span id="passwordErrorId" class="text-danger small mt-1"></span>
+                        <label for="phoneId" class="form-label text-success fw-semibold">Phone No</label>
+                        <input type="text"  class="form-control  border-success" oninput="validatePhone()" onchange="checkUserMobileNumber()"  maxlength="10" id="phoneId" name="phone" value="${dto.phone}" required >
+                        <span class="text-danger small mt-1" id="phoneErrorId"></span>
+                    <span id="userPhoneCheckError" class="text-danger small mt-1"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label for="confirmPasswordId" class="form-label text-success fw-semibold">Confirm Password</label>
-                    <input type="password" class="form-control border-success" id="confirmPasswordId" oninput="validateConfirmPassword()"
-                        placeholder="Confirm password" required>
-                    <span id="cpasswordErrorId" class="text-danger small mt-1"></span>
-                </div>
 
                 <div class="d-grid">
                     <button type="submit" class="btn btn-success fw-semibold">Sign Up</button>
@@ -96,19 +86,6 @@
 </div>
 
 <c:if test="${not empty result}">
-    <c:if test="${result eq 'User Details Successfully Saved'}">
-        <div class="position-fixed bottom-0 end-0  p-3 " >
-            <div class="toast align-items-center text-bg-dark " role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body text-success">
-                        ${result}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-    </c:if>
-    <c:if test="${result eq 'User Details Not Saved'}">
         <div class="position-fixed bottom-0 end-0  p-3 " >
             <div class="toast align-items-center text-bg-dark " role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="d-flex">
@@ -119,7 +96,6 @@
                 </div>
             </div>
         </div>
-    </c:if>
 </c:if>
 
 

@@ -54,4 +54,71 @@ public class UserRepositoryImpl implements  UserRepository{
         }
         return false;
     }
+
+    @Override
+    public long checkMobileNumber(long phone) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        long count = 0L;
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("UserPhoneCheck");
+            query.setParameter("phone", phone);
+            count = (long) query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return count;
+    }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        UserEntity entity=null;
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("getEntityByEmail");
+            query.setParameter("email", email);
+            entity= (UserEntity) query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return entity;
+    }
+
+    @Override
+    public void updateTable(UserEntity entity) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        UserEntity entity1=null;
+        try {
+            transaction.begin();
+            Query query = manager.createNamedQuery("getEntityByEmail");
+            query.setParameter("email", entity.getUserEmail());
+            entity1= (UserEntity) query.getSingleResult();
+
+            entity1.setOtp(entity.getOtp());
+            entity1.setLoginTime(entity.getLoginTime());
+
+            manager.merge(entity1);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+    }
 }
