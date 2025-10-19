@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "UserEmailCheck",query = "select count(u.userEmail) from UserEntity u where u.userEmail=:email ")
 @NamedQuery(name = "getEntityByEmail",query = "select u from UserEntity u where u.userEmail=:email ")
 @NamedQuery(name = "UserPhoneCheck",query = "select count(u.phone) from UserEntity u where u.phone=:phone ")
+@NamedQuery(name = "findUserAllOTP", query = "SELECT u FROM UserEntity u WHERE u.otp IS NOT NULL")
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,6 @@ public class UserEntity {
 
   @Column(name = "user_phone",unique = true)
     private long phone;
-
 
 
  @Column(name = "register_time")

@@ -1,6 +1,7 @@
 package com.xworkz.hospital.repository;
 
 import com.xworkz.hospital.dto.UserDto;
+import com.xworkz.hospital.entity.HospitalEntity;
 import com.xworkz.hospital.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements  UserRepository{
@@ -121,4 +124,25 @@ public class UserRepositoryImpl implements  UserRepository{
             manager.close();
         }
     }
+
+    @Override
+    public List<UserEntity> getAllWithOtp() {
+            EntityManager manager = entityManagerFactory.createEntityManager();
+            EntityTransaction transaction = manager.getTransaction();
+            List<UserEntity> userEntities = null;
+            try {
+                transaction.begin();
+                userEntities = manager.createNamedQuery("findUserAllOTP").getResultList();
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction.isActive()) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                manager.close();
+            }
+            return userEntities;
+        }
+
 }

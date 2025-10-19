@@ -18,6 +18,8 @@ public class SchedulingConfig {
     public ThreadPoolTaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
         scheduler.setPoolSize(5);
+        scheduler.setWaitForTasksToCompleteOnShutdown(true);
+        scheduler.setAwaitTerminationSeconds(10);
         scheduler.setThreadNamePrefix("otp-verify-task ");
         return scheduler;
     }

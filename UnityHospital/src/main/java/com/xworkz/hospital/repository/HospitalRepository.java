@@ -11,7 +11,6 @@ public interface HospitalRepository {
 
     void updateTable(HospitalEntity entity);
 
-
     List<HospitalEntity> getAllWithOtp();
 
 

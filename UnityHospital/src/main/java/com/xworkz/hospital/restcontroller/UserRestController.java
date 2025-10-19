@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/")
 public class UserRestController {
@@ -33,6 +35,13 @@ public class UserRestController {
         }else{
             return "failure";
         }
+    }
+
+    @GetMapping("/verifyOtp")
+    public String verifyOtp(@RequestParam String otp, HttpSession session){
+        boolean status=userService.verifyOtp(otp,(String) session.getAttribute("userEmail"));
+        if(status) return"pass";
+        else return "fail";
     }
 
 }

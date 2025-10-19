@@ -126,6 +126,31 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+async function verifyOtp(){
+const otpInputField=document.getElementById('otpId');
+const loginButton=document.getElementById('loginButtonId');
+const otpStatus=document.getElementById("otpStatusId");
+otpInputField.value = otpInputField.value.replace(/[^0-9]/g, '');
+const response=await axios.get("http://localhost:8080/UnityHospital/verifyOtp?otp="+otpInputField.value);
+
+const result=response.data;
+
+loginButton.disabled=true;
+
+if (result === "pass") {
+  otpInputField.classList.add("border-success");
+    otpInputField.classList.remove("border-danger");
+    loginButton.disabled = false;
+    otpStatus.innerHTML = "";
+} else {
+    otpInputField.classList.remove("border-success");
+    otpInputField.classList.add("border-danger");
+    loginButton.disabled = true;
+    otpStatus.innerHTML = "OTP Invalid";
+}
+}
+
+
 
 
 

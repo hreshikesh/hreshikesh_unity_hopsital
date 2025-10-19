@@ -36,10 +36,9 @@
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
     <div class="card shadow-sm w-100" style="max-width: 400px;">
         <div class="card-body">
-            <h4 class="text-center text-success fw-bold" style="font-family: 'Quintessential', serif;">Sign In with OTP</h4>
+            <h4 class="text-center text-success fw-bold" style="font-family: 'Quintessential', serif;">Sign In </h4>
             <p class="text-center text-muted small mb-4">Enter your registered email to receive OTP</p>
 
-            <!-- Email Form -->
             <form action="sendOtp" method="post">
                 <div class="mb-3">
                     <label for="emailId" class="form-label">Email address</label>
@@ -55,31 +54,33 @@
                 <span class="text-danger text-center small mt-1">${emailerror}</span>
             </form>
 
-            <!-- OTP Form -->
             <c:if test="${check}">
-                <form id="otpForm" class="mt-4">
+                <form action="login"  method="post" id="otpForm" class="mt-4">
                     <div class="mb-3">
                         <label for="otpId" class="form-label">Enter OTP</label>
-                        <input type="text" class="form-control" id="otpId" name="otp" placeholder="Enter 6-digit OTP" required>
+                        <input type="text" class="form-control" id="otpId" name="otp" placeholder="Enter 6-digit OTP" onchange="verifyOtp()" maxlength="6" required>
+                        <span id="otpStatusId" class="text-danger text-center small mt-1"></span>
                     </div>
-                    <input type="hidden" value="${email}" required>
-
-                    <div class="d-flex justify-content-center align-items-center mb-3">
-                        <span id="timeCountId" class="text-dark fw-semibold"></span>
-                        <button type="button" class="btn btn-outline-dark btn-sm ms-1" id="resendId" disabled>
-                            Resend OTP
-                        </button>
-                    </div>
+                    <input type="hidden" value="${email}" name="email" required>
 
                     <p id="timeoutMessageId" class="text-danger text-center fw-semibold"></p>
 
-                    <button type="submit" class="btn btn-success w-100" id="loginButtonId">Verify OTP</button>
+                    <button type="submit" class="btn btn-success w-100" id="loginButtonId" disabled>Verify OTP</button>
                 </form>
+
+                <div class="d-flex justify-content-center align-items-center m-3">
+                    <span id="timeCountId" class="text-dark fw-semibold me-2"></span>
+                    <form action="resendOtp" method="post" class="d-inline">
+                        <input type="hidden" name="email" value="${email}">
+                        <button type="submit" class="btn btn-outline-dark btn-sm" id="resendId" disabled>
+                            Resend OTP
+                        </button>
+                    </form>
+                </div>
             </c:if>
 
         </div>
 
-        <!-- OTP Sent Modal -->
         <c:if test="${otpSent}">
             <div class="modal fade" id="otpSentModal" tabindex="-1" aria-labelledby="otpSentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -101,6 +102,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/user.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 </body>
 </html>

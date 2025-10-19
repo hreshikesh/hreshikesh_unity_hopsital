@@ -26,7 +26,7 @@
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
-            <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
+            <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL-Admin</span>
         </a>
         <div class="d-flex justify-content-center align-items-center">
             <ul class="nav nav-underline">

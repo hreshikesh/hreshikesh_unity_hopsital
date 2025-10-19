@@ -48,9 +48,6 @@ public class HopsitalController {
     @RequestMapping("Home")
     public String goToHome(HttpSession session)
     {
-        session.removeAttribute("selectedSpecialization");
-        session.removeAttribute("selectedDoctorName");
-        session.removeAttribute("selectedDoctorId");
         return "Home";
 
     }

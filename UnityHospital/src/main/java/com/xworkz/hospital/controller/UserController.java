@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -30,6 +31,7 @@ public class UserController {
 
         boolean isSaved=userService.saveUser(userDto);
         if(isSaved){
+
             view.setViewName("UserSignIn");
             return view;
         }else{
@@ -42,11 +44,12 @@ public class UserController {
     }
 
     @PostMapping("sendOtp")
-    public String verifyAndSendOtp(@RequestParam String email, Model model){
+    public String verifyAndSendOtp(@RequestParam String email, Model model,HttpSession session){
         if(email==null){
             model.addAttribute("emailerror","Enter email");
             model.addAttribute("email",email);
         }else{
+            session.setAttribute("userEmail",email);
             String result=userService.verifyAndSendOtp(email);
             if(result.equals("Email Not Found")){
                 model.addAttribute("emailerror","Email Not Found");
@@ -59,4 +62,31 @@ public class UserController {
         }
         return "UserSignIn";
     }
+
+    @PostMapping("resendOtp")
+    public String resendOtp(@RequestParam String email,Model model){
+        String result=userService.verifyAndSendOtp(email);
+        if(result.equals("Email Not Found")){
+            model.addAttribute("emailerror","Email Not Found");
+            model.addAttribute("email",email);
+        }else if(result.equals("sentOtp")){
+            model.addAttribute("check",true);
+            model.addAttribute("otpSent",true);
+            model.addAttribute("email",email);
+        }
+        return "UserSignIn";
+    }
+
+    @PostMapping("login")
+    public String gotoUserDashBoard(Model model,HttpSession session){
+        String userEmail= (String) session.getAttribute("userEmail");
+        UserDto userDto=userService.findByEmail(userEmail);
+        if(userDto!=null){
+            session.setAttribute("userName",userDto.getUserName());
+            model.addAttribute("user",userDto.getUserName());
+            userService.updateOTP(userEmail);
+        }
+        return "UserDashBoard";
+    }
+
 }

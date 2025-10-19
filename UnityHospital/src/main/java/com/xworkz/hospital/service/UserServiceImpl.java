@@ -88,4 +88,34 @@ public class UserServiceImpl  implements  UserService{
             return "sentOtp";
         }
         }
+
+    @Override
+    public UserDto findByEmail(String email) {
+        UserEntity userEntity=userRepository.findByEmail(email);
+        if(userEntity!=null){
+            UserDto dto=new UserDto();
+            BeanUtils.copyProperties(userEntity,dto);
+            return dto;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean verifyOtp(String otp, String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        if (userEntity != null) {
+            return userEntity.getOtp().equals(otp) && LocalDateTime.now().isBefore(userEntity.getLoginTime());
+        } else if(userEntity.getOtp()==null){
+            return false;
+        }
+        return false;
+    }
+
+    @Override
+    public void updateOTP(String email) {
+       UserEntity entity= userRepository.findByEmail(email);
+       entity.setOtp(null);
+       entity.setLoginTime(null);
+       userRepository.updateTable(entity);
+    }
 }
