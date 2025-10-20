@@ -119,5 +119,11 @@ public class HopsitalController {
         return "UserSignIn";
     }
 
+    @RequestMapping("userDashboard")
+    public String gotoUserDashboard(Model model,HttpSession session){
+        model.addAttribute("user",session.getAttribute("userName"));
+        return "UserDashBoard";
+    }
+
 
 }

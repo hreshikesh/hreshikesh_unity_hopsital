@@ -55,17 +55,7 @@ userEmailCheckError.innerHTML="User Email Already Present";
 }
 
 
-async function checkUserMobileNumber(){
-let userPhone=document.getElementById("phoneId").value;
-let userPhoneCheckError=document.getElementById("userPhoneCheckError");
-const result=await axios.get("http://localhost:8080/UnityHospital/checkUserMobileNumber?phone="+userPhone);
-const response=result.data;
-if(response === "success"){
-userPhoneCheckError.innerHTML=" ";
-}else{
-userPhoneCheckError.innerHTML="User Phone No Already Present";
-}
-}
+
 
 var timer;
 

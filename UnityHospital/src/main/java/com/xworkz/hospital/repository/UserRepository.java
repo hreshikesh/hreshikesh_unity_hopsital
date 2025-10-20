@@ -12,13 +12,14 @@ public interface UserRepository {
 
     boolean saveUser(UserEntity userEntity);
 
-    long checkMobileNumber(long phone);
 
     UserEntity findByEmail(String email);
 
     void updateTable(UserEntity entity);
 
     List<UserEntity> getAllWithOtp();
+
+    boolean updateUserDetails(UserEntity userEntity);
 
 
 

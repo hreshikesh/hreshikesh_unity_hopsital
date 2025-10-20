@@ -8,8 +8,6 @@ public interface UserService {
 
     boolean saveUser(UserDto userDto);
 
-    boolean checkMobileNumber(long phone);
-
     String verifyAndSendOtp(String email);
 
     UserDto findByEmail(String email);
@@ -17,4 +15,6 @@ public interface UserService {
     boolean verifyOtp(String otp,String email);
 
     void updateOTP(String email);
+
+    boolean updateUserDetails(UserDto userDto);
 }

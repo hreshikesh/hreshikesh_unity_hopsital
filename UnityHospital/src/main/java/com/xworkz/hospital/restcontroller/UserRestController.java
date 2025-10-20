@@ -26,16 +26,7 @@ public class UserRestController {
 
     }
 
-    @GetMapping("checkUserMobileNumber")
-    public String CheckMobileNumber(@RequestParam("phone") String userPhone){
-        long convertedPhoneNo=Long.parseLong(userPhone);
-        boolean status=userService.checkMobileNumber(convertedPhoneNo);
-        if(status){
-            return "success";
-        }else{
-            return "failure";
-        }
-    }
+
 
     @GetMapping("/verifyOtp")
     public String verifyOtp(@RequestParam String otp, HttpSession session){

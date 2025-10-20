@@ -10,6 +10,9 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+
+    private int id;
+
     @NotNull(message = "User Name Cannot be empty")
     @Size(min = 3,max = 25,message = "UserName should be between 3-35 characters")
     @Pattern(regexp = "^[A-Za-z]+$",message = "UserName should only have alphabets")

@@ -19,9 +19,6 @@ public class UserServiceImpl  implements  UserService{
     @Autowired
     EmailService emailService;
 
-    @Autowired
-    HospitalService hospitalService;
-
 
     @Override
     public boolean checkEmail(String email) {
@@ -58,15 +55,6 @@ public class UserServiceImpl  implements  UserService{
         return false;
     }
 
-    @Override
-    public boolean checkMobileNumber(long phone) {
-        long count =userRepository.checkMobileNumber(phone);
-        if(count==0L
-        ){
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public String verifyAndSendOtp(String email) {
@@ -117,5 +105,16 @@ public class UserServiceImpl  implements  UserService{
        entity.setOtp(null);
        entity.setLoginTime(null);
        userRepository.updateTable(entity);
+    }
+
+    @Override
+    public boolean updateUserDetails(UserDto userDto) {
+        if(userDto==null) {
+            return false;
+        }else{
+            UserEntity userEntity=new UserEntity();
+            BeanUtils.copyProperties(userDto,userEntity);
+            return userRepository.updateUserDetails(userEntity);
+        }
     }
 }

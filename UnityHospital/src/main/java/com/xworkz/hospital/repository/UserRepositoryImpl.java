@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -58,26 +57,7 @@ public class UserRepositoryImpl implements  UserRepository{
         return false;
     }
 
-    @Override
-    public long checkMobileNumber(long phone) {
-        EntityManager manager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = manager.getTransaction();
-        long count = 0L;
-        try {
-            transaction.begin();
-            Query query = manager.createNamedQuery("UserPhoneCheck");
-            query.setParameter("phone", phone);
-            count = (long) query.getSingleResult();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-        } finally {
-            manager.close();
-        }
-        return count;
-    }
+
 
     @Override
     public UserEntity findByEmail(String email) {
@@ -145,4 +125,31 @@ public class UserRepositoryImpl implements  UserRepository{
             return userEntities;
         }
 
+    @Override
+    public boolean updateUserDetails(UserEntity userEntity) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        UserEntity entity1 = null;
+        try {
+            transaction.begin();
+
+            entity1 = manager.find(UserEntity.class, userEntity.getId());
+
+
+            entity1.setUserName(userEntity.getUserName());
+            entity1.setPhone(userEntity.getPhone());
+
+            manager.merge(entity1);
+            transaction.commit();
+
+            return true;
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return false;
+    }
 }

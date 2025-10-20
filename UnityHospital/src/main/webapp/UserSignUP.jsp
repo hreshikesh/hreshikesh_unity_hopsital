@@ -68,7 +68,7 @@
 
                 <div class="mb-3">
                         <label for="phoneId" class="form-label text-success fw-semibold">Phone No</label>
-                        <input type="text"  class="form-control  border-success" oninput="validatePhone()" onchange="checkUserMobileNumber()"  maxlength="10" id="phoneId" name="phone" value="${dto.phone}" required >
+                        <input type="text"  class="form-control  border-success" oninput="validatePhone()"  maxlength="10" id="phoneId" name="phone" value="${dto.phone}" required >
                         <span class="text-danger small mt-1" id="phoneErrorId"></span>
                     <span id="userPhoneCheckError" class="text-danger small mt-1"></span>
                 </div>
