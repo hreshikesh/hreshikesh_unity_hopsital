@@ -58,12 +58,26 @@
             </div>
         </c:if>
 
-        <div class="text-center mb-4">
-            <img src="download?imagePath=${dto.imagePath}"
-                 class="rounded-circle border border-3 border-light shadow-sm"
-                 style="width:120px; height:120px; object-fit:cover;"
-                 alt="profile">
-        </div>
+        <c:if test="${not empty dto}">
+            <c:choose>
+                <c:when test="${not empty dto.imagePath}">
+                    <div class="text-center mb-4">
+                        <img src="download?imagePath=${dto.imagePath}"
+                             class="rounded-circle border border-3 border-light shadow-sm"
+                             style="width:120px; height:120px; object-fit:cover;"
+                             alt="profile">
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="text-center mb-4">
+                        <img src="images/defualtProfile.png"
+                             class="rounded-circle border border-3 border-light shadow-sm"
+                             style="width:120px; height:120px; object-fit:cover;"
+                             alt="profile">
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </c:if>
 
         <input type="hidden" value="${dto.id}" name="id">
 

@@ -16,6 +16,12 @@
         .feature-icon { font-size: 2rem; }
         .card:hover { transform: translateY(-5px); transition: 0.3s ease; }
         .card a.btn:hover { transform: scale(1.05); transition: 0.3s ease; }
+        .content:hover{transform: scale(1.05); transition: 0.3s ease;border:1px solid green}
+        .quintessential-regular {
+  font-family: "Quintessential", serif;
+  font-weight: 400;
+  font-style: normal;
+}
     </style>
 </head>
 <body class="bg-success-subtle">
@@ -24,7 +30,7 @@
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
-            <span class="fw-bold fs-5">UNITY HOSPITAL</span>
+            <span class="fw-bold fs-5 quintessential-regular ">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
             <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-right"></i> Logout</a>
@@ -38,6 +44,9 @@
             <h2 class="text-success fw-bold">Welcome, ${user}!</h2>
             <p class="text-muted fs-5">You have successfully logged in. Explore our hospital services and stay informed about your health.</p>
             <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="myAppointment" class="btn btn-success btn-lg rounded-pill">
+                    <i class="bi bi-person-circle me-2"></i> My Appointment
+                </a>
                 <a href="profile" class="btn btn-outline-success btn-lg rounded-pill">
                     <i class="bi bi-person-circle me-2"></i> My Profile
                 </a>
@@ -46,8 +55,8 @@
     </div>
     <div class="row g-4 mb-5">
         <div class="col-md-6">
-            <div class="card shadow-sm border-0 rounded-4 h-100 bg-white p-4">
-                <div class="card-body">
+            <div class="card shadow-sm border-0 rounded-4 h-100 bg-white p-4 d-flex justify-content-center align-items-center">
+                <div class="card-body   ">
                     <h4 class="text-success fw-bold mb-3">About Unity Hospital</h4>
                     <p class="text-muted fs-6" id="aboutPreview">
                         Unity Hospital is a premier healthcare institution dedicated to high-quality medical care. Our experienced team ensures compassionate treatment with advanced technology.
@@ -68,35 +77,35 @@
                 <div class="card-body">
                     <h4 class="text-success fw-bold mb-3">Our Services</h4>
                     <div class="row g-3">
-                        <div class="col-6 d-flex align-items-start">
+                        <div class="col-6 d-flex align-items-start  content p-1">
                             <i class="bi bi-person-check-fill text-success feature-icon me-3"></i>
-                            <div>
+                            <div >
                                 <h6 class="fw-bold mb-0">Patient Care</h6>
                                 <small class="text-muted">Focused on your health and comfort with personalized attention.</small>
                             </div>
                         </div>
-                        <div class="col-6 d-flex align-items-start">
+                        <div class="col-6 d-flex align-items-start content  p-1">
                             <i class="bi bi-journal-medical text-success feature-icon me-3"></i>
                             <div>
                                 <h6 class="fw-bold mb-0">Consultations</h6>
                                 <small class="text-muted">Professional advice tailored to your health needs.</small>
                             </div>
                         </div>
-                        <div class="col-6 d-flex align-items-start">
+                        <div class="col-6 d-flex align-items-start content  p-1">
                             <i class="bi bi-clipboard-check text-success feature-icon me-3"></i>
                             <div>
                                 <h6 class="fw-bold mb-0">Diagnostics</h6>
                                 <small class="text-muted">Accurate lab and imaging services for informed decisions.</small>
                             </div>
                         </div>
-                        <div class="col-6 d-flex align-items-start">
+                        <div class="col-6 d-flex align-items-start content  p-1">
                             <i class="bi bi-people text-success feature-icon me-3"></i>
                             <div>
                                 <h6 class="fw-bold mb-0">Wellness Programs</h6>
                                 <small class="text-muted">Designed to promote healthy living and prevent illness.</small>
                             </div>
                         </div>
-                        <div class="col-12 d-flex align-items-start">
+                        <div class="col-12 d-flex align-items-start content  p-1">
                             <i class="bi bi-hospital text-success feature-icon me-3"></i>
                             <div>
                                 <h6 class="fw-bold mb-0">Patient Support</h6>
