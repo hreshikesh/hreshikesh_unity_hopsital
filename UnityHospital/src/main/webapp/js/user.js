@@ -129,17 +129,30 @@ loginButton.disabled=true;
 
 if (result === "pass") {
   otpInputField.classList.add("border-success");
-    otpInputField.classList.remove("border-danger");
+    otpInputField.classList.remove("is-invalid");
     loginButton.disabled = false;
     otpStatus.innerHTML = "";
 } else {
     otpInputField.classList.remove("border-success");
-    otpInputField.classList.add("border-danger");
+    otpInputField.classList.add("is-invalid");
     loginButton.disabled = true;
     otpStatus.innerHTML = "OTP Invalid";
 }
 }
 
+function validateRegistrationId(){
+const regId=document.getElementById("regId").value;
+const regIdError=document.getElementById("regIdError");
+const searchButton=document.getElementById("searchButtonId");
+const regIdPattern=/^UNITY[a-zA-Z]{2}-(0[1-9]|1[0-2])\d{2}-\d{4}$/;
+if(!regIdPattern.test(regId.toUpperCase())){
+regIdError.innerHTML="Invalid Registration Id";
+searchButton.disabled=true;
+}else{
+regIdError.innerHTML=" ";
+searchButton.disabled=false;
+}
+}
 
 
 

@@ -11,12 +11,19 @@
     <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
+    <style>
+        .quintessential-regular {
+         font-family: "Quintessential", serif;
+         font-weight: 400;
+         font-style: normal;
+     }
+    </style>
 </head>
 <body class="bg-success-subtle">
 
 <nav class="navbar bg-body-tertiary shadow-sm" data-bs-theme="dark">
     <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center text-success fw-bold" href="#">
+        <a class="navbar-brand d-flex align-items-center text-success fw-bold quintessential-regular" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
             UNITY HOSPITAL
         </a>
