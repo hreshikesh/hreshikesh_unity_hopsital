@@ -1,7 +1,8 @@
 package com.xworkz.hospital.service;
 
+import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.dto.UserDto;
-import com.xworkz.hospital.entity.UserEntity;
+
 
 public interface UserService {
     boolean checkEmail(String email);
@@ -17,4 +18,5 @@ public interface UserService {
     void updateOTP(String email);
 
     boolean updateUserDetails(UserDto userDto);
+
 }

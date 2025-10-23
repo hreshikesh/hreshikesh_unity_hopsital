@@ -21,5 +21,7 @@ public interface PatientRepository {
 
     PateintEntity getPatientDetails(int id);
 
+    PateintEntity findPatientByRegistrationId(String regid);
+
 
 }

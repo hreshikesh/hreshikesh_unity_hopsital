@@ -19,4 +19,7 @@ public interface PatientService {
 
     PatientDto getPatientDetails(int id);
 
+
+    PatientDto findPatientByRegistrationId(String regid);
+
 }

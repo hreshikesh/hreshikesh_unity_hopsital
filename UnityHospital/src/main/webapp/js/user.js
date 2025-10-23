@@ -144,7 +144,7 @@ function validateRegistrationId(){
 const regId=document.getElementById("regId").value;
 const regIdError=document.getElementById("regIdError");
 const searchButton=document.getElementById("searchButtonId");
-const regIdPattern=/^UNITY[a-zA-Z]{2}-(0[1-9]|1[0-2])\d{2}-\d{4}$/;
+const regIdPattern= /^UNITY[a-zA-Z]{2}-\d{2}(0[1-9]|1[0-2])-\d{4}$/i;
 if(!regIdPattern.test(regId.toUpperCase())){
 regIdError.innerHTML="Invalid Registration Id";
 searchButton.disabled=true;

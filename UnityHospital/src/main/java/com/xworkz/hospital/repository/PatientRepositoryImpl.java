@@ -140,4 +140,25 @@ public class PatientRepositoryImpl  implements PatientRepository{
         }
         return pateintEntity;
     }
+
+    @Override
+    public PateintEntity findPatientByRegistrationId(String regid) {
+        EntityManager manager=entityManagerFactory.createEntityManager();
+        EntityTransaction transaction=manager.getTransaction();
+        PateintEntity pateintEntity=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("getPatientDetailsByRegistrationID");
+            query.setParameter("regId",regid);
+            pateintEntity=(PateintEntity) query.getSingleResult();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return pateintEntity;
+    }
 }

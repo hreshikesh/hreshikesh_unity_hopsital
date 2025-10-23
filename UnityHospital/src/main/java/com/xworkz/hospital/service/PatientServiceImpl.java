@@ -203,4 +203,37 @@ public class PatientServiceImpl  implements  PatientService{
         }
         return dto;
     }
+
+    @Override
+    public PatientDto findPatientByRegistrationId(String regid) {
+        if(regid!=null) {
+            PateintEntity pateintEntity=repository.findPatientByRegistrationId(regid);
+            if(pateintEntity!=null){
+                PatientDto dto=new PatientDto();
+                dto.setRegistrationId(pateintEntity.getRegistrationId());
+                dto.setName(pateintEntity.getName());
+                dto.setAge(pateintEntity.getAge());
+                dto.setBloodGroup(pateintEntity.getBloodGroup());
+                dto.setEmail(pateintEntity.getEmail());
+                dto.setPhone(pateintEntity.getPhone());
+                dto.setAddress(pateintEntity.getAddress());
+                dto.setDisease(pateintEntity.getDisease());
+                dto.setSlot(pateintEntity.getSlot());
+
+                if(pateintEntity.getPatientProfileEntity()!=null && pateintEntity.getPatientProfileEntity().getImageName()!=null){
+                    dto.setProfilePath(pateintEntity.getPatientProfileEntity().getImageName());
+                }
+
+                if(pateintEntity.getPatientSymtomsImageEntityList()!=null && !pateintEntity.getPatientSymtomsImageEntityList().isEmpty()){
+                 dto.setSymptomsPath(new ArrayList<>());
+                 for(PatientSymtomsImageEntity patientSymtomsImageEntity: pateintEntity.getPatientSymtomsImageEntityList()){
+                     dto.getSymptomsPath().add(patientSymtomsImageEntity.getImageName());
+                 }
+                }
+
+                return  dto;
+            }
+        }
+        return null;
+    }
 }

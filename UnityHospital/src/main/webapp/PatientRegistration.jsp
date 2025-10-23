@@ -123,7 +123,6 @@
             </div>
 
 
-            <input type="hidden" id="doctorSlot">
             <div class="col-md-4">
                 <label for="doctorName" class="form-label fw-semibold text-dark">Doctor Name</label>
                 <span class="text-danger">*</span>
@@ -132,21 +131,21 @@
                     <select class="form-select" id="doctorName" name="doctorName" onchange="fetchTimeSlot()" required>
                         <option selected disabled>Select Doctor</option>
                     </select>
-
                 </div>
                 <span class="text-warning" id="doctorNameError"></span>
             </div>
             <input type="hidden" name="doctorId" id="doctorIdInput" required>
-            <input type="hidden" name="slotId" id="slotInputId" required>
+
 
             <div class="col-md-4">
                 <label for="slotId" class="form-label fw-semibold text-dark">Appointment Slot</label>
                 <span class="text-danger">*</span>
-                <select class="form-select"  id="slotId" name="slot" required disabled>
+                <select class="form-select"  id="slotId" name="slot" onchange="setSlot()" required disabled>
                 </select>
                 <span class="text-warning" id="doctorSlotErrorId"></span>
             </div>
         </div>
+        <input type="hidden" name="slotId" id="slotInputId" required>
 
         <div class="row mb-3 g-3">
 

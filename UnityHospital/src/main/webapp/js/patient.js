@@ -102,13 +102,14 @@ function validateDoctorName() {
 
 
 function fetchDoctor(){
+console.log("hello")
+
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 if(doctorSlotError) doctorSlotError.innerHTML="";
 let specialization=document.getElementById("specialization").value;
 
 const slotSelect=document.getElementById("doctorSlot");
 
-slotSelect.innerHTML = '<option selected disabled>Select Slot</option>';
 
 
     const xhhtp=new XMLHttpRequest();
@@ -143,7 +144,7 @@ slotSelect.innerHTML = '<option selected disabled>Select Slot</option>';
                      option.textContent = name;
                      option.setAttribute("id", id);
                    doctorNameSelect.appendChild(option);
-                   }
+              }
         }
     }
 }
@@ -173,7 +174,6 @@ if(interval==="Not Assigned"){
 slot.disabled=true;
 doctorSlotError.innerHTML="Timeslot not assigned"
 }else{
-let slotInput=document.getElementById("slotInputId");
 doctorSlotError.innerHTML="";
 slot.disabled=false;
 let intervals=interval.split("|");
@@ -183,11 +183,19 @@ for(let i=0;i<intervals.length;i++){
     let option = document.createElement("option");
                  option.value = timeslot;
                  option.textContent = timeslot;
+                 option.setAttribute("id", id);
                   slot.appendChild(option);
-                  slotInput.value=id;
 }
 }
 }
+
+function setSlot(){
+let slotInput=document.getElementById("slotInputId");
+let slot=document.getElementById("slotId");
+let selectedOption = slot.options[slot.selectedIndex];
+slotInput.value=selectedOption.getAttribute("id");
+}
+
 
 function setDoctorId(){
 let doctorNameSelect=document.getElementById("doctorName");

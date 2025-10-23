@@ -78,17 +78,16 @@
 
 
                                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#confirmDeleteModal">
+                                            data-bs-target="#confirmDeleteModal${loop.index}">
                                         <i class="bi bi-trash"></i> Delete
                                     </button>
 
-                                    <div class="modal fade " id="confirmDeleteModal" tabindex="-1"
-                                         aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+                                    <div class="modal fade" id="confirmDeleteModal${loop.index}" tabindex="-1"
+                                         aria-labelledby="confirmDeleteLabel${loop.index}" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header bg-dark text-success">
-                                                    <h1 class="modal-title fs-5 " id="confirmDeleteLabel">Confirm
-                                                        Deletion</h1>
+                                                    <h1 class="modal-title fs-5" id="confirmDeleteLabel${loop.index}">Confirm Deletion</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                 </div>
@@ -96,8 +95,7 @@
                                                     Are you sure you want to delete this doctor?
                                                     <form action="deleteDoctor" method="post" class="d-inline">
                                                         <input type="hidden" value="${dto.doctorEmail}" name="email">
-                                                        <button type="submit" class="btn btn-danger">Yes, Delete
-                                                        </button>
+                                                        <button type="submit" class="btn btn-danger">Yes, Delete</button>
                                                     </form>
                                                 </div>
                                             </div>

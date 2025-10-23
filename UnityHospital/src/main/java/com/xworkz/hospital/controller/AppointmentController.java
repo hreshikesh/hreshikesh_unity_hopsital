@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -27,8 +30,9 @@ public class AppointmentController {
     PatientService patientService;
 
     @RequestMapping("getAppointments")
-    public String  getAppointment(String  specialization, String doctorName, @RequestParam(defaultValue = "0") int doctorId, @RequestParam(defaultValue = "0") int slot,Model model, HttpSession session){
-
+    public String  getAppointment(@RequestParam(defaultValue = "0") int doctorId, @RequestParam(defaultValue = "0") int slot,Model model, HttpSession session){
+            log.info(String.valueOf(doctorId));
+            log.info(String.valueOf(slot));
         if(doctorId==0){
             List<SpecializationDto> specializations=doctorService.getAllSpecialization();
             model.addAttribute("specializations",specializations);
@@ -64,6 +68,31 @@ public class AppointmentController {
         }else{
             model.addAttribute("dto",patientDto);
             return "Details";
+        }
+    }
+
+
+    @GetMapping("searchUser")
+    public ModelAndView getUserDetails(String regid,ModelAndView modelAndView){
+        if(regid==null){
+            modelAndView.setViewName("CheckAppointment");
+            modelAndView.addObject("regId",regid);
+            modelAndView.addObject("error","Registration Id Cannot be Empty");
+            return modelAndView;
+        }else{
+            modelAndView.setViewName("CheckAppointment");
+            if(regid.matches( "^UNITY[a-zA-Z]{2}-\\d{2}(0[1-9]|1[0-2])-\\d{4}$")){
+                modelAndView.addObject("error","Invalid registration Id");
+                return modelAndView;
+            }else{
+                PatientDto patientDto=patientService.findPatientByRegistrationId(regid);
+                if(patientDto==null){
+                    modelAndView.addObject("result","No Patient Found for Registration Id");
+                    return modelAndView;
+                }
+                modelAndView.addObject("dto",patientDto);
+                return modelAndView;
+            }
         }
     }
 
