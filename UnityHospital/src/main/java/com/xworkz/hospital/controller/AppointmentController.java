@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -30,7 +29,7 @@ public class AppointmentController {
     PatientService patientService;
 
     @RequestMapping("getAppointments")
-    public String  getAppointment(@RequestParam(defaultValue = "0") int doctorId, @RequestParam(defaultValue = "0") int slot,Model model, HttpSession session){
+    public String  getAppointment(@RequestParam(defaultValue = "0") int doctorId, @RequestParam(defaultValue = "0") int slot,Model model){
             log.info(String.valueOf(doctorId));
             log.info(String.valueOf(slot));
         if(doctorId==0){

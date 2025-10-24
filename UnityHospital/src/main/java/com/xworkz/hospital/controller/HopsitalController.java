@@ -3,6 +3,7 @@ import com.xworkz.hospital.dto.*;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.HospitalService;
+import com.xworkz.hospital.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,11 +27,13 @@ import java.util.List;
 @RequestMapping("/")
 public class HopsitalController {
 
-    @Autowired
-    HospitalService hospitalService;
+
 
     @Autowired
     DoctorService doctorService;
+
+    @Autowired
+    PatientService patientService;
 
 
     @RequestMapping("admin")
@@ -129,6 +132,15 @@ public class HopsitalController {
     @GetMapping("myAppointment")
     public String gotoMyAppointment(){
         return  "CheckAppointment";
+    }
+
+    @GetMapping("patientRegistration")
+    public String gotoUserPatientRegistration(Model model){
+        List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
+        List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
+        model.addAttribute("specializationDtos",specializationDtos);
+        model.addAttribute("bloodGroupDtos",dtos);
+        return "UserPatientRegistration";
     }
 
 

@@ -51,6 +51,11 @@
                     <i class="bi bi-person-circle me-2"></i> My Profile
                 </a>
             </div>
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="patientRegistration" class="btn btn-success btn-lg rounded-pill">
+                    <i class="bi bi-person-circle me-2"></i>Book a Appointment
+                </a>
+            </div>
         </div>
     </div>
     <div class="row g-4 mb-5">

@@ -19,7 +19,13 @@ public class AuditorAwareImpl implements AuditorAware<String> {
     @Override
     public Optional<String> getCurrentAuditor() {
         String email = (String) httpSession.getAttribute("adminEmail1");
-        log.info(email);
-        return Optional.ofNullable(email);
+        String userName=(String) httpSession.getAttribute("userName");
+        if(email!=null) {
+            log.info(email);
+            return Optional.of(email);
+        }else if(userName!=null){
+            return  Optional.of(userName);
+        }
+        return Optional.empty();
     }
 }
