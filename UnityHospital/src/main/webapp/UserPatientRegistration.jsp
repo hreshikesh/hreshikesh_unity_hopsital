@@ -15,7 +15,6 @@
 
 <body class="bg-success-subtle">
 
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success fw-bold" href="#">
@@ -27,8 +26,6 @@
         </div>
     </div>
 </nav>
-
-<!-- Form Section -->
 <div class="container py-4 d-flex justify-content-center">
     <form class="bg-success text-white p-4 rounded-4 shadow w-75"
           action="registerPatient" method="post" enctype="multipart/form-data">
@@ -48,8 +45,6 @@
                 </ul>
             </div>
         </c:if>
-
-        <!-- Row 1 -->
         <div class="row g-3 mb-3">
             <div class="col-md-5">
                 <label class="form-label">Full Name <span class="text-danger">*</span></label>
@@ -78,8 +73,6 @@
                 <div class="form-text text-warning" id="patientBloodErrorId"></div>
             </div>
         </div>
-
-        <!-- Row 2 -->
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label">Email <span class="text-danger">*</span></label>
@@ -95,8 +88,6 @@
                 <div class="form-text text-warning" id="patientPhoneErrorId"></div>
             </div>
         </div>
-
-        <!-- Row 3 -->
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label">Address <span class="text-danger">*</span></label>
@@ -112,8 +103,6 @@
                 <div class="form-text text-warning" id="patientDiseaseError"></div>
             </div>
         </div>
-
-        <!-- Row 4 -->
         <div class="row g-3 mb-3">
             <div class="col-md-4">
                 <label class="form-label">Doctor Specialization <span class="text-danger">*</span></label>
@@ -146,8 +135,6 @@
         </div>
 
         <input type="hidden" name="slotId" id="slotInputId" required>
-
-        <!-- Row 5 -->
         <div class="row g-3 mb-3">
             <div class="col-md-4">
                 <label class="form-label">Fees <span class="text-danger">*</span></label>
@@ -166,7 +153,6 @@
             </div>
         </div>
 
-        <!-- Submit -->
         <div class="d-grid">
             <button type="submit" class="btn btn-dark btn-lg">Register Patient</button>
         </div>
