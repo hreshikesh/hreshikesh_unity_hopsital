@@ -36,17 +36,21 @@
     </div>
 </nav>
 
+
+
+
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 85vh;">
     <div class="card shadow-lg border-success w-100 mt-3" style="max-width: 400px;">
         <div class="card-body">
             <h3 class="text-center text-success mb-4 fw-bold">User Sign Up</h3>
             <c:if test="${not empty error}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <ul class="mb-0">
+                    <ul class="mb-0 ps-3">
                         <c:forEach var="err" items="${error}">
-                            <li class="text-danger small">${err.defaultMessage}</li>
+                            <li class="small">${err.defaultMessage}</li>
                         </c:forEach>
                     </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </c:if>
 

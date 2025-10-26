@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,25 +38,25 @@
 <div class="container mt-5">
     <div class="card bg-success text-white mx-auto" style="max-width: 500px;">
         <div class="card-header text-black text-center fs-4 fw-bold">
-            Add Specialization
+            Add  Event
         </div>
         <div class="card-body">
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <ul class="mb-0 ps-3">
-                        <c:forEach var="err" items="${error}">
-                            <li class="small">${err.defaultMessage}</li>
-                        </c:forEach>
-                    </ul>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </c:if>
-            <form action="addSpecialization" method="post">
+            <form action="addEvent" method="post">
                 <div class="mb-3">
-                    <label for="specializationId" class="form-label">Specialization Name</label>
-                    <input type="text" id="specializationId" class="form-control"
-                           placeholder="Enter specialization" oninput="validateInput()" name="specialization" value="${dto.specialization}" minlength="5" maxlength="25" required>
-                    <span id="message" class="form-text text-warning"></span>
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <ul class="mb-0 ps-3">
+                                <c:forEach var="err" items="${error}">
+                                    <li class="small">${err.defaultMessage}</li>
+                                </c:forEach>
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </c:if>
+                    <label for="eventId" class="form-label">Event Details</label>
+                    <input type="text" id="eventId" class="form-control"
+                           placeholder="Enter Event Details" oninput="validateInput()" name="event" value="${dto.event}" minlength="5" maxlength="50" required>
+                    <span id="messageId" class="form-text text-warning"></span>
                 </div>
                 <div class="d-flex justify-content-center gap-2">
                     <button type="submit" class="btn btn-warning"><i class="bi bi-plus-circle mx-2"></i>Add</button>
@@ -66,36 +67,28 @@
     </div>
 </div>
 
-
-    <c:if test="${not empty result}">
-        <div class="position-absolute bottom-0 start-50 translate-middle-x p-3">
-            <div class="toast align-items-center text-bg-success " role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body text-warning">
-                        ${result}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+<c:if test="${not empty result}">
+    <div class="position-absolute bottom-0 start-50 translate-middle-x p-3">
+        <div class="toast align-items-center text-bg-success " role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body text-warning">
+                    ${result}
                 </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
-    </c:if>
-
-
-
-
-
-
-
+    </div>
+</c:if>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
 <script>
     function validateInput() {
-        const input = document.getElementById("specializationId");
-        const message = document.getElementById("message");
+        const input = document.getElementById("eventId");
+        const message = document.getElementById("messageId");
 
-        if (input.value.length > 25 ||input.value.length < 5 ) {
-            message.textContent = "Maximum 25 characters allowed and minimum 5 characters";
+        if (input.value.length > 50 ||input.value.length < 5 ) {
+            message.textContent = "Maximum 5 characters allowed and minimum 50 characters";
         } else {
             message.textContent = "";
         }
@@ -104,11 +97,13 @@
  document.addEventListener('DOMContentLoaded', function () {
     const toastElList = document.querySelectorAll('.toast');
     toastElList.forEach(toastEl => {
-        const toast = new bootstrap.Toast(toastEl, { delay: 3000 }); // auto-hide after 3s
+        const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
         toast.show();
     });
 });
 </script>
 
+</body>
+</html>
 </body>
 </html>

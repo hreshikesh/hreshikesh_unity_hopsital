@@ -48,7 +48,10 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-success">
                         <li><a class="dropdown-item text-success" href="specialization"><i class="bi bi-plus-square  mx-2"></i>Specialization</a></li>
+                        <li><a class="dropdown-item text-success" href="event"><i class="bi bi-plus-square  mx-2"></i>Event</a></li>
+
                     </ul>
+
                 </li>
 
             </ul>

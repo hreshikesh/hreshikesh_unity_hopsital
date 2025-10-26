@@ -22,7 +22,9 @@
             UNITY HOSPITAL
         </a>
         <div class="d-flex">
-            <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
+            <a href="userDashboard" class="btn btn-outline-success">
+                <i class="bi bi-arrow-return-left"></i>
+            </a>
         </div>
     </div>
 </nav>

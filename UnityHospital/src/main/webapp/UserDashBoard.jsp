@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Unity Hospital - User</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
+    <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page isELIgnored="false" %>
 
@@ -16,17 +16,22 @@
         .feature-icon { font-size: 2rem; }
         .card:hover { transform: translateY(-5px); transition: 0.3s ease; }
         .card a.btn:hover { transform: scale(1.05); transition: 0.3s ease; }
-        .content:hover { transform: scale(1.05); transition: 0.3s ease; border:1px solid green }
+        .content:hover { transform: scale(1.05); transition: 0.3s ease; }
         .quintessential-regular {
             font-family: "Quintessential", serif;
             font-weight: 400;
             font-style: normal;
         }
+        .major-mono-display-regular {
+  font-family: "Major Mono Display", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
     </style>
 </head>
 <body class="bg-success-subtle">
-
-<nav class="navbar bg-body-tertiary shadow-sm" data-bs-theme="dark">
+<div class="sticky-top">
+<nav class="navbar bg-body-tertiary sticky-top" data-bs-theme="dark" style="z-index: 1030;">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center text-success" href="#">
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
@@ -38,6 +43,23 @@
     </div>
 </nav>
 
+<marquee class="bg-black bg-gradient py-2 " behavior="scroll" direction="left" >
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2  major-mono-display-regular">Welcome to Unity Hospital – Excellence in Healthcare</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">24/7 Emergency Services – Call +91-12345-67890 &#9877;</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Book OPD Appointments Online – Quick & Easy &#9877;</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Advanced Cardiac & Cancer Care Available &#9877;</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Join Our Blood Donation Camp on 31st October &#9877;</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Get Affordable Health Checkup Packages Today &#9877;</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Stay Safe – Follow Hygiene and Health Guidelines &#9877;</span>
+    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Unity Hospital – Caring Beyond Limits</span>
+</marquee>
+</div>
+
+
+
+
+
+
 <div class="container py-5">
     <div class="card mb-5 shadow-lg border-0 rounded-4">
         <div class="card-body text-center bg-white p-5">
@@ -48,12 +70,12 @@
                     <i class="bi bi-person-circle me-2"></i> My Appointment
                 </a>
                 <a href="profile" class="btn btn-outline-success btn-lg rounded-pill">
-                    <i class="bi bi-person-circle me-2"></i> My Profile
+                    <i class="bi bi-person-circle "></i> My Profile
                 </a>
             </div>
             <div class="d-flex justify-content-center gap-3 mt-4">
-                <a href="patientRegistration" class="btn btn-success btn-lg rounded-pill">
-                    <i class="bi bi-person-circle me-2"></i>Book an Appointment
+                <a href="patientRegistration" class="btn btn-outline-success btn-md rounded-pill">
+                    <i class="bi bi-file-medical me-2"></i>Book an Appointment
                 </a>
             </div>
         </div>
@@ -190,34 +212,23 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Send Message</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success"><i class="bi bi-send me-2"></i>Send Message</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<c:choose>
-    <c:when test="${check}">
-        <div class="modal fade" id="resultmodal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <p class="text-success text-center">Your Email has been Sent We will contact You soon...</p>
-                </div>
-            </div>
+<c:if test="${not empty check}">
+<div class="modal fade" id="resultmodal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-success">
+            <p  class="text-center p-3 text-light">${check}</p>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
         </div>
-    </c:when>
-    <c:otherwise>
-        <div class="modal fade" id="resultmodal1" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <p class="text-success text-center">Issue in sending mail</p>
-                </div>
-            </div>
-        </div>
-    </c:otherwise>
-</c:choose>
+    </div>
+</div>
+</c:if>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" ></script>
 
 <script>
@@ -239,6 +250,13 @@
     }, false)
   })
 })()
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+            var resultModalEl = document.getElementById('resultmodal');
+            var resultModal = new bootstrap.Modal(resultModalEl);
+            resultModal.show();
+        });
 </script>
 
 </body>

@@ -143,5 +143,10 @@ public class HopsitalController {
         return "UserPatientRegistration";
     }
 
+    @GetMapping("event")
+    public String gotoEventPage(){
+        return "Event";
+    }
+
 
 }
