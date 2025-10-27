@@ -1,6 +1,8 @@
 package com.xworkz.hospital.controller;
 
+import com.xworkz.hospital.dto.EventDto;
 import com.xworkz.hospital.dto.UserDto;
+import com.xworkz.hospital.service.EventService;
 import com.xworkz.hospital.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventService eventService;
 
     @PostMapping("registerUser")
     public ModelAndView registerUser(@Valid UserDto userDto, BindingResult result, ModelAndView view) {
@@ -86,6 +93,18 @@ public class UserController {
             session.setAttribute("userName", userDto.getUserName());
             model.addAttribute("user", userDto.getUserName());
             userService.updateOTP(userEmail);
+        }
+        List<EventDto> eventDtos = eventService.getAllEvent();
+        model.addAttribute("dtos", eventDtos);
+        if (eventDtos == null || eventDtos.isEmpty()) {
+            eventDtos.addAll(Arrays.asList(
+                    new EventDto(0, "Welcome to Unity Hospital - Excellence in Healthcare", null),
+                    new EventDto(0, "24/7 Emergency Services - Call +91-12345-67890 ", null),
+                    new EventDto(0, "Book OPD Appointments Online - Quick & Easy", null),
+                    new EventDto(0, "Get Affordable Health Checkup Packages Today", null),
+                    new EventDto(0, "Unity Hospital - Caring Beyond Limits", null)
+            ));
+            model.addAttribute("dtos", eventDtos);
         }
         return "UserDashBoard";
     }

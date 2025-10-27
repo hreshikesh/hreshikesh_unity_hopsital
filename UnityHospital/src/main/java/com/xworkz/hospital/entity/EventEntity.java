@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedQuery(name = "getAllEvent",query = "select e from EventEntity e")
 public class EventEntity extends  AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

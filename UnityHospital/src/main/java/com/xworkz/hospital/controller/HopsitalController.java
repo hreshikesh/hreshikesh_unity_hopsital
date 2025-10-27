@@ -1,25 +1,15 @@
 package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.*;
-import com.xworkz.hospital.entity.DoctorEntity;
-import com.xworkz.hospital.service.DoctorService;
-import com.xworkz.hospital.service.HospitalService;
-import com.xworkz.hospital.service.PatientService;
+import com.xworkz.hospital.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -34,6 +24,12 @@ public class HopsitalController {
 
     @Autowired
     PatientService patientService;
+
+    @Autowired
+    EventService eventService;
+
+    @Autowired
+    SpecializationService specializationService;
 
 
     @RequestMapping("admin")
@@ -126,6 +122,18 @@ public class HopsitalController {
     @RequestMapping("userDashboard")
     public String gotoUserDashboard(Model model,HttpSession session){
         model.addAttribute("user",session.getAttribute("userName"));
+        List<EventDto> eventDtos = eventService.getAllEvent();
+        model.addAttribute("dtos", eventDtos);
+        if (eventDtos == null || eventDtos.isEmpty()) {
+            eventDtos.addAll(Arrays.asList(
+                    new EventDto(0, "Welcome to Unity Hospital - Excellence in Healthcare", null),
+                    new EventDto(0, "24/7 Emergency Services - Call +91-12345-67890 ", null),
+                    new EventDto(0, "Book OPD Appointments Online - Quick & Easy", null),
+                    new EventDto(0, "Get Affordable Health Checkup Packages Today", null),
+                    new EventDto(0, "Unity Hospital - Caring Beyond Limits", null)
+            ));
+            model.addAttribute("dtos", eventDtos);
+        }
         return "UserDashBoard";
     }
 
@@ -147,6 +155,33 @@ public class HopsitalController {
     public String gotoEventPage(){
         return "Event";
     }
+
+
+    @GetMapping("modifyEvent")
+    public String gotoModifyEvent(Model model){
+        List<EventDto> eventDtos=eventService.getAllEvent();
+        log.info(eventDtos.toString());
+        if(eventDtos!=null&&!eventDtos.isEmpty()) {
+            model.addAttribute("check",true);
+            model.addAttribute("dtos", eventDtos);
+        }else {
+            model.addAttribute("check", false);
+        }
+        return "ModifyEvent";
+    }
+
+@GetMapping("modifySpecialization")
+    public String gotoModifySpecialization(Model model){
+    List<SpecializationDto> specializationDtos=specializationService.getAllSpecialization();
+    log.info(specializationDtos.toString());
+    if(specializationDtos!=null&&!specializationDtos.isEmpty()) {
+        model.addAttribute("check",true);
+        model.addAttribute("dtos", specializationDtos);
+    }else {
+        model.addAttribute("check", false);
+    }
+    return "ModifySpecialization";
+}
 
 
 }

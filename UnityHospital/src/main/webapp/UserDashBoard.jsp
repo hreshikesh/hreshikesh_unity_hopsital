@@ -43,16 +43,13 @@
     </div>
 </nav>
 
-<marquee class="bg-black bg-gradient py-2 " behavior="scroll" direction="left" >
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2  major-mono-display-regular">Welcome to Unity Hospital – Excellence in Healthcare</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">24/7 Emergency Services – Call +91-12345-67890 &#9877;</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Book OPD Appointments Online – Quick & Easy &#9877;</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Advanced Cardiac & Cancer Care Available &#9877;</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Join Our Blood Donation Camp on 31st October &#9877;</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Get Affordable Health Checkup Packages Today &#9877;</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Stay Safe – Follow Hygiene and Health Guidelines &#9877;</span>
-    <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2">Unity Hospital – Caring Beyond Limits</span>
-</marquee>
+    <marquee class="bg-black bg-gradient py-2" behavior="scroll" direction="left">
+        <c:forEach var="dto" items="${dtos}">
+        <span class="p-3 bg-success bg-opacity-10 border border-success border-start-0 border-end-0 text-success rounded-end mx-2 major-mono-display-regular">
+            ${dto.event}
+        </span>
+        </c:forEach>
+    </marquee>
 </div>
 
 

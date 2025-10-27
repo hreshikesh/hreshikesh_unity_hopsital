@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SpecializationDto {
+    private int id;
+
     @NotNull(message = "Specialization cannot be empty")
     @Size(min = 5,max = 25,message = "Cannot exceed 25 and minimum 5 characters")
     private String specialization;

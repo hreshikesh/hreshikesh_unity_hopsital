@@ -12,8 +12,12 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class EventDto {
 
+    private int id;
+
     @NotNull
     @Size(min = 5,max = 50,message = "Event details should be between 5 and 50")
     private String event;
+
+    private String date;
 
 }

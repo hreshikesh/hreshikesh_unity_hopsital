@@ -29,6 +29,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex gap-3">
+            <a href="modifySpecialization" class="btn btn-outline-success">Modify Specialization</a>
             <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
         </div>
     </div>

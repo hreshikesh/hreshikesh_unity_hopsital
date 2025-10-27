@@ -30,10 +30,11 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex gap-3">
+            <a href="modifyEvent" class="btn btn-outline-success">Modify Event</a>
             <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
         </div>
     </div>
-</nav>'
+</nav>
 
 <div class="container mt-5">
     <div class="card bg-success text-white mx-auto" style="max-width: 500px;">
@@ -103,7 +104,5 @@
 });
 </script>
 
-</body>
-</html>
 </body>
 </html>

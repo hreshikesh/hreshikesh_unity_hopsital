@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@NamedQuery(name = "getAllSpecilaization",query = "select e from SpecializationEntity e ")
+@NamedQuery(name = "getAllSpecialization",query = "select e from SpecializationEntity e ")
 public class SpecializationEntity extends AuditEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
