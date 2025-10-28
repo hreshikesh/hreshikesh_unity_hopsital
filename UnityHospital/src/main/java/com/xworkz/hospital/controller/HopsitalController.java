@@ -20,9 +20,6 @@ public class HopsitalController {
 
 
     @Autowired
-    DoctorService doctorService;
-
-    @Autowired
     PatientService patientService;
 
     @Autowired
@@ -54,7 +51,7 @@ public class HopsitalController {
 
     @RequestMapping("doctor")
     public String goToDoctor(Model model){
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         System.out.println(specializationDto);
         model.addAttribute("specializations",specializationDto);
         return "Doctor";
@@ -75,14 +72,14 @@ public class HopsitalController {
 
     @RequestMapping("slot")
     public String goToSlot(Model model){
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         model.addAttribute("specializations",specializationDto);
         return "Slot";
     }
 
     @RequestMapping("setSlot")
     public String goToSetSlot(Model model){
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         model.addAttribute("specializations",specializationDto);
         return "SetSlot";
     }
@@ -90,14 +87,14 @@ public class HopsitalController {
 
     @RequestMapping("appointment")
     public String gotoAppointment(Model model){
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         model.addAttribute("specializations",specializationDto);
         return "Appointment";
     }
 
     @RequestMapping("toappointment")
     public String backToAppointment(Model model,HttpSession session){
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         model.addAttribute("specializations",specializationDto);
         return "Appointment";
     }
@@ -144,7 +141,7 @@ public class HopsitalController {
 
     @GetMapping("patientRegistration")
     public String gotoUserPatientRegistration(Model model){
-        List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDtos=specializationService.getAllSpecialization();
         List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
         model.addAttribute("specializationDtos",specializationDtos);
         model.addAttribute("bloodGroupDtos",dtos);

@@ -5,6 +5,7 @@ import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.PatientService;
+import com.xworkz.hospital.service.SpecializationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,23 +29,26 @@ public class AppointmentController {
     @Autowired
     PatientService patientService;
 
+    @Autowired
+    SpecializationService specializationService;
+
     @RequestMapping("getAppointments")
     public String  getAppointment(@RequestParam(defaultValue = "0") int doctorId, @RequestParam(defaultValue = "0") int slot,Model model){
             log.info(String.valueOf(doctorId));
             log.info(String.valueOf(slot));
         if(doctorId==0){
-            List<SpecializationDto> specializations=doctorService.getAllSpecialization();
+            List<SpecializationDto> specializations=specializationService.getAllSpecialization();
             model.addAttribute("specializations",specializations);
             model.addAttribute("result","Select Doctor to check appointments");
             return "Appointment";
         }else  if(slot==0) {
-            List<SpecializationDto> specializations = doctorService.getAllSpecialization();
+            List<SpecializationDto> specializations = specializationService.getAllSpecialization();
             model.addAttribute("specializations", specializations);
             model.addAttribute("result", "Select Slot to get patient details");
             return "Appointment";
         }else{
             log.info(String.valueOf(doctorId));
-            List<SpecializationDto> specializations = doctorService.getAllSpecialization();
+            List<SpecializationDto> specializations = specializationService.getAllSpecialization();
             model.addAttribute("specializations", specializations);
             List<PatientDto> patientDtos = patientService.getPatient(doctorId,slot);
             if (patientDtos == null || patientDtos.isEmpty()) {

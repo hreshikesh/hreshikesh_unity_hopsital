@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface DoctorService {
-    List<SpecializationDto> getAllSpecialization();
+
 
     boolean saveDoctor(DoctorDto dto) throws IOException;
 

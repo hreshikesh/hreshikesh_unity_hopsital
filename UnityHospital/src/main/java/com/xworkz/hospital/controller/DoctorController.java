@@ -2,6 +2,7 @@ package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.service.DoctorService;
+import com.xworkz.hospital.service.SpecializationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,12 @@ public class DoctorController {
     @Autowired
     DoctorService doctorService;
 
+    @Autowired
+    SpecializationService specializationService;
+
     @PostMapping("registerDoctor")
     public ModelAndView registerDoctor(@Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         view.addObject("specializations",specializationDto);
         if(result.hasErrors()){
             view.setViewName("Doctor");
@@ -64,7 +68,7 @@ public class DoctorController {
             model.addAttribute("result","Doctor not found");
         }else{
             model.addAttribute("dto",dto);
-            List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+            List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
             model.addAttribute("specializations",specializationDto);
         }
         return "Update";
@@ -73,7 +77,7 @@ public class DoctorController {
     @RequestMapping("updateDoctor")
     public ModelAndView updateDoctor(@Valid DoctorDto dto,BindingResult result,ModelAndView view) throws IOException {
 
-        List<SpecializationDto> specializationDto = doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto = specializationService.getAllSpecialization();
         view.addObject("specializations", specializationDto);
 
         if (dto.getImage() == null || dto.getImage().isEmpty()) {

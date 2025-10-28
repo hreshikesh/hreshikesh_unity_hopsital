@@ -6,6 +6,7 @@ import com.xworkz.hospital.dto.SpecializationDto;
 import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.HospitalService;
 import com.xworkz.hospital.service.PatientService;
+import com.xworkz.hospital.service.SpecializationService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,12 @@ public class PatientController {
     @Autowired
     DoctorService doctorService;
 
+    @Autowired
+    SpecializationService specializationService;
+
     @GetMapping("patient")
     public  String goToPatientRegistration(Model model){
-        List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDtos=specializationService.getAllSpecialization();
        List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
        log.info(dtos.toString());
         model.addAttribute("specializationDtos",specializationDtos);
@@ -64,7 +68,7 @@ public class PatientController {
     @RequestMapping("registerPatient")
     public ModelAndView registerPatient(@Valid PatientDto dto, BindingResult result,ModelAndView view) throws IOException {
         view.setViewName("PatientRegistration");
-        List<SpecializationDto> specializationDtos=doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDtos=specializationService.getAllSpecialization();
         List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
         view.addObject("bloodGroupDtos",dtos);
         view.addObject("specializationDtos",specializationDtos);

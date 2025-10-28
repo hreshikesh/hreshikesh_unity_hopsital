@@ -32,18 +32,6 @@ public class DoctorServiceImpl implements DoctorService {
     @Autowired
     EmailService emailService;
 
-    @Override
-    public List<SpecializationDto> getAllSpecialization() {
-        List<SpecializationEntity> entity=doctorRepository.getAllSpecialization();
-        List<SpecializationDto> dtos=new ArrayList<>();
-        for (SpecializationEntity entity1:entity){
-            SpecializationDto dto=new SpecializationDto();
-            BeanUtils.copyProperties(entity1,dto);
-            dtos.add(dto);
-        }
-        return dtos;
-    }
-
 
     private String fileUpload(String name, MultipartFile file) throws IOException {
         byte[] filePart= file.getBytes();

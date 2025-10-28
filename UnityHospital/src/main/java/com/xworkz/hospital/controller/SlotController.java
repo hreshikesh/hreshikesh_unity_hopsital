@@ -7,6 +7,7 @@ import com.xworkz.hospital.dto.TimeSlotDto;
 import com.xworkz.hospital.entity.DoctorEntity;
 import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.SlotService;
+import com.xworkz.hospital.service.SpecializationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,10 +32,13 @@ public class SlotController {
     @Autowired
     SlotService slotService;
 
+    @Autowired
+    SpecializationService specializationService;
+
 
     @RequestMapping("settimeslot")
     public ModelAndView setTimeSlot(@Valid TimeSlotDto dto, BindingResult result, ModelAndView view){
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         view.addObject("specializations",specializationDto);
         if(result.hasErrors()){
             view.addObject("errors",result.getAllErrors());
@@ -67,7 +71,7 @@ public class SlotController {
         modelAndView.addObject("check",false);
         List<String> timeIntervals=new ArrayList<>();
         List<DoctorDto> dtos=doctorService.getAllDoctor();
-        List<SpecializationDto> specializationDto= doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         modelAndView.addObject("specializations",specializationDto);
         if(doctors.isEmpty()){
             modelAndView.addObject("dtos",dtos);
@@ -95,7 +99,7 @@ public class SlotController {
 
     @RequestMapping("doctorSave")
     public String setDoctorSlot(@RequestParam String specialization, @Valid DoctorTimeSlotDto dto, BindingResult result, Model model){
-        List<SpecializationDto> specializationDto = doctorService.getAllSpecialization();
+        List<SpecializationDto> specializationDto = specializationService.getAllSpecialization();
         if(result.hasErrors()){
             model.addAttribute("error",result.getAllErrors());
             model.addAttribute("specializations", specializationDto);
