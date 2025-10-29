@@ -37,8 +37,6 @@ public class PatientController {
     @Autowired
     PatientService patientService;
 
-    @Autowired
-    DoctorService doctorService;
 
     @Autowired
     SpecializationService specializationService;

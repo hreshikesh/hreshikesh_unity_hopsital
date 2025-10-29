@@ -31,6 +31,7 @@ public class DoctorController {
     @Autowired
     SpecializationService specializationService;
 
+
     @PostMapping("registerDoctor")
     public ModelAndView registerDoctor(@Valid DoctorDto dto, BindingResult result, ModelAndView view) throws IOException {
         List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
@@ -56,10 +57,7 @@ public class DoctorController {
             view.addObject("status","Doctor Not Registered");
         }
         return view;
-
     }
-
-
 
     @RequestMapping("updateClick")
     public String updateRedirect(String email, Model model){
@@ -74,6 +72,7 @@ public class DoctorController {
         return "Update";
     }
 
+
     @RequestMapping("updateDoctor")
     public ModelAndView updateDoctor(@Valid DoctorDto dto,BindingResult result,ModelAndView view) throws IOException {
 
@@ -86,15 +85,12 @@ public class DoctorController {
                 dto.setImagePath(existingDto.getImagePath());
             }
         }
-
-
         if (result.hasErrors()) {
             view.setViewName("Update");
             view.addObject("dto", dto);
             view.addObject("error", result.getAllErrors());
             return view;
         }
-
         if (dto.getImage().getSize()>1*1024*1024) {
             view.setViewName("Update");
             DoctorDto existingDto = doctorService.searchByEmail(dto.getDoctorEmail());
@@ -105,17 +101,13 @@ public class DoctorController {
             view.addObject("imageError", "Image Size Cannot exceed 1MB");
             return view;
         }
-
         boolean status = doctorService.updateDoctor(dto);
-
         DoctorDto updatedDto = doctorService.searchByEmail(dto.getDoctorEmail());
         if (updatedDto != null && updatedDto.getImagePath() != null) {
             dto.setImagePath(updatedDto.getImagePath());
         }
-
         view.setViewName("Update");
         view.addObject("dto", dto);
-
         if (status) {
             view.addObject("status", "Updated Successfully");
         } else {
@@ -123,6 +115,7 @@ public class DoctorController {
         }
         return view;
     }
+
 
     @GetMapping("download")
     public void download(HttpServletResponse response, @RequestParam String imagePath)throws IOException{
@@ -136,6 +129,7 @@ public class DoctorController {
         }
     }
 
+
     @GetMapping("alldoctor")
     public ModelAndView getAllDoctors(ModelAndView modelAndView){
         List<DoctorDto> list=doctorService.getAllDoctor();
@@ -147,8 +141,6 @@ public class DoctorController {
         }
         return modelAndView;
     }
-
-
 
     @RequestMapping("deleteDoctor")
     public String deleteDoctorDetails(String email,Model model){

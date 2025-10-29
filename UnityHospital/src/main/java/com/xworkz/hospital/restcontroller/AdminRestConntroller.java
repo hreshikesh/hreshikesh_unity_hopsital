@@ -28,8 +28,9 @@ public class AdminRestConntroller {
     @GetMapping("sendOtp/{email}")
     public String verifyAndSendOtp(@PathVariable String email, HttpSession session) {
         String sent = service.sendOtp(email);
-        session.setAttribute("adminEmail1", email);
+
         if (sent.equals("true")) {
+            session.setAttribute("adminEmail1", email);
             return "OTP sent successfully";
         } else {
             return "OTP not sent check your Email!";

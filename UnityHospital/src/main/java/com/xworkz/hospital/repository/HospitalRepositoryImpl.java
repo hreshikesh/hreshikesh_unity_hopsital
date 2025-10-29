@@ -103,5 +103,22 @@ public class HospitalRepositoryImpl implements HospitalRepository {
         return hospitalEntities;
     }
 
+    @Override
+    public String findAdminNameByEmail(String email) {
+        EntityManager manager= entityManagerFactory.createEntityManager();
+        EntityTransaction entityTransaction= manager.getTransaction();
+        String adminName=null;
+        try{
+            entityTransaction.begin();
+            adminName=(String)manager.createNamedQuery("findAdminNameByEmail").setParameter("email",email).getSingleResult();
+            entityTransaction.commit();
+        }catch (Exception e){
+            if (entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return adminName;
+    }
 
 }

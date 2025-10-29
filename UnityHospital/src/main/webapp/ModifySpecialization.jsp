@@ -47,13 +47,13 @@
                     Specialization
                 </div>
                 <div class="card-body text-success">
-                    <h5 class="card-title text-primary">${dto.specialization}</h5>
+                    <h5 class="card-title badge text-bg-success">${dto.specialization}</h5>
                 </div>
                 <div class="card-footer text-body-secondary">
-                    <button type="button" class="btn btn-success rounded-5"
+                    <button type="button" class="btn btn-outline-success rounded-5"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal${loop.index}">
-                        <i class="bi bi-trash"></i> Delete Event
+                        <i class="bi bi-trash"></i> Delete Specialization
                     </button>
                 </div>
             </div>

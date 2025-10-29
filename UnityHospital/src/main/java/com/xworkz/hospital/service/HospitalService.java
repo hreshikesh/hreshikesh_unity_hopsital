@@ -8,5 +8,7 @@ public interface HospitalService {
 
     String verifyOtp(String Otp,String email);
 
+    String findAdminNameByEmail(String email);
+
 
 }

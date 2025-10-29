@@ -49,7 +49,6 @@
                     <ul class="dropdown-menu dropdown-menu-success">
                         <li><a class="dropdown-item text-success" href="specialization"><i class="bi bi-plus-square  mx-2"></i>Specialization</a></li>
                         <li><a class="dropdown-item text-success" href="event"><i class="bi bi-plus-square  mx-2"></i>Event</a></li>
-
                     </ul>
 
                 </li>
@@ -57,6 +56,7 @@
             </ul>
         </div>
         <div class="d-flex">
+            <span class="text-success"
             <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-left"></i></a>
 
         </div>

@@ -23,8 +23,6 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/")
 public class AppointmentController {
-    @Autowired
-    DoctorService doctorService;
 
     @Autowired
     PatientService patientService;
@@ -84,7 +82,7 @@ public class AppointmentController {
             return modelAndView;
         }else{
             modelAndView.setViewName("CheckAppointment");
-            if(regid.matches( "^UNITY[a-zA-Z]{2}-\\d{2}(0[1-9]|1[0-2])-\\d{4}$")){
+            if(!regid.toUpperCase().matches( "^UNITY[A-Z]{2}-\\d{2}(0[1-9]|1[0-2])-\\d{4}$")){
                 modelAndView.addObject("error","Invalid registration Id");
                 return modelAndView;
             }else{

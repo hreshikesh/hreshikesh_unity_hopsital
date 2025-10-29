@@ -23,9 +23,7 @@ public class UserRestController {
         }else{
             return "failure";
         }
-
     }
-
 
 
     @GetMapping("/verifyOtp")

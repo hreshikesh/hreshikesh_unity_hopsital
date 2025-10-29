@@ -22,6 +22,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class UserController {
+
     @Autowired
     UserService userService;
 
@@ -39,7 +40,6 @@ public class UserController {
 
             boolean isSaved = userService.saveUser(userDto);
             if (isSaved) {
-
                 view.setViewName("UserSignIn");
                 return view;
             } else {

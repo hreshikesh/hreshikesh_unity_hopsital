@@ -13,6 +13,8 @@ public interface HospitalRepository {
 
     List<HospitalEntity> getAllWithOtp();
 
+    String findAdminNameByEmail(String email);
+
 
 
 

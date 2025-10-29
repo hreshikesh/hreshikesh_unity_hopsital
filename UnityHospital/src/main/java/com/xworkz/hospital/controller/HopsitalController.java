@@ -17,7 +17,8 @@ import java.util.List;
 @RequestMapping("/")
 public class HopsitalController {
 
-
+    @Autowired
+    HospitalService hospitalService;
 
     @Autowired
     PatientService patientService;
@@ -43,16 +44,14 @@ public class HopsitalController {
     public String goToService(){return "Service";}
 
     @RequestMapping("Home")
-    public String goToHome(HttpSession session)
+    public String goToHome()
     {
         return "Home";
-
     }
 
     @RequestMapping("doctor")
     public String goToDoctor(Model model){
         List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
-        System.out.println(specializationDto);
         model.addAttribute("specializations",specializationDto);
         return "Doctor";
     }
@@ -66,6 +65,9 @@ public class HopsitalController {
     @RequestMapping("home")
     public String verifyOtpAndLogin(Model model, HttpSession session) {
         model.addAttribute("email",(String) session.getAttribute("adminEmail1"));
+        String adminName=hospitalService.findAdminNameByEmail((String) session.getAttribute("adminEmail1"));
+        log.info(adminName);
+        session.setAttribute("adminName",adminName);
         session.setAttribute("adminLoggedIn",true);
         return "Home";
     }

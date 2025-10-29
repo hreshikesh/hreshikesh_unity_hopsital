@@ -221,7 +221,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-success">
             <p  class="text-center p-3 text-light">${check}</p>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger w-50 mx-auto" data-bs-dismiss="modal">Close</button>
         </div>
     </div>
 </div>
