@@ -3,8 +3,6 @@ package com.xworkz.hospital.controller;
 import com.xworkz.hospital.dto.BloodGroupDto;
 import com.xworkz.hospital.dto.PatientDto;
 import com.xworkz.hospital.dto.SpecializationDto;
-import com.xworkz.hospital.service.DoctorService;
-import com.xworkz.hospital.service.HospitalService;
 import com.xworkz.hospital.service.PatientService;
 import com.xworkz.hospital.service.SpecializationService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.DateFormatter;
 import javax.validation.Valid;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -36,7 +33,6 @@ public class PatientController {
 
     @Autowired
     PatientService patientService;
-
 
     @Autowired
     SpecializationService specializationService;
@@ -64,12 +60,15 @@ public class PatientController {
     }
 
     @RequestMapping("registerPatient")
-    public ModelAndView registerPatient(@Valid PatientDto dto, BindingResult result,ModelAndView view) throws IOException {
+    public ModelAndView registerPatient(@Valid PatientDto dto, BindingResult result,ModelAndView view,HttpSession httpSession) throws IOException {
         view.setViewName("PatientRegistration");
         List<SpecializationDto> specializationDtos=specializationService.getAllSpecialization();
         List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
         view.addObject("bloodGroupDtos",dtos);
         view.addObject("specializationDtos",specializationDtos);
+        if(httpSession.getAttribute("userName")!=null) {
+            view.addObject("check", true);
+        }
         if(result.hasErrors()){
             view.addObject("error",result.getAllErrors());
             view.addObject("dto",dto);
@@ -91,7 +90,6 @@ public class PatientController {
                         view.addObject("result","Patient Details not saved");
                     }
                 }
-
         }
         return view;
     }

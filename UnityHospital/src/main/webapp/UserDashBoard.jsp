@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Unity Hospital - User</title>
+    <link rel="icon" href="images/hospitallogo.webp">
+    <title>Unity Hospital</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -38,7 +39,7 @@
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
         <div class="d-flex">
-            <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-left mx-2"></i>Logout</a>
         </div>
     </div>
 </nav>
@@ -170,6 +171,19 @@
             </div>
 
         </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="w-100" style="max-width:800px;">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d288548.90180434124!2d78.38478602422774!3d13.051712884987296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae15e2df6c9ccf%3A0xf1dc47ea7a6a133!2sX-workz%20BTM!5e1!3m2!1sen!2sin!4v1761723725788!5m2!1sen!2sin"
+                        width="100%"
+                        height="250"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+
     </div>
 </footer>
 

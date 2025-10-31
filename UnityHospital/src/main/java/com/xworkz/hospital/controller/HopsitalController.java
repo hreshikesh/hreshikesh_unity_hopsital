@@ -147,7 +147,8 @@ public class HopsitalController {
         List<BloodGroupDto> dtos= patientService.getAllBloodGroup();
         model.addAttribute("specializationDtos",specializationDtos);
         model.addAttribute("bloodGroupDtos",dtos);
-        return "UserPatientRegistration";
+        model.addAttribute("check",true);
+        return "PatientRegistration";
     }
 
     @GetMapping("event")

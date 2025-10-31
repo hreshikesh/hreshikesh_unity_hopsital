@@ -28,42 +28,44 @@
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
             <span class="fw-bold fs-5 quintessential-regular">UNITY HOSPITAL-Admin</span>
         </a>
-        <div class="d-flex justify-content-center align-items-center">
-            <ul class="nav nav-underline">
-                <li class="nav-item">
-                    <a class="nav-link link-success fs-6 mx-2" aria-current="page" href="#"><i class="bi bi-house mx-1"></i>Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link-success fs-6 mx-2" href="alldoctor"><i class="bi bi-person-fill mx-1"></i>Doctors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link-success fs-6 mx-2" href="slot"><i class="bi bi-plus mx-1"></i>Slot</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link link-success fs-6 mx-2" href="appointment"><i class="bi bi-journal-bookmark-fill mx-1"></i>Appointments</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <button class="nav-link link-success  btn   dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        other
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-success">
-                        <li><a class="dropdown-item text-success" href="specialization"><i class="bi bi-plus-square  mx-2"></i>Specialization</a></li>
-                        <li><a class="dropdown-item text-success" href="event"><i class="bi bi-plus-square  mx-2"></i>Event</a></li>
-                    </ul>
 
-                </li>
-
-            </ul>
-        </div>
         <div class="d-flex">
-            <span class="text-success"
-            <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-left"></i></a>
-
+            <a href="logout" class="btn btn-outline-success"><i class="bi bi-box-arrow-left mx-2"></i>Logout</a>
         </div>
     </div>
 </nav>
 
+<div class="d-flex justify-content-between align-items-center text-dark bg-dark py-1 ">
+    <span class="ms-2 text-success" id="dateDisplayId"></span>
+    <div class="d-flex justify-content-center align-items-center">
+        <ul class="nav nav-underline">
+            <li class="nav-item">
+                <a class="nav-link link-success fs-6 mx-2" aria-current="page" href="#"><i class="bi bi-house mx-1"></i>Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-success fs-6 mx-2" href="alldoctor"><i class="bi bi-person-fill mx-1"></i>Doctors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-success fs-6 mx-2" href="slot"><i class="bi bi-plus mx-1"></i>Slot</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-success fs-6 mx-2" href="appointment"><i class="bi bi-journal-bookmark-fill mx-1"></i>Appointments</a>
+            </li>
+            <li class="nav-item dropdown">
+                <button class="nav-link link-success  btn   dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    other
+                </button>
+                <ul class="dropdown-menu dropdown-menu " data-bs-theme="dark">
+                    <li><a class="dropdown-item  link-success "  href="specialization"><i class="bi bi-plus-square  mx-2"></i>Specialization</a></li>
+                    <li><a class="dropdown-item  link-success" href="event"><i class="bi bi-plus-square  mx-2"></i>Event</a></li>
+                </ul>
 
+            </li>
+
+        </ul>
+    </div>
+    <span class="text-success mx-2" id="timeDisplayId"></span>
+</div>
 
 <div class="container text-center mb-5 mt-5">
     <h2 class="text-success">Welcome Admin!!</h2>
@@ -97,6 +99,17 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
+<script>
+    const timeElement = document.getElementById("timeDisplayId");
+    const dateElement = document.getElementById("dateDisplayId");
 
+    function updateTimeAndDate() {
+        const date = new Date();
+        timeElement.innerHTML = date.toLocaleTimeString();
+        dateElement.innerHTML = date.toDateString();
+    }
+    updateTimeAndDate();
+    setInterval(updateTimeAndDate, 1000);
+</script>
 </body>
 </html>

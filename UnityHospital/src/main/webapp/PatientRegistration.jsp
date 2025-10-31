@@ -25,9 +25,23 @@
             <img src="images/hospitallogo.webp" alt="Logo" width="60" height="40" class="me-2">
             <span class=" fs-5 quintessential-regular">UNITY HOSPITAL</span>
         </a>
-        <div class="d-flex">
-            <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
-        </div>
+
+        <c:choose>
+            <c:when test="${check}">
+                <div class="d-flex">
+                    <a href="userDashboard" class="btn btn-outline-success">
+                        <i class="bi bi-arrow-return-left"></i>
+                    </a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <div class="d-flex">
+                    <a href="Home" class="btn btn-outline-success"><i class="bi bi-house"></i></a>
+                </div>
+            </c:otherwise>
+        </c:choose>
+
+
     </div>
 </nav>
 
