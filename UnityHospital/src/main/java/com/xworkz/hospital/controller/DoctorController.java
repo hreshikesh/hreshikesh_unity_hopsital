@@ -131,9 +131,14 @@ public class DoctorController {
 
 
     @GetMapping("alldoctor")
-    public ModelAndView getAllDoctors(ModelAndView modelAndView){
-        List<DoctorDto> list=doctorService.getAllDoctor();
+    public ModelAndView getAllDoctors(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size, ModelAndView modelAndView){
+        List<DoctorDto> list=doctorService.getAllDoctor(page,size);
+        int totalDoctors=doctorService.getDoctorCount();
+        int totalPages= (int) Math.ceil((double) totalDoctors/size);
         modelAndView.setViewName("AllDoctor");
+        modelAndView.addObject("currentPage", page);
+        modelAndView.addObject("totalPages", totalPages);
+        modelAndView.addObject("size", size);
         if (list.isEmpty()){
             modelAndView.addObject("status","No Doctors are found");
         }else {

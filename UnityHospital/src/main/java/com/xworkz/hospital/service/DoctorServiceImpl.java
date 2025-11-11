@@ -144,8 +144,13 @@ public class DoctorServiceImpl implements DoctorService {
 
 
     @Override
-    public List<DoctorDto> getAllDoctor() {
+    public List<DoctorDto> getAllDoctor(int page,int size) {
         List<DoctorEntity> entities=doctorRepository.getAllDoctor();
+        int start=page*size;
+        int end=Math.min(start+size,entities.size());
+        if(start>end){
+            return new ArrayList<>();
+        }
         List<DoctorDto> dtos=new ArrayList<>();
         for (DoctorEntity entity:entities){
             DoctorDto dto=new DoctorDto();
@@ -161,6 +166,8 @@ public class DoctorServiceImpl implements DoctorService {
         return dtos;
     }
 
+
+
     @Override
     public long getEmailCount(String email) {
         return doctorRepository.getEmailCount(email);
@@ -170,6 +177,11 @@ public class DoctorServiceImpl implements DoctorService {
     public boolean deleteDoctor(String email) {
         return doctorRepository.deleteDoctor(email);
 
+    }
+
+    @Override
+    public int getDoctorCount() {
+        return doctorRepository.getAllDoctor().size();
     }
 
 

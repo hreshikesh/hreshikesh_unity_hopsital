@@ -15,10 +15,12 @@ public interface DoctorService {
 
     boolean updateDoctor(DoctorDto dto) throws IOException;
 
-    List<DoctorDto> getAllDoctor();
+    List<DoctorDto> getAllDoctor(int page,int size);
 
     long getEmailCount(String email);
 
     boolean deleteDoctor(String email);
+
+    int getDoctorCount();
 
 }
