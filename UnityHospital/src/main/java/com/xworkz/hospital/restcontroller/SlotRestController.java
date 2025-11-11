@@ -50,7 +50,7 @@ public class SlotRestController {
     @GetMapping("fetchDoctor/{specialization}")
     public String fetchDoctor(@PathVariable String specialization, Model model) {
         log.info(specialization);
-        List<DoctorDto> doctor = doctorService.getAllDoctor();
+        List<DoctorDto> doctor = doctorService.getAllDoctor(0,0);
         if (doctor.isEmpty()) {
             return "No Doctors Found";
         }

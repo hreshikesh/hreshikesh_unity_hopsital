@@ -37,7 +37,7 @@
 <div class="text-warning text-center">
     <span> ${status}</span>
 </div>
-<main>
+
     <h3 class="text-dark text-center mt-3">Doctor of Unity Hospital</h3>
     <p class="text-center text-warning">${deleteMessage}</p>
     <div class="album py-5 ">
@@ -96,6 +96,7 @@
                                                     Are you sure you want to delete this doctor?
                                                     <form action="deleteDoctor" method="post" class="d-inline">
                                                         <input type="hidden" value="${dto.doctorEmail}" name="email">
+                                                        <input type="hidden" value="${currentPage}" name="page">
                                                         <button type="submit" class="btn btn-danger">Yes, Delete</button>
                                                     </form>
                                                 </div>
@@ -108,10 +109,23 @@
                         </div>
                     </div>
                 </c:forEach>
+
+
             </div>
         </div>
+
     </div>
-</main>
+
+<ul class="pagination justify-content-center mt-4  ">
+
+    <c:forEach var="i" begin="0" end="${totalPages - 1}">
+        <li class="page-item  ${i == currentPage ? 'active' : ''}">
+            <a class="page-link bg-success link-dark" href="alldoctor?page=${i}&size=${size}">${i + 1}</a>
+        </li>
+    </c:forEach>
+
+</ul>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/index.js"></script>
 </body>

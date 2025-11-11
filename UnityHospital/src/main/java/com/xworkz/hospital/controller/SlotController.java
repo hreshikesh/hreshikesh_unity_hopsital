@@ -70,7 +70,7 @@ public class SlotController {
         List<TimeSlotDto> timeSlotDtos= slotService.findAllIntervals(specialization);
         modelAndView.addObject("check",false);
         List<String> timeIntervals=new ArrayList<>();
-        List<DoctorDto> dtos=doctorService.getAllDoctor();
+        List<DoctorDto> dtos=doctorService.getAllDoctor(0,0);
         List<SpecializationDto> specializationDto= specializationService.getAllSpecialization();
         modelAndView.addObject("specializations",specializationDto);
         if(doctors.isEmpty()){

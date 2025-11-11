@@ -131,8 +131,11 @@ public class DoctorController {
 
 
     @GetMapping("alldoctor")
-    public ModelAndView getAllDoctors(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "10") int size, ModelAndView modelAndView){
+    public ModelAndView getAllDoctors(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "4") int size, ModelAndView modelAndView){
+
+
         List<DoctorDto> list=doctorService.getAllDoctor(page,size);
+
         int totalDoctors=doctorService.getDoctorCount();
         int totalPages= (int) Math.ceil((double) totalDoctors/size);
         modelAndView.setViewName("AllDoctor");
@@ -148,14 +151,19 @@ public class DoctorController {
     }
 
     @RequestMapping("deleteDoctor")
-    public String deleteDoctorDetails(String email,Model model){
+    public String deleteDoctorDetails(@RequestParam int page,@RequestParam(defaultValue = "4") int size,String email,Model model){
         boolean check=doctorService.deleteDoctor(email);
+        int totalDoctors=doctorService.getDoctorCount();
+        int totalPages= (int) Math.ceil((double) totalDoctors/size);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("size", size);
         if(!check) {
             model.addAttribute("deleteMessage","Doctor not Deleted Successfully");
         }else {
             model.addAttribute("deleteMessage", "Doctor Deleted Successfully");
         }
-        List<DoctorDto> doctorList = doctorService.getAllDoctor();
+        List<DoctorDto> doctorList = doctorService.getAllDoctor(page,size);
         model.addAttribute("dtolist", doctorList);
         return "AllDoctor";
     }

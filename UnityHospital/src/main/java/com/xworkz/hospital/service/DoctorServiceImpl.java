@@ -151,8 +151,10 @@ public class DoctorServiceImpl implements DoctorService {
         if(start>end){
             return new ArrayList<>();
         }
+        List<DoctorEntity> pagedEntity=entities.subList(start,end);
+
         List<DoctorDto> dtos=new ArrayList<>();
-        for (DoctorEntity entity:entities){
+        for (DoctorEntity entity:pagedEntity){
             DoctorDto dto=new DoctorDto();
 
             BeanUtils.copyProperties(entity,dto);
