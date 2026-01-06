@@ -1,7 +1,7 @@
 package com.xworkz.hospital.service;
 
 
-import lombok.Data;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
+
 
 
 @Service
@@ -21,7 +21,7 @@ import java.util.concurrent.Future;
 public class EmailService {
 
     @Value("${spring.mail.username}")
-    private String userEmail;
+    private String hospitalEmail;
     @Autowired
     private JavaMailSender emailSender;
 
@@ -30,7 +30,7 @@ public class EmailService {
     @Async
     public void getEmail(String email, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(userEmail);
+        message.setFrom(hospitalEmail);
         message.setTo(email);
         message.setSubject(subject);
         message.setText(body);
@@ -42,9 +42,12 @@ public class EmailService {
     @Async
     public CompletableFuture<Boolean> sendContact(String email, String subject, String body) {
         try {
+            if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+                return CompletableFuture.completedFuture(false);
+            }
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(userEmail);
-            message.setTo(userEmail);
+            message.setFrom(email);
+            message.setTo(hospitalEmail);
             message.setSubject(subject + "-" + email);
             message.setText(body);
             message.setSentDate(new Date());
