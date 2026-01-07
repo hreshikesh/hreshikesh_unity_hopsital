@@ -1,6 +1,8 @@
 package com.xworkz.hospital.restcontroller;
 
+import com.xworkz.hospital.dto.DoctorDto;
 import com.xworkz.hospital.dto.DoctorTimeSlotDto;
+import com.xworkz.hospital.service.DoctorService;
 import com.xworkz.hospital.service.PatientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import java.util.List;
 public class AppointmentRestController {
     @Autowired
     PatientService patientService;
+
+    @Autowired
+    DoctorService doctorService;
 
     @GetMapping(value = "fetchAssignedSlot",produces = "application/json")
     public ResponseEntity<List<DoctorTimeSlotDto>> getAssignedSlot(@RequestParam int id){
@@ -31,4 +36,31 @@ public class AppointmentRestController {
         return ResponseEntity.ok(dtos);
 
     }
+
+
+    @GetMapping("fetchDoctor/{specialization}")
+    public String getDoctorNameBySpecialization(@PathVariable String specialization) {
+
+        List<DoctorDto> doctorDtos =
+                doctorService.getDoctorBySpecialization(specialization);
+
+        if (doctorDtos == null || doctorDtos.isEmpty()) {
+            return "No Doctors Found";
+        }
+
+        StringBuilder response = new StringBuilder();
+
+        for (DoctorDto doctor : doctorDtos) {
+            response.append(doctor.getDoctorName())
+                    .append("|")
+                    .append(doctor.getId())
+                    .append(",");
+        }
+
+        // remove last comma
+        response.deleteCharAt(response.length() - 1);
+
+        return response.toString();
+    }
+
 }

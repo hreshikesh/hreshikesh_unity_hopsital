@@ -21,7 +21,7 @@ import java.util.List;
 @NamedQuery(name = "doctorEmailCount",query = "select count(e.doctorEmail) from DoctorEntity e where doctorEmail=:email")
 @NamedQuery(name = "doctorBySpecialization",query = "select e from DoctorEntity e where specialization=:specializationBy ")
 @NamedQuery(name="getDoctorDetailsById",query = "select e from  DoctorEntity e where e.id=:id")
-
+@NamedQuery(name = "getDoctorDetailsBySpeacilization",query = "select e from DoctorEntity e where e.specialization=:specialization ")
 
 public class DoctorEntity extends AuditEntity{
     @Id

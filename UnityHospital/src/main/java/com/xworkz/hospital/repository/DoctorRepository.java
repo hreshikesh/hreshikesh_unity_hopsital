@@ -23,5 +23,7 @@ public interface DoctorRepository {
 
     DoctorEntity findById(int id);
 
+    List<DoctorEntity> getDoctorBySpecialization(String specilaization);
+
 
 }

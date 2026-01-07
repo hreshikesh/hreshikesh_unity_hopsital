@@ -107,7 +107,7 @@ console.log("hello")
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 if(doctorSlotError) doctorSlotError.innerHTML="";
 let specialization=document.getElementById("specialization").value;
-
+console.log(specialization)
 const slotSelect=document.getElementById("doctorSlot");
 
 

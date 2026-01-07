@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -196,7 +197,26 @@ public class DoctorRepositoryImpl  implements  DoctorRepository{
         return entity;
     }
 
-
+    @Override
+    public List<DoctorEntity> getDoctorBySpecialization(String specilaization) {
+        EntityManager manager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = manager.getTransaction();
+        List<DoctorEntity> entities=null;
+        try {
+            transaction.begin();
+            Query query=manager.createNamedQuery("getDoctorDetailsBySpeacilization");
+            query.setParameter("specialization",specilaization);
+            entities=query.getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+        } finally {
+            manager.close();
+        }
+        return entities;
+    }
 
 
 }
