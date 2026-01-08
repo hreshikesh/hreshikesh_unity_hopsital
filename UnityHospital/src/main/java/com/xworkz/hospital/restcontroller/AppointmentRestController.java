@@ -38,29 +38,5 @@ public class AppointmentRestController {
     }
 
 
-    @GetMapping("fetchDoctor/{specialization}")
-    public String getDoctorNameBySpecialization(@PathVariable String specialization) {
-
-        List<DoctorDto> doctorDtos =
-                doctorService.getDoctorBySpecialization(specialization);
-
-        if (doctorDtos == null || doctorDtos.isEmpty()) {
-            return "No Doctors Found";
-        }
-
-        StringBuilder response = new StringBuilder();
-
-        for (DoctorDto doctor : doctorDtos) {
-            response.append(doctor.getDoctorName())
-                    .append("|")
-                    .append(doctor.getId())
-                    .append(",");
-        }
-
-        // remove last comma
-        response.deleteCharAt(response.length() - 1);
-
-        return response.toString();
-    }
 
 }

@@ -102,7 +102,7 @@ function validateDoctorName() {
 
 
 function fetchDoctor(){
-console.log("hello")
+console.log("fetch doctor by specilaization")
 
 let doctorSlotError=document.getElementById("doctorSlotErrorId");
 if(doctorSlotError) doctorSlotError.innerHTML="";
@@ -129,6 +129,7 @@ const slotSelect=document.getElementById("doctorSlot");
         doctorNameSelect.appendChild(defaultOption);
 
     if(this.responseText==="No Doctors Found"||this.responseText==="No doctors"){
+    console.log(this.responseText)
     doctorNameSelect.disabled=true;
     doctorError.innerHTML="No doctors found";
 

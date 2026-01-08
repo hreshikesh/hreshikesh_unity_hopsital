@@ -51,6 +51,7 @@ public class SlotRestController {
     public String fetchDoctor(@PathVariable String specialization, Model model) {
         log.info(specialization);
         List<DoctorDto> doctor = doctorService.getAllDoctor(0,0);
+        log.info(doctor.toString());
         if (doctor.isEmpty()) {
             return "No Doctors Found";
         }

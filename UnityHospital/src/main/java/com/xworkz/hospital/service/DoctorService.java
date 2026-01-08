@@ -23,6 +23,6 @@ public interface DoctorService {
 
     int getDoctorCount();
 
-
+    List<DoctorDto> getDoctorBySpecialization(String specilaization);
 
 }
