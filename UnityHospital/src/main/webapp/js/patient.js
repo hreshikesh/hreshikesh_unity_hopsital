@@ -128,7 +128,7 @@ const slotSelect=document.getElementById("doctorSlot");
         defaultOption.selected=true;
         doctorNameSelect.appendChild(defaultOption);
 
-    if(this.responseText==="No Doctors Found"||this.responseText==="No doctors"){
+    if(this.responseText==="No doctors"){
     console.log(this.responseText)
     doctorNameSelect.disabled=true;
     doctorError.innerHTML="No doctors found";
@@ -214,6 +214,8 @@ slotSelect.innerHTML = '<option selected disabled>Select Slot</option>';
 const doctorId=document.getElementById("doctorIdInput");
 const messageDiv = document.getElementById("message");
 messageDiv.textContent = "";
+
+console.log(doctorId.value)
 
 const result=await axios.get("http://localhost:8080/UnityHospital/fetchAssignedSlot?id="+doctorId.value);
 

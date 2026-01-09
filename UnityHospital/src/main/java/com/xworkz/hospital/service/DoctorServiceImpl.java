@@ -188,16 +188,22 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public List<DoctorDto> getDoctorBySpecialization(String specilaization) {
-        List<DoctorEntity> doctorEntities=doctorRepository.getDoctorBySpecialization(specilaization);
-        List<DoctorDto> doctorDtos=new ArrayList<>();
-        if(doctorEntities!=null||!doctorEntities.isEmpty()){
-            doctorEntities.forEach(doctorEntity -> {
-                DoctorDto doctorDto=new DoctorDto();
-                BeanUtils.copyProperties(doctorDto,doctorEntity);
-                doctorDtos.add(doctorDto);
+    public List<DoctorDto> getDoctorBySpecialization(String specialization) {
+
+        List<DoctorEntity> doctorEntities =
+                doctorRepository.getDoctorBySpecialization(specialization);
+
+        List<DoctorDto> doctorDtos = new ArrayList<>();
+
+        if (doctorEntities != null && !doctorEntities.isEmpty()) {
+            doctorEntities.forEach(entity -> {
+                DoctorDto dto = new DoctorDto();
+                BeanUtils.copyProperties(entity, dto);
+                doctorDtos.add(dto);
             });
         }
+
+        log.info(doctorDtos.toString());
         return doctorDtos;
     }
 

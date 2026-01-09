@@ -49,25 +49,25 @@ public class SlotRestController {
 
     @GetMapping("fetchDoctor/{specialization}")
     public String fetchDoctor(@PathVariable String specialization, Model model) {
-        log.info(specialization);
-        List<DoctorDto> doctor = doctorService.getAllDoctor(0,0);
-        log.info(doctor.toString());
-        if (doctor.isEmpty()) {
-            return "No Doctors Found";
-        }
+        log.info("Specialization: {}", specialization);
 
-        List<String> matchedDoctor = new ArrayList<>();
+        List<DoctorDto> doctors =
+                doctorService.getDoctorBySpecialization(specialization);
 
-        for (DoctorDto dto : doctor) {
-            if (specialization.equals(dto.getSpecialization())) {
-                matchedDoctor.add(dto.getDoctorName()+"|"+dto.getId());
-            }
-        }
-        if (matchedDoctor.isEmpty()) {
+        log.info(doctors.toString());
+
+        if (doctors.isEmpty()) {
             return "No doctors";
-        } else {
-            return String.join(",", matchedDoctor);
         }
+
+        List<String> doctorNames = new ArrayList<>();
+
+        for (DoctorDto dto : doctors) {
+            log.info(dto.getDoctorName());
+            doctorNames.add(dto.getDoctorName()+"|"+dto.getId());
+        }
+
+        return String.join(", ", doctorNames);
     }
 
 
