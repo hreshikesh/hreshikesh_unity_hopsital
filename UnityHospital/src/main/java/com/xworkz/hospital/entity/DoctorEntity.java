@@ -15,7 +15,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @NamedQuery(name = "findByName",query = "select e from DoctorEntity e where doctorEmail=:email")
 @NamedQuery(name = "getAllDoctor",query = "select e from DoctorEntity e")
 @NamedQuery(name = "doctorEmailCount",query = "select count(e.doctorEmail) from DoctorEntity e where doctorEmail=:email")
