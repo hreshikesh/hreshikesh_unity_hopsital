@@ -22,6 +22,7 @@ public class EmailService {
 
     @Value("${spring.mail.username}")
     private String hospitalEmail;
+
     @Autowired
     private JavaMailSender emailSender;
 
