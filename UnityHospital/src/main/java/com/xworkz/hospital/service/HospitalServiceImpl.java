@@ -17,6 +17,7 @@ public class HospitalServiceImpl implements HospitalService {
     private static final Logger log = LoggerFactory.getLogger(HospitalServiceImpl.class);
     @Autowired
     HospitalRepository hopsitalRepository;
+
     @Autowired
     EmailService emailService;
 
