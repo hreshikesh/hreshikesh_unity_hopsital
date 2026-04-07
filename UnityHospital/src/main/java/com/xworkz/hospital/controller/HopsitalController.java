@@ -32,6 +32,9 @@ public class HopsitalController {
 
     @RequestMapping("admin")
     public String goTOAdmin(){
+        log.info("Going to admin page");
+        log.warn("going to admin ");
+
         return "Admin";
     }
 
